@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\cypress",
+    "\\cypress\\downloads",
+    "\\cypress\\fixtures",
+    "\\cypress\\integration",
+    "\\cypress\\plugins",
+    "\\cypress\\support"
   ],
-  "SelectedNode": "\\C:\\Users\\pedro.faria\\source\\ion-automation-cypress",
+  "SelectedNode": "\\cypress",
   "PreviewInSolutionExplorer": false
 }
