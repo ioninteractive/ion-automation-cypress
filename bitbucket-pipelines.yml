@@ -14,4 +14,5 @@ pipelines:
               - node
             script:
               - npm install
+              - npm install cypress --save-dev
               - npm test
