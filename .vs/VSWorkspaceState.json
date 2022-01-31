@@ -8,6 +8,10 @@
     "\\cypress\\plugins",
     "\\cypress\\support"
   ],
+<<<<<<< HEAD
   "SelectedNode": "\\cypress",
+=======
+  "SelectedNode": "\\C:\\Users\\pedro.faria\\source\\ion-automation-cypress",
+>>>>>>> master
   "PreviewInSolutionExplorer": false
 }
