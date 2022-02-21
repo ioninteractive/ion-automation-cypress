@@ -8,17 +8,12 @@ image: atlassian/default-image:3
 pipelines:
   default:
     - step:
-        name: 'Create Cypress cache folder'
-        script:
-            - mkdir -p ~/cypress/.cache
-    - step:
-        name: 'Export Cypress cache folder'
-        script:
-          - export CYPRESS_CACHE_FOLDER=~/cypress/.cache
-    - step:
         name: 'Install required packages'
+        caches:
+          - node
         script:
-          - npm install
+          - unset NPM_CONFIG_USER
+          - npm ci
     - step:
         name: 'Run Cypress tests'
         script:
