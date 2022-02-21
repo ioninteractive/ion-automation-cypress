@@ -9,10 +9,7 @@ pipelines:
   default:
     - step:
         name: 'Install required packages'
-        caches:
-          - node
         script:
-          - unset NPM_CONFIG_USER
           - npm ci
     - step:
         name: 'Run Cypress tests'
