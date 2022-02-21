@@ -8,6 +8,10 @@ image: atlassian/default-image:3
 pipelines:
   default:
     - step:
+        name: 'Export Cypress cache folder'
+        script:
+          - export CYPRESS_CACHE_FOLDER=/home/.cache
+    - step:
         name: 'Install required packages'
         script:
           - npm install
