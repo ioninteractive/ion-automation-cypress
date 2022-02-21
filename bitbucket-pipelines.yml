@@ -8,10 +8,10 @@ image: atlassian/default-image:3
 pipelines:
   default:
     - step:
-      name: 'Install required packages'
-      script:
-        - npm install
+        name: 'Install required packages'
+        script:
+          - npm install
     - step:
-      name: 'Run Cypress tests'
-      script:
-        - npm run test
+        name: 'Run Cypress tests'
+        script:
+          - npm run test
