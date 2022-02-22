@@ -2,16 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\cypress",
-    "\\cypress\\downloads",
-    "\\cypress\\fixtures",
     "\\cypress\\integration",
-    "\\cypress\\plugins",
     "\\cypress\\support"
   ],
-<<<<<<< HEAD
-  "SelectedNode": "\\cypress",
-=======
-  "SelectedNode": "\\C:\\Users\\pedro.faria\\source\\ion-automation-cypress",
->>>>>>> master
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }
