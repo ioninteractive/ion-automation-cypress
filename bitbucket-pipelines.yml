@@ -3,21 +3,12 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 
-image: cypress/base:latest
+image: node:latest
 
 pipelines:
   default:
     - step:
         name: 'Install required packages'
-        caches:
-          - npm
         script:
           - npm ci
-    - step:
-        name: 'Run Cypress tests'
-        script:
           - npm run test
-definitions:
-  caches:
-    npm: $HOME/.npm
-    cypress: $HOME/.cache/Cypress
