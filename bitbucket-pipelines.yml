@@ -8,7 +8,7 @@ image: cypress/base:latest
 pipelines:
   default:
     - step:
-        name: 'Install required packages'
+        name: 'Install packages & Run Cypress'
         script:
           - npm ci
           - npm run test
