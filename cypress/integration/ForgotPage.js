@@ -45,7 +45,7 @@ describe("Tests Login Page", () => {
 
     })
 
-    it.only("Fill in the field with Email of a non-federated user and reset the password.", () => {
+    it("Fill in the field with Email of a non-federated user and reset the password.", () => {
         cy.forgotPassword()
 
         cy.get('#txtuserid').type("pedro.test")
