@@ -53,3 +53,23 @@ Cypress.Commands.add("nullFields", () => {
     cy.get('button[type=submit]').click()
 })
 
+Cypress.Commands.add('loginStaySigned', () => {
+    cy.visit('Admin/Login')
+
+    cy.get('#txtuserid').type(Cypress.env('userId'))
+    cy.get('#txtpassword').type(Cypress.env('password'))
+    cy.get('span[class="slider round"]').click()
+  /*  cy.get('button[type=submit]').click()*/
+})
+
+Cypress.Commands.add('forgotPassword', () => {
+    cy.visit('Admin/Login')
+
+    cy.get('a.login-forgot-password').click()
+})
+
+Cypress.Commands.add("userResetIncorrect", resetIncorrectUser => {
+
+    cy.get('#txtuserid').type(resetIncorrectUser.userId)
+    cy.get('button[type=submit]').click()
+})

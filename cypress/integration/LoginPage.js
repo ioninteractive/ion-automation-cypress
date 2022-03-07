@@ -25,6 +25,7 @@ describe("Tests Login Page", () => {
             userId: `${faker.random.uuid()}`,
             password: faker.random.words(1)
         }
+
         cy.userIncorrect(loginIncorrectUser)
 
         cy.contains('Wrong user ID or password').should('exist')
@@ -47,6 +48,19 @@ describe("Tests Login Page", () => {
         cy.get('.field-validation-error').should('not.be.disabled')
         cy.contains('Invalid User ID').should('exist')
         cy.contains('Wrong user ID or password').should('exist')
+    });
+
+    it("Authenticate by checking the Stay signed in option", () => {
+        cy.loginStaySigned()
+
+        //to do improve condition of ::before and ::after
+        cy.get('span')
+            .should('have.class', 'slider round')
+
+        cy.get('button[type=submit]').click()
+
+        cy.get('h1')
+            .should("contain", `Welcome back, ${Cypress.env('firstName')}.`);
     });
 
 });
