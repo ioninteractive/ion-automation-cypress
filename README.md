@@ -1,29 +1,32 @@
-# README #
+# Ion's automation #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Welcome to Ion's automation test using Cypress.
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+#### Requisites
 
-### Contribution guidelines ###
+* [NodeJS](https://nodejs.org)
+* [NPM](https://npmjs.com)
 
-* Writing tests
-* Code review
-* Other guidelines
+#### Running locally 
+
+1. Clone the project
+  ```bash
+  git clone git@bitbucket.org:scribblelive/ion-automation-cypress.git
+  ```
+
+2. Install dependencies
+  ```bash
+  npm install`
+  ```
+
+3. Run the tests
+  ```bash
+  npm run e2e
+  ```
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* [Pedro Faria](pedro.faria@rockcontent.com)
+* [Caique Santana](caique.santana@rockcontent.com)
