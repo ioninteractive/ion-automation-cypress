@@ -14,7 +14,7 @@ describe("Tests - Portfolio Page", () => {
         cy.contains(portfolioName.namePortfolio)
             .should('exist')
     })
-
+})
 //    it("Tests - Delete Portfolio", () => {
         
 

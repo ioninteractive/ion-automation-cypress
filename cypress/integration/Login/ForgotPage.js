@@ -2,7 +2,7 @@
 
 const faker = require('faker')
 
-describe("Tests Login Page", () => {
+describe("Tests Login Page - Forgot your password", () => {
 
     it("Trying to recover password without filling in user id or email", () => {
         cy.forgotPassword()
@@ -48,7 +48,7 @@ describe("Tests Login Page", () => {
     it("Fill in the field with Email of a non-federated user and reset the password.", () => {
         cy.forgotPassword()
 
-        cy.get('#txtuserid').type("pedro.test")
+        cy.get('#txtuserid').type("UserTest7")
         cy.get('button[class="reset-request-submit"]').click()
 
         cy.get('label.reset-success-title')
