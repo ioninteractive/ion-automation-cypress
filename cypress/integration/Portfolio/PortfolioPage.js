@@ -14,7 +14,22 @@ describe("Tests - Portfolio Page", () => {
         cy.contains(portfolioName.namePortfolio)
             .should('exist')
     })
+
+    it("Tests - Edit Portfolio", () => {
+        const portfolioEditName = {
+            nameEditPortfolio: faker.random.words(1),
+            portfolioEditDescription: faker.random.words(10)
+        }
+        cy.portfolioEdit(portfolioEditName)
+        //cy.title()
+        //    .should('include', 'ion ? Portfolio ? * ion AForTesting')
+        //    .and
+        cy.get('a[class="c-button"]').should('be.visible')
+
+    })
+
 })
+
 //    it("Tests - Delete Portfolio", () => {
         
 
@@ -24,3 +39,18 @@ describe("Tests - Portfolio Page", () => {
 //            .should('exist')
 //    })
 //})
+
+describe("Tests - Campaign Page", () => {
+    it("Tests - Create a new Campaign", () => {
+        const campaignName = {
+            nameCampaign: faker.random.words(1),
+            campaignDescription: faker.random.words(10)
+        }
+
+        cy.campaignCreate(campaignName)
+
+        cy.get('th[class="c-data-grid__col"]')
+            .contains('Campaign')
+            .should('be.visible')
+    })
+})
