@@ -2,12 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\cypress",
-    "\\cypress\\cypress",
     "\\cypress\\integration",
     "\\cypress\\integration\\Login",
     "\\cypress\\integration\\Portfolio",
     "\\cypress\\support"
   ],
-  "SelectedNode": "\\cypress.env.json",
+  "SelectedNode": "\\cypress\\integration\\Login\\LoginPage.js",
   "PreviewInSolutionExplorer": false
 }
