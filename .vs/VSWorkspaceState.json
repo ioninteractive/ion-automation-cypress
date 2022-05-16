@@ -7,6 +7,6 @@
     "\\cypress\\integration\\Portfolio",
     "\\cypress\\support"
   ],
-  "SelectedNode": "\\cypress\\integration\\Login\\LoginPage.js",
+  "SelectedNode": "\\cypress.env.json",
   "PreviewInSolutionExplorer": false
 }

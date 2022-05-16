@@ -53,6 +53,8 @@ Cypress.Commands.add('portfolioDelete', portfolioName => {
 
 })
 
+// ------------------------------------------------------------------------ Comandos da campanha
+
 Cypress.Commands.add('campaignCreate', campaignName => {
 
     cy.loginEmail()
@@ -69,4 +71,12 @@ Cypress.Commands.add('campaignCreate', campaignName => {
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.get("input[class='c-button c-button--save']").click()
 
+})
+
+Cypress.Commands.add('campaignDelete', () => {
+    cy.loginEmail()
+    cy.visit('Admin/portfolios/49')
+
+    cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
+    cy.get('#formDeleteSubmit').click()
 })

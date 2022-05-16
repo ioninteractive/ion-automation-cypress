@@ -53,4 +53,12 @@ describe("Tests - Campaign Page", () => {
             .contains('Campaign')
             .should('be.visible')
     })
+
+    it.only("Tests - Delete a new Campaign", () => {
+
+        cy.campaignDelete()
+
+        cy.xpath('(//tr[@class="c-data-grid__row"])[1]')
+            .should('not.exist')
+    })
 })
