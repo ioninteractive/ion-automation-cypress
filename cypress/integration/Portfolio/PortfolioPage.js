@@ -54,7 +54,7 @@ describe("Tests - Campaign Page", () => {
             .should('be.visible')
     })
 
-    it.only("Tests - Delete a new Campaign", () => {
+    it("Tests - Delete a new Campaign", () => {
 
         cy.campaignDelete()
 
