@@ -24,21 +24,21 @@ describe("Tests - Portfolio Page", () => {
         //cy.title()
         //    .should('include', 'ion ? Portfolio ? * ion AForTesting')
         //    .and
-        cy.get('a[class="c-button"]').should('be.visible')
+               cy.get('a[class="c-button"]').should('be.visible')
 
     })
 
 })
 
-//    it("Tests - Delete Portfolio", () => {
+/*    it("Tests - Delete Portfolio", () => {
         
 
-//        cy.portfolioDelete(portfolioName);
+        cy.portfolioDelete(portfolioName);
 
-//        cy.contains(portfolioName.namePortfolio)
-//            .should('exist')
-//    })
-//})
+       cy.contains(portfolioName.namePortfolio)
+           .should('exist')
+    })
+})*/
 
 describe("Tests - Campaign Page", () => {
     it("Tests - Create a new Campaign", () => {
