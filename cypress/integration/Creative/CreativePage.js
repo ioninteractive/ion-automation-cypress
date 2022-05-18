@@ -1,7 +1,7 @@
 /// <reference types="Cypress"/>
 
 const faker = require('faker')
-
+//Creative
 describe("Tests - Creative Page", () => {
     it.only("Tests - Create a new Creative using a quick start", () => {
         const creativeName = {
