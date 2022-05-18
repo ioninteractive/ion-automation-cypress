@@ -13,14 +13,14 @@ Cypress.Commands.add('portfolioCreate', portfolioName => {
     cy.get("#inLabel").type(portfolioName.namePortfolio)
     cy.get("#inDescription").type(portfolioName.portfolioDescription)
     cy.get("#Submit1").click()
-  
+
 })
 
 Cypress.Commands.add('portfolioEdit', portfolioEditName => {
 
     cy.loginEmail()
     cy.visit('Admin/portfolios')
-    
+
     cy.xpath('(//a[@class="txt-title-link"])[1]')
         .click()
     cy.get('a[class="c-button"]')
