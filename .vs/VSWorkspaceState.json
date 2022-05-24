@@ -5,6 +5,7 @@
     "\\cypress\\integration",
     "\\cypress\\integration\\Login",
     "\\cypress\\integration\\Portfolio",
+    "\\cypress\\integration\\Creative",
     "\\cypress\\support"
   ],
   "SelectedNode": "\\cypress.env.json",
