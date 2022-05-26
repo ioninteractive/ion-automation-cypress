@@ -22,16 +22,49 @@ Cypress.Commands.add('newCreative', creativeName => {
 Cypress.Commands.add('editCreative', editCreative => {
 
     cy.loginEmail()
-    cy.visit('/Admin/Creative/1519')
+    cy.visit('/Admin/Creative/1959')
 
-    cy.get('a[href="/Admin/Campaigns/EditPath/1837"]').click()
+    cy.get('a[href="/Admin/Campaigns/EditPath/2259"]').click()
 
-    cy.get("#Label").type(editCreative.creativeEdit)
-    cy.get("#Description").type(editCreative.creativeDescription)
-    cy.get("#FriendlyPathURL").type("/test-rules-Automation")
+    
+    cy.get("#Label").clear().type(editCreative.creativeEdit)
+    cy.get("#Description").clear().type(editCreative.creativeDescription)
+    cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('select').eq(0).select(2).should('have.id', 'AutoPopulateDataScope')
     cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
+
+})
+
+Cypress.Commands.add('copyCreative', copyCreative => {
+
+    cy.loginEmail()
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('#tab_addcreative_copy').click()
+
+    cy.get('select').eq(4).select(2).should('have.id', 'creatives')
+    cy.get("#inLabel").type(copyCreative.creativeCopy)
+    cy.get("#Description").type(copyCreative.creativeCopyDescription)
+    cy.get("#Create").click()
+
+})
+
+Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
+
+    cy.loginEmail()
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('#tab_addcreative_scratch').click()
+
+    cy.get('#apptix').click()
+    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.get("#inLabel").type(startCreativeFromScratch.creativeFromScratch)
+    cy.get("#Description").type(startCreativeFromScratch.creativeFromScratchDescription)
+    cy.get("#Create").click()
 
 })
