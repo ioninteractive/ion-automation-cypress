@@ -59,3 +59,21 @@ describe("Tests - Creative Page", () => {
             .should('exist')
     })
 })
+
+describe("Tests - Creative Page", () => {
+    it.only("Tests - Deleting a creative created using a quick start", () => {
+        const deletingNewCreative = {
+            newCreativeDeletedName: faker.random.words(1),
+            creativeDeletedDescription: faker.random.words(10)
+        }
+
+        cy.deleteNewCreative(deletingNewCreative);
+
+        
+
+        cy.contains(deletingNewCreative.newCreativeDeletedName)
+            .should('not.exist')
+
+
+    })
+})

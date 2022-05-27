@@ -15,7 +15,8 @@
   "author": "Pedro Faria",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.4.0",
+    "chai": "^4.3.6",
+    "cypress": "^9.7.0",
     "cypress-xpath": "^1.6.2",
     "faker": "^5.5.3"
   }
