@@ -61,7 +61,7 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
-    it.only("Tests - Deleting a creative created using a quick start", () => {
+    it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
             newCreativeDeletedName: faker.random.words(1),
             creativeDeletedDescription: faker.random.words(10)
