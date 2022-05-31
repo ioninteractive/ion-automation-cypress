@@ -26,7 +26,7 @@ Cypress.Commands.add('editCreative', editCreative => {
 
     cy.get('a[href="/Admin/Campaigns/EditPath/2259"]').click()
 
-    
+
     cy.get("#Label").clear().type(editCreative.creativeEdit)
     cy.get("#Description").clear().type(editCreative.creativeDescription)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
@@ -68,3 +68,27 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
     cy.get("#Create").click()
 
 })
+
+Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
+
+    cy.loginEmail()
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
+    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
+    cy.get('[id=select-qscat146-13474]').click({ force: true })
+
+    cy.get("#inLabel").type(deletingNewCreative.newCreativeDeletedName)
+    cy.get("#Description").type(deletingNewCreative.creativeDeletedDescription)
+    cy.get("#Create").click()
+
+    cy.wait(500)
+
+    cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
+    cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
+    cy.wait(500)
+    cy.get("#formDeleteSubmit").click({ force: true })
+})
+
+
