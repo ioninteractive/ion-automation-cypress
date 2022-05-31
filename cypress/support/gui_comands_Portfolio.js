@@ -26,8 +26,10 @@ Cypress.Commands.add('portfolioEdit', portfolioEditName => {
     cy.get('a[class="c-button"]')
         .contains('Edit portfolio')
         .click()
-    cy.get("#inLabel").type(portfolioEditName.nameEditPortfolio)
-    cy.get("#inDescription").type(portfolioEditName.portfolioEditDescription)
+    cy.get("#inLabel").clear()
+        .type(portfolioEditName.nameEditPortfolio)
+    cy.get("#inDescription").clear()
+        .type(portfolioEditName.portfolioEditDescription)
     cy.get("#Submit1").click()
 
     //to do setando novamente o valor inicial
