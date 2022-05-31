@@ -1,7 +1,6 @@
 /// <reference types="Cypress"/>
 require('cypress-xpath')
 
-const { should } = require('chai')
 const faker = require('faker')
 
 Cypress.Commands.add('newCreative', creativeName => {
@@ -83,17 +82,13 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
     cy.get("#inLabel").type(deletingNewCreative.newCreativeDeletedName)
     cy.get("#Description").type(deletingNewCreative.creativeDeletedDescription)
     cy.get("#Create").click()
-    
+
     cy.wait(500)
-    
+
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
     cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
     cy.wait(500)
     cy.get("#formDeleteSubmit").click({ force: true })
-
-
-
-
 })
 
 
