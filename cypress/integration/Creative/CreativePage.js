@@ -69,7 +69,7 @@ describe("Tests - Creative Page", () => {
 
         cy.deleteNewCreative(deletingNewCreative);
 
-        
+
 
         cy.contains(deletingNewCreative.newCreativeDeletedName)
             .should('not.exist')
@@ -77,3 +77,82 @@ describe("Tests - Creative Page", () => {
 
     })
 })
+
+/**
+ * This was created only to delete a creative!
+ * Creative with preview and without preview
+ *  
+ */
+
+describe("Tests - Creative Page", () => {
+    it("Tests - To delete a creative, only.", () => {
+
+        for (let i = 0; i < 3; i++) {
+
+            /*cy.loginEmail()
+            cy.visit('Admin/Campaigns/Campaign/291')
+
+            //with icon preview
+
+            //cy.xpath('(//a[@class="path_preview"])[1]').should('exist')
+
+            cy.xpath('(//a[@class="txt-title-link"])[1]').click()
+            cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
+            cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
+            cy.wait(500)
+            cy.get("#formDeleteSubmit").click({ force: true })
+
+
+            //without icon preview
+
+            //cy.contains('azure').click({ force: true })
+
+            cy.xpath('(//a[@class="txt-title-link"])[1]').click()
+            cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click()
+            cy.xpath('(//a[@class="c-button"])[4]').click({ force: true })
+            cy.wait(500)
+            cy.get("#formDeleteSubmit").click({ force: true })*/
+
+            //cy.contains('azure').should('not.exist')
+
+        }
+
+    })
+
+})
+
+describe("Tests - Creative Page", () => {
+    it("Tests - Edit the creative after deleting it.", () => {
+        const editCreativeAndDelete = {
+            creativeEditDelete: faker.random.words(2),
+            creativeDeleteDescription: faker.random.words(10)
+        }
+
+        cy.editCreativeAndDelete(editCreativeAndDelete);
+
+        cy.contains(editCreativeAndDelete.creativeEditDelete)
+            .should('not.exist')
+
+
+        cy.get("#inLabel").type('Creative to edit and delete it')
+        cy.get("#Description").type('Creative to edit and delete it')
+        cy.get("#Create").click()
+    })
+})
+
+describe("Tests - Creative Page", () => {
+    it("Tests - Delete a new creative started from scratch", () => {
+        const deleteCreativeStartFromScratch = {
+            deleteCreativeFromScratchDescription: faker.random.words(10)
+        }
+
+        cy.deleteCreativeStartFromScratch(deleteCreativeStartFromScratch);
+
+        cy.contains('Creative Start From Scratch')
+            .should('not.exist')
+    })
+})
+
+
+
+
