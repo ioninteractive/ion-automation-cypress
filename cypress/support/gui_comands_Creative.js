@@ -31,12 +31,8 @@ Cypress.Commands.add('editCreative', editCreative => {
     cy.get("#Description").clear().type(editCreative.creativeDescription)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('select').eq(0).select(2).should('have.id', 'AutoPopulateDataScope')
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').click
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').clear
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation1</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').click
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').clear
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.xpath('(//span[@style="padding-right: 0.1px;"])[1]').type("<script>Test automation1</script>")
+    cy.xpath('(//span[@style="padding-right: 0.1px;"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
 
 })
@@ -93,7 +89,7 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
     cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
     cy.wait(500)
-    cy.get("#formDeleteSubmit").click({ force: true })
+    cy.get('#formDeleteSubmit').click({ force: true })
 })
 
 
@@ -111,15 +107,12 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
     cy.get("#Description").clear().type(editCreativeAndDelete.creativeDeleteDescription)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('select').eq(0).select(2).should('have.id', 'AutoPopulateDataScope')
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').click
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').clear
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation1</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').click
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').clear
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.xpath('(//span[@style="padding-right: 0.1px;"])[1]').type("<script>Test automation1</script>")
+    cy.xpath('(//span[@style="padding-right: 0.1px;"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
 
-    cy.xpath('(//a[@class="c-button"])[4]').click({ force: true })
+    cy.xpath('(//button[@type="button"])[8]').click({ force: true })
+    cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
     cy.wait(500)
     cy.get("#formDeleteSubmit").click({ force: true })
 
@@ -153,3 +146,50 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
 
 
 })
+
+Cypress.Commands.add('duplicateCreative', duplicateCreative => {
+
+    /*cy.loginEmail()
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.xpath('(//a[@class="txt-title-link"])[1]').click()
+
+    cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
+    cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').focused()
+    cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').click({ force: true })
+
+
+    cy.get('#portfolios').should('be.visible').click
+    cy.get('select').eq(0).select('Regression test').should('have.value', '106')
+    cy.get('#campaigns').click
+    cy.get('select').eq(1).select('Regression test campaign').should('have.value', '291')
+    cy.get('#creativeName').clear().type(duplicateCreative.creativeName)
+   
+    
+    cy.xpath('(//button[@data-action="confirmDuplicateCreative"])').should('be.visible').click
+    cy.wait(500)
+    cy.xpath('//h3[@class="h-mb-0"]').should('have.text', 'Duplication process was done')
+    cy.xpath('//a[contains(text(),"Copy")]').click
+
+
+
+
+
+
+
+
+
+    cy.xpath('(//button[@type="button"])[8]').click({ force: true })
+    cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
+    cy.wait(500)
+    cy.get("#formDeleteSubmit").click({ force: true })
+
+    //creating a new creative to delete
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
+    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
+    cy.get('[id=select-qscat146-13474]').click({ force: true })*/
+
+})
+
+
