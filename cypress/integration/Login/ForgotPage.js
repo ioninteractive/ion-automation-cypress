@@ -37,7 +37,7 @@ describe("Tests Login Page - Forgot your password", () => {
     it("Fill in a federated userID and reset the password.", () => {
         cy.forgotPassword()
 
-        cy.get('#txtuserid').type("pedro.faria@rockcontent.com")
+        cy.get('#txtuserid').type("ops@scribblelive.com")
         cy.get('button[class="reset-request-submit"]').click()
 
         cy.get('label.reset-success-title')
