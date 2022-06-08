@@ -37,21 +37,18 @@ Cypress.Commands.add('portfolioEdit', portfolioEditName => {
         .contains('Edit portfolio')
         .click()
     cy.get("#inLabel").clear()
-    cy.get("#inLabel").type('* ion AForTesting')
+    cy.get("#inLabel").type('* ion Automation')
     cy.get("#Submit1").click()
 
 })
 
 
+Cypress.Commands.add('portfolioDelete', () => {
 
-Cypress.Commands.add('portfolioDelete', portfolioName => {
-
-
-    //cy.get('a:contains(Portfolios)').click()
-
-    //cy.get("#inLabel").type(portfolioName.namePortfolio)
-    //cy.get("#inDescription").type(portfolioName.portfolioDescription)
-    //cy.get("#Submit1").click()
+    cy.loginEmail()
+    cy.visit('Admin/portfolios')
+    cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
+    cy.get('#formDeleteSubmit').click()
 
 })
 
@@ -60,7 +57,8 @@ Cypress.Commands.add('portfolioDelete', portfolioName => {
 Cypress.Commands.add('campaignCreate', campaignName => {
 
     cy.loginEmail()
-    cy.visit('Admin/portfolios/49')
+    cy.xpath('//a[@class="txt-title-link"][text()="* ion Automation"]')
+        .click()
 
     cy.get('a[class="c-button c-button--primary"')
         .contains('New campaign')
@@ -77,7 +75,8 @@ Cypress.Commands.add('campaignCreate', campaignName => {
 
 Cypress.Commands.add('campaignDelete', () => {
     cy.loginEmail()
-    cy.visit('Admin/portfolios/49')
+    cy.xpath('//a[@class="txt-title-link"][text()="* ion Automation"]')
+        .click()
 
     cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
     cy.get('#formDeleteSubmit').click()

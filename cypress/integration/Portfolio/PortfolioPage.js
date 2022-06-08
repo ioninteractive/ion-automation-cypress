@@ -5,7 +5,7 @@ const faker = require('faker')
 describe("Tests - Portfolio Page", () => {
     it("Tests - Create a new Portfolio", () => {
         const portfolioName = {
-            namePortfolio: faker.random.words(1),
+            namePortfolio: '* ion Automation',
             portfolioDescription: faker.random.words(10)
         }
 
@@ -24,21 +24,10 @@ describe("Tests - Portfolio Page", () => {
         //cy.title()
         //    .should('include', 'ion ? Portfolio ? * ion AForTesting')
         //    .and
-               cy.get('a[class="c-button"]').should('be.visible')
+        cy.get('a[class="c-button"]').should('be.visible')
 
     })
-
-})
-
-/*    it("Tests - Delete Portfolio", () => {
-        
-
-        cy.portfolioDelete(portfolioName);
-
-       cy.contains(portfolioName.namePortfolio)
-           .should('exist')
-    })
-})*/
+}) 
 
 describe("Tests - Campaign Page", () => {
     it("Tests - Create a new Campaign", () => {
@@ -60,5 +49,16 @@ describe("Tests - Campaign Page", () => {
 
         cy.xpath('(//tr[@class="c-data-grid__row"])[1]')
             .should('not.exist')
+    })
+})
+
+
+describe("Tests - Delete Portfolio", () => {
+    it("Tests - Delete Portfolio", () => {
+
+        cy.portfolioDelete();
+
+        cy.get('h1:contains(Portfolios)')
+            .should('be.visible')
     })
 })
