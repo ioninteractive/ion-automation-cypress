@@ -111,7 +111,7 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
     cy.xpath('(//span[@style="padding-right: 0.1px;"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
 
-    cy.xpath('(//button[@type="button"])[8]').click({ force: true })
+    cy.xpath('(//button[@type="button"])[8])').click({ force: true })
     cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
     cy.wait(500)
     cy.get("#formDeleteSubmit").click({ force: true })
