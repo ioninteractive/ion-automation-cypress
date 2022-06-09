@@ -85,37 +85,16 @@ describe("Tests - Creative Page", () => {
  */
 
 describe("Tests - Creative Page", () => {
-    it("Tests - To delete a creative, only.", () => {
+    it("Tests - To delete a creative, only.", () =>{
 
-        for (let i = 0; i < 3; i++) {
+        /*for (let i = 0; i < 10 ; i++) {
 
-            /*cy.loginEmail()
+            cy.loginEmail()
             cy.visit('Admin/Campaigns/Campaign/291')
 
-            //with icon preview
-
-            //cy.xpath('(//a[@class="path_preview"])[1]').should('exist')
-
-            cy.xpath('(//a[@class="txt-title-link"])[1]').click()
-            cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
-            cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
-            cy.wait(500)
+            cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
             cy.get("#formDeleteSubmit").click({ force: true })
-
-
-            //without icon preview
-
-            //cy.contains('azure').click({ force: true })
-
-            cy.xpath('(//a[@class="txt-title-link"])[1]').click()
-            cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click()
-            cy.xpath('(//a[@class="c-button"])[4]').click({ force: true })
-            cy.wait(500)
-            cy.get("#formDeleteSubmit").click({ force: true })*/
-
-            //cy.contains('azure').should('not.exist')
-
-        }
+        }*/
 
     })
 
@@ -136,6 +115,7 @@ describe("Tests - Creative Page", () => {
 
         cy.get("#inLabel").type('Creative to edit and delete it')
         cy.get("#Description").type('Creative to edit and delete it')
+        //cy.get('select').last().select(9).should('have.value', 'en')
         cy.get("#Create").click()
     })
 })
@@ -153,6 +133,18 @@ describe("Tests - Creative Page", () => {
     })
 })
 
+describe("Tests - Creative Page", () => {
+    it.only("Tests - Duplicate a creative", () => {
+        /*const duplicateCreative = {
+            creativeName: 'Creative duplication'
+        }
+        
+        cy.duplicateCreative(duplicateCreative);
+
+        cy.contains(duplicateCreative.creativeName).should('exist')*/
+        
+    })
+})
 
 
 
