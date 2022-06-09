@@ -3,11 +3,11 @@
     "",
     "\\cypress",
     "\\cypress\\integration",
+    "\\cypress\\integration\\Creative",
     "\\cypress\\integration\\Login",
     "\\cypress\\integration\\Portfolio",
-    "\\cypress\\integration\\Creative",
     "\\cypress\\support"
   ],
-  "SelectedNode": "\\cypress.env.json",
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }
