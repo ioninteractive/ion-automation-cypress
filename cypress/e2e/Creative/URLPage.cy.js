@@ -20,7 +20,7 @@ describe("Tests - Create URL", () => {
 describe("Tests - Creative Page", () => {
     it.only("Tests - To delete a URL, only.", () => {
 
-        for (let i = 0; i < 5 ; i++) {
+        /*for (let i = 0; i < 5 ; i++) {
 
             cy.loginEmail()
             cy.visit('Admin/Campaigns/Campaign/291')
@@ -28,7 +28,7 @@ describe("Tests - Creative Page", () => {
 
             cy.xpath('/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[7]/a').wait(500).click({ force: true })
             cy.get("#formDeleteSubmit").click({ force: true })
-        }
+        }*/
 
     })
 
