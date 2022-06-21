@@ -85,9 +85,9 @@ describe("Tests - Creative Page", () => {
  */
 
 describe("Tests - Creative Page", () => {
-    it("Tests - To delete a creative, only.", () =>{
+    it("Tests - To delete a creative, only.", () => {
 
-        /*for (let i = 0; i < 10 ; i++) {
+        /*for (let i = 0; i < 12 ; i++) {
 
             cy.loginEmail()
             cy.visit('Admin/Campaigns/Campaign/291')
@@ -135,14 +135,18 @@ describe("Tests - Creative Page", () => {
 
 describe("Tests - Creative Page", () => {
     it.only("Tests - Duplicate a creative", () => {
-        /*const duplicateCreative = {
-            creativeName: 'Creative duplication'
+        const duplicateCreative = {
+            creativeName: faker.random.words(1)
         }
-        
+
         cy.duplicateCreative(duplicateCreative);
 
-        cy.contains(duplicateCreative.creativeName).should('exist')*/
+        cy.contains(duplicateCreative.creativeName).should('exist')
+
+        cy.clearCookie
+
         
+
     })
 })
 

@@ -156,38 +156,45 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
 
 Cypress.Commands.add('duplicateCreative', duplicateCreative => {
 
-    /*cy.loginEmail()
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.loginEmail()
+    cy.visit('Admin/Creative/1983')
 
-    cy.xpath('(//a[@class="txt-title-link"])[1]').click()
-
-    cy.xpath('(//button[@type="button"])[8]').trigger('force').click({ force: true })
-    cy.xpath('(//button[@class="c-button"])[7]').click({ force: true })
+    cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
+    cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').wait(1000).click({ force: true })
     
-    //cy.get('#portfolios').should('be.visible').click
-    cy.get('select').eq(0).select('Regression test').should('have.value', '106')
+    cy.get('select').eq(0).select('Regression test').should('be.visible').wait(1000).should('have.value', '106')
     cy.get('#campaigns').click
     cy.get('select').eq(1).select('Regression test campaign').should('have.value', '291')
     cy.get('#creativeName').clear().type(duplicateCreative.creativeName)
+    cy.xpath('//button[@data-action="confirmDuplicateCreative"]').should('be.visible').click({ force: true })
 
 
-    cy.xpath('(//button[@type="button"])[2]').should('be.visible').click({ force: true })
-    cy.wait(500)
-    cy.xpath('//h3[@class="h-mb-0"]').should('have.text', 'Duplication process was done')
-    cy.xpath('//a[contains(text(),"Copy")]').click
+    cy.wait(2000)
+    cy.contains(duplicateCreative.creativeName).click({ force: true })
 
-
-    cy.xpath('(//button[@type="button"])[8]').click({ force: true })
+    /*cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
     cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
     cy.wait(500)
-    cy.get("#formDeleteSubmit").click({ force: true })
-
-    //creating a new creative to delete
-    cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
-    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
-    cy.get('[id=select-qscat146-13474]').click({ force: true })*/
+    cy.get("#formDeleteSubmit").click({ force: true })*/
 
 })
+
+/*/// <reference types="Cypress"/>
+require('cypress-xpath')
+
+const faker = require('faker')
+
+Cypress.Commands.add('imageActionURL', creativeName => {
+
+    cy.loginEmail()
+    cy.visit('/Admin/Creative/1518')
+
+    cy.get("#buttonCreativePreview").click()
+    cy.xpath("//button[@class='c-button preview-button']").click
+    cy.scrollTo('bottom')
+    cy.get("#ball_it7Imrv6UE2fQMbbkKXNKQ").click()
+    cy.get("#ball_inneriCvIQOvUu3UuyOVIaConCg").click()
+
+})*/
 
 
