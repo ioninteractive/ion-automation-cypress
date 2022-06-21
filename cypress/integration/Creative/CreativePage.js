@@ -134,8 +134,8 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
-    it.only("Tests - Duplicate a creative", () => {
-        const duplicateCreative = {
+    it("Tests - Duplicate a creative", () => {
+        /*const duplicateCreative = {
             creativeName: faker.random.words(1)
         }
 
@@ -143,7 +143,7 @@ describe("Tests - Creative Page", () => {
 
         cy.contains(duplicateCreative.creativeName).should('exist')
 
-        cy.clearCookie
+        cy.clearCookie*/
 
         
 
