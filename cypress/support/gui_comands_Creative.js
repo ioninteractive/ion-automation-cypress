@@ -161,7 +161,7 @@ Cypress.Commands.add('duplicateCreative', duplicateCreative => {
 
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
     cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').wait(1000).click({ force: true })
-    
+
     cy.get('select').eq(0).select('Regression test').should('be.visible').wait(1000).should('have.value', '106')
     cy.get('#campaigns').click
     cy.get('select').eq(1).select('Regression test campaign').should('have.value', '291')
@@ -196,5 +196,28 @@ Cypress.Commands.add('imageActionURL', creativeName => {
     cy.get("#ball_inneriCvIQOvUu3UuyOVIaConCg").click()
 
 })*/
+
+Cypress.Commands.add('createURL', createURL => {
+
+    cy.loginEmail()
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.xpath('//a[@data-region="url-button"]').click({ force: true })
+    cy.get('#inDomain').select(17).should('have.value', 'qa.postclickmarketing.com')
+    cy.get('#inSlashName').type(createURL.urlCreate)
+    cy.get('#inMediaType').select(1).should('have.value', 'BND')
+    cy.get('#inVehicle').select('Email').should('have.value', '10')
+    cy.get('#pt2715').click({ force: true })
+    cy.xpath('//input[@type="submit"]').click({ force: true })
+
+
+
+
+
+
+
+
+})
+
 
 
