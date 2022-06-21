@@ -143,6 +143,8 @@ describe("Tests - Creative Page", () => {
 
         cy.contains(duplicateCreative.creativeName).should('exist')
 
+        cy.clearCookie
+
         
 
     })
