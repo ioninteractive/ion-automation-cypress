@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress run",
+    "open": "cypress open"
   },
   "keywords": [
     "cypress",
@@ -16,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.3.6",
-    "cypress": "^9.7.0",
+    "cypress": "^10.1.0",
     "cypress-xpath": "^1.6.2",
     "faker": "^5.5.3"
   }
