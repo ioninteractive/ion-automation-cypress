@@ -15,7 +15,7 @@ Cypress.Commands.add('newCreative', creativeName => {
 
     cy.get("#inLabel").type(creativeName.nameCreative)
     cy.get("#Description").type(creativeName.creativeDescription)
-    //cy.get('select').last().select(9).should('have.value', 'en')
+    cy.get('select').last().select(9).should('have.value', 'en')
     cy.get("#Create").click()
 
 })
@@ -50,7 +50,7 @@ Cypress.Commands.add('copyCreative', copyCreative => {
     cy.get('select').eq(4).select(2).should('have.id', 'creatives')
     cy.get("#inLabel").type(copyCreative.creativeCopy)
     cy.get("#Description").type(copyCreative.creativeCopyDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select').eq(5).select(9).should('have.value', 'en')
     cy.get("#Create").click()
 
 })
@@ -68,7 +68,7 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.get("#inLabel").type(startCreativeFromScratch.creativeFromScratch)
     cy.get("#Description").type(startCreativeFromScratch.creativeFromScratchDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
     cy.get("#Create").click()
 
 })
@@ -86,7 +86,7 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
     cy.get("#inLabel").type(deletingNewCreative.newCreativeDeletedName)
     cy.get("#Description").type(deletingNewCreative.creativeDeletedDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
     cy.get("#Create").click()
 
     cy.wait(500)
@@ -113,7 +113,7 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
     cy.get('select').eq(0).select(9).should('have.value', 'en')
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').focused().type("<script>Test automation</script>")
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
     cy.wait(500)
@@ -143,7 +143,7 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.get("#inLabel").type('Creative Start From Scratch')
     cy.get("#Description").type(deleteCreativeStartFromScratch.deleteCreativeFromScratchDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
     cy.get("#Create").click()
 
     cy.contains('Creative Start From Scratch').click({ force: true })
@@ -209,13 +209,6 @@ Cypress.Commands.add('createURL', createURL => {
     cy.get('#inVehicle').select('Email').should('have.value', '10')
     cy.get('#pt2715').click({ force: true })
     cy.xpath('//input[@type="submit"]').click({ force: true })
-
-
-
-
-
-
-
 
 })
 

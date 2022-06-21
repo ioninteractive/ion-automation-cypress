@@ -70,7 +70,7 @@ describe("Tests - Creative Page", () => {
         cy.deleteNewCreative(deletingNewCreative);
 
 
-
+        cy.wait(1000)
         cy.contains(deletingNewCreative.newCreativeDeletedName)
             .should('not.exist')
 
@@ -87,14 +87,14 @@ describe("Tests - Creative Page", () => {
 describe("Tests - Creative Page", () => {
     it("Tests - To delete a creative, only.", () => {
 
-        /*for (let i = 0; i < 12 ; i++) {
+        for (let i = 0; i < 10 ; i++) {
 
             cy.loginEmail()
             cy.visit('Admin/Campaigns/Campaign/291')
 
             cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
             cy.get("#formDeleteSubmit").click({ force: true })
-        }*/
+        }
 
     })
 
@@ -145,7 +145,7 @@ describe("Tests - Creative Page", () => {
 
         cy.clearCookie
 
-        
+
 
     })
 })
