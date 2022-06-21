@@ -160,9 +160,9 @@ Cypress.Commands.add('duplicateCreative', duplicateCreative => {
     cy.visit('Admin/Creative/1983')
 
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
-    cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').wait(500).click({ force: true })
+    cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').wait(1000).click({ force: true })
     
-    cy.get('select').eq(0).select('Regression test').should('have.value', '106').should('be.visible').wait(500)
+    cy.get('select').eq(0).select('Regression test').should('be.visible').wait(500).should('have.value', '106')
     cy.get('#campaigns').click
     cy.get('select').eq(1).select('Regression test campaign').should('have.value', '291')
     cy.get('#creativeName').clear().type(duplicateCreative.creativeName)
