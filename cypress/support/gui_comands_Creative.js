@@ -30,9 +30,9 @@ Cypress.Commands.add('editCreative', editCreative => {
 
     cy.get("#Label").clear().type(editCreative.creativeEdit)
     cy.get("#Description").clear().type(editCreative.creativeDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select').eq(0).select(9).should('have.value', 'en')
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
-    cy.get('select').eq(0).select(2).should('have.id', 'AutoPopulateDataScope')
+    cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
     cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
@@ -110,9 +110,9 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
     cy.get("#Label").clear().type(editCreativeAndDelete.creativeEditDelete)
     cy.get("#Description").clear().type(editCreativeAndDelete.creativeDeleteDescription)
-    //cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('select').eq(0).select(9).should('have.value', 'en')
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
-    cy.get('select').eq(0).select(2).should('have.id', 'AutoPopulateDataScope')
+    cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
     cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
