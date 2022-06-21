@@ -28,5 +28,6 @@ Welcome to Ion's automation test using Cypress.
 
 ### Who do I talk to? ###
 
-* [Pedro Faria](pedro.faria@rockcontent.com)
+* [Janaína Maciel](janaina.maciel@rockcontent.com)
 * [Caique Santana](caique.santana@rockcontent.com)
+### Pedro Faria (pedro.faria@rockcontent.com)###
