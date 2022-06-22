@@ -6,6 +6,9 @@ const faker = require('faker')
 Cypress.Commands.add('newCreative', creativeName => {
 
     cy.loginEmail()
+
+    //cy.xpath('//div[@class="sm-close"]').wait(500).click()
+
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -34,6 +37,7 @@ Cypress.Commands.add('editCreative', editCreative => {
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
     cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
+    cy.wait(500)
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
     cy.xpath("//input[@value='Save']").click()
 
@@ -160,7 +164,7 @@ Cypress.Commands.add('duplicateCreative', duplicateCreative => {
     cy.visit('Admin/Creative/1983')
 
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
-    cy.xpath('//button[@data-action="duplicateCreative"]').should('be.visible').wait(1000).click({ force: true })
+    cy.xpath('//button[@data-action="duplicateCreative"]').wait(1000).click({ force: true })
 
     cy.get('select').eq(0).select('Regression test').should('be.visible').wait(1000).should('have.value', '106')
     cy.get('#campaigns').click

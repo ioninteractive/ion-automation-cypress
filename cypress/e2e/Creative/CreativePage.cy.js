@@ -74,7 +74,6 @@ describe("Tests - Creative Page", () => {
         cy.contains(deletingNewCreative.newCreativeDeletedName)
             .should('not.exist')
 
-
     })
 })
 
@@ -144,8 +143,6 @@ describe("Tests - Creative Page", () => {
         cy.contains(duplicateCreative.creativeName).should('exist')
 
         cy.clearCookie
-
-
 
     })
 })

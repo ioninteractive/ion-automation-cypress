@@ -18,7 +18,7 @@ describe("Tests - Create URL", () => {
 })
 
 describe("Tests - Creative Page", () => {
-    it.only("Tests - To delete a URL, only.", () => {
+    it("Tests - To delete a URL, only.", () => {
 
         /*for (let i = 0; i < 5 ; i++) {
 
