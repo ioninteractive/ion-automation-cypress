@@ -223,9 +223,8 @@ Cypress.Commands.add('editURL', editURLInput => {
         cy.visit('Admin/Campaigns/Campaign/291#urls')
         const firstUrlFullXPath = '/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[1]/a'
         cy.xpath(firstUrlFullXPath).click({ force: true })
-        const editButtonFullXPath = '/html/body/div[4]/div[3]/div[1]/div[1]/div[2]/section[2]/div/a'
+        const editButtonFullXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[1]/div[2]/section[2]/div/a'
         cy.wait(2000).then(_ => cy.xpath(editButtonFullXPath).click({ force: true }))
-        // cy.xpath(editButtonFullXPath).click({ force: true })
     }
 
     visitFirstUrlEditPage()
