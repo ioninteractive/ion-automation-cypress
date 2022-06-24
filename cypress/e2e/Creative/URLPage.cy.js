@@ -27,8 +27,7 @@ describe("Tests - Creative Page", () => {
 
         //for (let i = 0; i < 10 ; i++) {
 
-            cy.loginEmail()
-            cy.visit('Admin/Campaigns/Campaign/291')
+            cy.visitCampaign()
             cy.xpath('//button[@data-for-region="urls"]').wait(500).click({ force: true })
 
             cy.xpath('/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[7]/a').wait(500).click({ force: true })

@@ -8,7 +8,7 @@ Cypress.Commands.add('newCreative', creativeName => {
 
     //cy.xpath('//div[@class="sm-close"]').wait(500).click()
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#qs_sources').select(0)
@@ -56,7 +56,7 @@ Cypress.Commands.add('editCreative', editCreative => {
 
 Cypress.Commands.add('copyCreative', copyCreative => {
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_copy').click()
@@ -71,7 +71,7 @@ Cypress.Commands.add('copyCreative', copyCreative => {
 
 Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_scratch').click()
@@ -89,7 +89,7 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
 //Tests - Delete a creative created using a quick start
 Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#qs_sources').select(1)
@@ -112,7 +112,7 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
 Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.xpath('(//a[@class="txt-title-link"])[1]').click()
     cy.xpath('//a[@class="c-button h-w-100"]').click()
@@ -141,7 +141,7 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
 Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromScratch => {
 
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_scratch').click()
@@ -163,15 +163,17 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
 })
 
 Cypress.Commands.add('duplicateCreative', duplicateCreative => {
+    cy.visitCampaign()
+    const firstCreativeXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[3]/section[1]/div[2]/table/tbody/tr[1]/td[2]/a'
+    cy.xpath(firstCreativeXPath).click({ force: true })
 
-    cy.visit('Admin/Creative/1983')
+    const actionsButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[2]/div/button'
+    cy.xpath(actionsButtonXPath).click({ force: true })
+    const duplicateCreativeButtonXPath = '//button[@data-action="duplicateCreative"]'
+    cy.xpath(duplicateCreativeButtonXPath).wait(1000).click({ force: true })
 
-    cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
-    cy.xpath('//button[@data-action="duplicateCreative"]').wait(1000).click({ force: true })
-
-    cy.get('select').eq(0).select('Regression test').should('be.visible').wait(1000).should('have.value', '106')
-    cy.get('#campaigns').click
-    cy.get('select').eq(1).select('Regression test campaign').should('have.value', '291')
+    cy.get('#portfolios').select(Cypress.env('portfolioName')).should('be.visible').wait(1000).should('have.value', Cypress.env('portfolioId'))
+    cy.get('#campaigns').select(Cypress.env('campaignName')).should('have.value', Cypress.env('campaignId'))
     cy.get('#creativeName').clear().type(duplicateCreative.creativeName)
     cy.xpath('//button[@data-action="confirmDuplicateCreative"]').should('be.visible').click({ force: true })
 
@@ -205,7 +207,7 @@ Cypress.Commands.add('imageActionURL', creativeName => {
 
 Cypress.Commands.add('createURL', input => {
     const { urlCreate, creativeId } = input
-    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.visitCampaign()
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
     cy.get('#inDomain').select(17)
@@ -221,7 +223,7 @@ Cypress.Commands.add('createURL', input => {
 Cypress.Commands.add('editURL', editURLInput => {
     const { urlName, isRedirectType301, seoType, isRespondentsAlwaysNew, description, defaultURL, sitemapPriority, mediaTypeIndex, vehicleIndex, domainIndex } = editURLInput
     const visitFirstUrlEditPage = () => {
-        cy.visit('Admin/Campaigns/Campaign/291#urls')
+        cy.visitCampaign()
         const firstUrlFullXPath = '/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[1]/a'
         cy.xpath(firstUrlFullXPath).click({ force: true })
         const editButtonFullXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[1]/div[2]/section[2]/div/a'

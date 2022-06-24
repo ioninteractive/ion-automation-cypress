@@ -105,7 +105,7 @@ describe("Tests - Creative Page", () => {
 
 
         //         cy.loginEmail()
-        //         cy.visit('Admin/Campaigns/Campaign/291')
+        //         cy.visitCampaign()
 
         //         cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
         //         cy.get("#formDeleteSubmit").click({ force: true })
@@ -160,6 +160,8 @@ describe("Tests - Creative Page", () => {
         cy.duplicateCreative(duplicateCreative);
 
         cy.get('span[class="c-breadcrumbs__item"]').contains(duplicateCreative.creativeName)
+        cy.contains(Cypress.env('portfolioName'))
+        cy.contains(Cypress.env('campaignName'))
     })
 })
 
