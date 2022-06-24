@@ -12,13 +12,13 @@ Cypress.Commands.add('newCreative', creativeName => {
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
-    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
-    cy.get('[id=select-qscat146-13474]').click({ force: true })
+    cy.get('#qs_sources').select(0)
+    cy.get('#qs_categories').select(5)
+    cy.get('#select-qscat133-11229').click({ force: true })
 
     cy.get("#inLabel").type(creativeName.nameCreative)
     cy.get("#Description").type(creativeName.creativeDescription)
-    cy.get('select').last().select(9).should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
 })
@@ -33,12 +33,18 @@ Cypress.Commands.add('editCreative', editCreative => {
 
     cy.get("#Label").clear().type(editCreative.creativeEdit)
     cy.get("#Description").clear().type(editCreative.creativeDescription)
-    cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
-    cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
-    cy.wait(500)
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.get('#AutoPopulateDataScope').select(2)
+    for (let i = 0; i < 30; i++) {
+        cy.xpath('(//textarea[@autocorrect="off"])[1]').clear({ force: true })
+    }
+    cy.xpath('(//textarea[@autocorrect="off"])[1]').type('<script>Test</script>')
+    for (let i = 0; i < 30; i++) {
+        cy.xpath('(//textarea[@autocorrect="off"])[2]').clear({ force: true })
+    }
+    cy.xpath('(//textarea[@autocorrect="off"])[2]').type('<script>Test</script>')
+
     cy.xpath("//input[@value='Save']").click()
 
 })
@@ -51,10 +57,10 @@ Cypress.Commands.add('copyCreative', copyCreative => {
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_copy').click()
 
-    cy.get('select').eq(4).select(2).should('have.id', 'creatives')
+    cy.get('#creatives').select(2)
     cy.get("#inLabel").type(copyCreative.creativeCopy)
     cy.get("#Description").type(copyCreative.creativeCopyDescription)
-    cy.get('select').eq(5).select(9).should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
 })
@@ -68,11 +74,11 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
     cy.get('#tab_addcreative_scratch').click()
 
     cy.get('#apptix').click()
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test2</script>")
     cy.get("#inLabel").type(startCreativeFromScratch.creativeFromScratch)
     cy.get("#Description").type(startCreativeFromScratch.creativeFromScratchDescription)
-    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
 })
@@ -84,13 +90,13 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
-    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
+    cy.get('#qs_sources').select(1)
+    cy.get('#qs_categories').select(5)
     cy.get('[id=select-qscat146-13474]').click({ force: true })
 
     cy.get("#inLabel").type(deletingNewCreative.newCreativeDeletedName)
     cy.get("#Description").type(deletingNewCreative.creativeDeletedDescription)
-    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
     cy.wait(500)
@@ -110,27 +116,25 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
     cy.xpath('(//a[@class="txt-title-link"])[1]').click()
     cy.xpath('//a[@class="c-button h-w-100"]').click()
 
-
-
     cy.get("#Label").clear().type(editCreativeAndDelete.creativeEditDelete)
     cy.get("#Description").clear().type(editCreativeAndDelete.creativeDeleteDescription)
-    cy.get('select').eq(0).select(9).should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
-    cy.get('select').eq(1).select(2).should('have.id', 'AutoPopulateDataScope')
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').focused().type("<script>Test automation</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.get('#AutoPopulateDataScope').select(2)
+    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test</script>")
     cy.xpath("//input[@value='Save']").click()
     cy.wait(500)
-    cy.xpath('(//button[@type="button"])[8]').click({ force: true })
-    cy.xpath('(//a[@class="c-button"])[6]').click({ force: true })
+    cy.xpath('//div[@data-region="creativeActions"]').click({ force: true })
+    cy.xpath('//a[contains(text(),"Delete")]').click({ force: true })
     cy.wait(500)
     cy.get("#formDeleteSubmit").click({ force: true })
 
-    //creating a new creative to delete
-    cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('select').eq(0).select(1).should('have.id', 'qs_sources')
-    cy.get('select').eq(1).select(5).should('have.id', 'qs_categories')
-    cy.get('[id=select-qscat146-13474]').click({ force: true })
+    // //creating a new creative to delete
+    // cy.get('a[class="c-button c-button--primary"]').click()
+    // cy.get('#qs_sources').select(1)
+    // cy.get('#qs_categories').select(5)
+    // cy.get('[id=select-qscat146-13474]').click({ force: true })
 
 })
 
@@ -143,11 +147,11 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
     cy.get('#tab_addcreative_scratch').click()
 
     cy.get('#apptix').click()
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test automation</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test automation2</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
+    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test2</script>")
     cy.get("#inLabel").type('Creative Start From Scratch')
     cy.get("#Description").type(deleteCreativeStartFromScratch.deleteCreativeFromScratchDescription)
-    cy.get('select#DefaultLanguage').select('English').should('have.value', 'en')
+    cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
     cy.contains('Creative Start From Scratch').click({ force: true })
@@ -207,10 +211,10 @@ Cypress.Commands.add('createURL', createURL => {
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
-    cy.get('#inDomain').select(17).should('have.value', 'qa.postclickmarketing.com')
+    cy.get('#inDomain').select(17)
     cy.get('#inSlashName').type(createURL.urlCreate)
-    cy.get('#inMediaType').select(1).should('have.value', 'BND')
-    cy.get('#inVehicle').select('Email').should('have.value', '10')
+    cy.get('#inMediaType').select(1)
+    cy.get('#inVehicle').select('Email')
     cy.get('#pt2715').click({ force: true })
     cy.xpath('//input[@type="submit"]').click({ force: true })
 
