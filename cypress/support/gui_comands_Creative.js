@@ -5,7 +5,6 @@ const faker = require('faker')
 
 Cypress.Commands.add('newCreative', creativeName => {
 
-    cy.loginEmail()
 
     //cy.xpath('//div[@class="sm-close"]').wait(500).click()
 
@@ -23,9 +22,15 @@ Cypress.Commands.add('newCreative', creativeName => {
 
 })
 
+Cypress.Commands.add('createEngagedCreative', input => {
+    const { creativeName } = input
+    cy.newCreative({ nameCreative: creativeName, creativeDescription: faker.random.words(10) });
+    const engageButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section/div[2]/div[1]/div/div/div/form/div/ul/li[2]/button'
+    cy.xpath(engageButtonXPath).click({ force: true })
+})
+
 Cypress.Commands.add('editCreative', editCreative => {
 
-    cy.loginEmail()
     cy.visit('/Admin/Creative/1983')
 
     cy.get('a[href="/Admin/Campaigns/EditPath/2283"]').click()
@@ -51,7 +56,6 @@ Cypress.Commands.add('editCreative', editCreative => {
 
 Cypress.Commands.add('copyCreative', copyCreative => {
 
-    cy.loginEmail()
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -67,7 +71,6 @@ Cypress.Commands.add('copyCreative', copyCreative => {
 
 Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
 
-    cy.loginEmail()
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -86,7 +89,6 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
 //Tests - Delete a creative created using a quick start
 Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
-    cy.loginEmail()
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -110,7 +112,6 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
 Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
-    cy.loginEmail()
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.xpath('(//a[@class="txt-title-link"])[1]').click()
@@ -140,7 +141,6 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
 Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromScratch => {
 
-    cy.loginEmail()
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -164,7 +164,6 @@ Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromSc
 
 Cypress.Commands.add('duplicateCreative', duplicateCreative => {
 
-    cy.loginEmail()
     cy.visit('Admin/Creative/1983')
 
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[2]').click({ force: true })
@@ -194,7 +193,6 @@ const faker = require('faker')
 
 Cypress.Commands.add('imageActionURL', creativeName => {
 
-    cy.loginEmail()
     cy.visit('/Admin/Creative/1518')
 
     cy.get("#buttonCreativePreview").click()
@@ -205,24 +203,23 @@ Cypress.Commands.add('imageActionURL', creativeName => {
 
 })*/
 
-Cypress.Commands.add('createURL', createURL => {
-
-    cy.loginEmail()
+Cypress.Commands.add('createURL', input => {
+    const { urlCreate, creativeId } = input
     cy.visit('Admin/Campaigns/Campaign/291')
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
     cy.get('#inDomain').select(17)
-    cy.get('#inSlashName').type(createURL.urlCreate)
+    cy.get('#inSlashName').type(urlCreate)
     cy.get('#inMediaType').select(1)
     cy.get('#inVehicle').select('Email')
-    cy.get('#pt2715').click({ force: true })
+    if(creativeId) {
+        cy.get(`#pt${creativeId}`).click({ force: true })
+    }
     cy.xpath('//input[@type="submit"]').click({ force: true })
-
 })
 
 Cypress.Commands.add('editURL', editURLInput => {
     const { urlName, isRedirectType301, seoType, isRespondentsAlwaysNew, description, defaultURL, sitemapPriority, mediaTypeIndex, vehicleIndex, domainIndex } = editURLInput
-    cy.loginEmail()
     const visitFirstUrlEditPage = () => {
         cy.visit('Admin/Campaigns/Campaign/291#urls')
         const firstUrlFullXPath = '/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[1]/a'

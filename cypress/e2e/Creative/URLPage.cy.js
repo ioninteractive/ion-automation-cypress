@@ -3,9 +3,13 @@
 const faker = require('faker')
 
 describe("Tests - Create URL", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Create a new URL", () => {
         const createURL = {
             urlCreate: faker.random.words(1),
+            creativeId: 2715
         }
 
         cy.createURL(createURL);
@@ -16,6 +20,9 @@ describe("Tests - Create URL", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - To delete a URL, only.", () => {
 
         //for (let i = 0; i < 10 ; i++) {
@@ -33,6 +40,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Edit URL", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     const inputs = [
         { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 0, vehicleIndex: 1, domainIndex: 5 },
         { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 2, vehicleIndex: 0, domainIndex: 2 },
@@ -43,5 +53,47 @@ describe("Tests - Edit URL", () => {
         it("Tests - Edit the first URL from URLs page", () => {
             cy.editURL(input)
         })
+    })
+})
+
+describe("Tests - Insert a creative to a URL", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    const inputs = [
+        { creativeWeight: 10 },
+        { creativeWeight: 5 }
+    ]
+
+    inputs.forEach(input => {
+        it("Tests - Create a URL and then add a engaged creative", () => {
+            const { creativeWeight } = input
+
+            cy.createEngagedCreative({ creativeName: faker.random.uuid() })
+            const getCreativeIdFromUrl = url => url.split('/').pop()
+            cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
+    
+            cy.createURL({ urlCreate: faker.random.uuid() })
+            cy.url().as('url')
+            
+            const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
+            addWeightToCreative()
+    
+            const revisitURL = () => cy.get('@url').then(url => cy.visit(url))
+            revisitURL()
+
+            cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+        })
+    })
+
+    it("Tests - Create a URL choosing an engaged creative", () => {
+        cy.createEngagedCreative({ creativeName: faker.random.uuid() })
+        const getCreativeIdFromUrl = url => url.split('/').pop()
+        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
+
+        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.random.uuid(), creativeId }))
+
+        const defaultWeight = 5
+        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
     })
 })
