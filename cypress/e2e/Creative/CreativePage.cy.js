@@ -99,7 +99,7 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
-    it.only("Tests - Edit the creative after deleting it.", () => {
+    it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
             creativeEditDelete: faker.random.words(2),
             creativeDeleteDescription: faker.random.words(10)
