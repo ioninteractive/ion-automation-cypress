@@ -3,6 +3,9 @@
 const faker = require('faker')
 
 describe("Tests - Portfolio Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Create a new Portfolio", () => {
         const portfolioName = {
             namePortfolio: '* ion Automation',
@@ -30,6 +33,9 @@ describe("Tests - Portfolio Page", () => {
 }) 
 
 describe("Tests - Campaign Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Create a new Campaign", () => {
         const campaignName = {
             nameCampaign: faker.random.words(1),
@@ -54,6 +60,9 @@ describe("Tests - Campaign Page", () => {
 
 
 describe("Tests - Delete Portfolio", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Delete Portfolio", () => {
 
         cy.portfolioDelete();
