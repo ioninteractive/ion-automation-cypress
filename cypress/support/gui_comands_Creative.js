@@ -15,8 +15,8 @@ Cypress.Commands.add('newCreative', creativeName => {
     cy.get('#qs_categories').select(5)
     cy.get('#select-qscat133-11229').click({ force: true })
 
-    cy.get("#inLabel").type(creativeName.nameCreative)
-    cy.get("#Description").type(creativeName.creativeDescription)
+    cy.get("#inLabel").type(creativeName.name)
+    cy.get("#Description").type(creativeName.description)
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
@@ -24,20 +24,22 @@ Cypress.Commands.add('newCreative', creativeName => {
 
 Cypress.Commands.add('createEngagedCreative', input => {
     const { creativeName } = input
-    cy.newCreative({ nameCreative: creativeName, creativeDescription: faker.random.words(10) });
+    cy.newCreative({ name: creativeName, description: faker.random.words(10) });
     const engageButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section/div[2]/div[1]/div/div/div/form/div/ul/li[2]/button'
     cy.xpath(engageButtonXPath).click({ force: true })
 })
 
 Cypress.Commands.add('editCreative', editCreative => {
+    cy.visitCampaign()
+    const firstCreativeXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[3]/section[1]/div[2]/table/tbody/tr[1]/td[2]/a'
+    cy.xpath(firstCreativeXPath).click({ force: true })
 
-    cy.visit('/Admin/Creative/1983')
+    const editButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[2]/a'
+    cy.xpath(editButtonXPath).click()
 
-    cy.get('a[href="/Admin/Campaigns/EditPath/2283"]').click()
 
-
-    cy.get("#Label").clear().type(editCreative.creativeEdit)
-    cy.get("#Description").clear().type(editCreative.creativeDescription)
+    cy.get("#Label").clear().type(editCreative.label)
+    cy.get("#Description").clear().type(editCreative.description)
     cy.get('#DefaultLanguage').select(9)
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('#AutoPopulateDataScope').select(2)
@@ -89,18 +91,7 @@ Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
 //Tests - Delete a creative created using a quick start
 Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
-    cy.visitCampaign()
-
-    cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('#qs_sources').select(1)
-    cy.get('#qs_categories').select(5)
-    cy.get('[id=select-qscat146-13474]').click({ force: true })
-
-    cy.get("#inLabel").type(deletingNewCreative.newCreativeDeletedName)
-    cy.get("#Description").type(deletingNewCreative.creativeDeletedDescription)
-    cy.get('#DefaultLanguage').select(9)
-    cy.get("#Create").click()
-
+    cy.newCreative(deletingNewCreative)
     cy.wait(500)
 
     cy.xpath('(//button[@class="c-button c-action-menu__trigger"])[3]').click()
@@ -112,19 +103,7 @@ Cypress.Commands.add('deleteNewCreative', deletingNewCreative => {
 
 Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
-    cy.visitCampaign()
-
-    cy.xpath('(//a[@class="txt-title-link"])[1]').click()
-    cy.xpath('//a[@class="c-button h-w-100"]').click()
-
-    cy.get("#Label").clear().type(editCreativeAndDelete.creativeEditDelete)
-    cy.get("#Description").clear().type(editCreativeAndDelete.creativeDeleteDescription)
-    cy.get('#DefaultLanguage').select(9)
-    cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
-    cy.get('#AutoPopulateDataScope').select(2)
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test</script>")
-    cy.xpath("//input[@value='Save']").click()
+    cy.editCreative(editCreativeAndDelete)
     cy.wait(500)
     cy.xpath('//div[@data-region="creativeActions"]').click({ force: true })
     cy.xpath('//a[contains(text(),"Delete")]').click({ force: true })
@@ -141,18 +120,7 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
 Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromScratch => {
 
-    cy.visitCampaign()
-
-    cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('#tab_addcreative_scratch').click()
-
-    cy.get('#apptix').click()
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test2</script>")
-    cy.get("#inLabel").type('Creative Start From Scratch')
-    cy.get("#Description").type(deleteCreativeStartFromScratch.deleteCreativeFromScratchDescription)
-    cy.get('#DefaultLanguage').select(9)
-    cy.get("#Create").click()
+    cy.startCreativeFromScratch(deleteCreativeStartFromScratch)
 
     cy.contains('Creative Start From Scratch').click({ force: true })
     cy.xpath('(//a[@class="c-button"])[4]').click({ force: true })

@@ -25,13 +25,13 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Edit the creative created before", () => {
         const editCreative = {
-            creativeEdit: faker.random.words(2),
-            creativeDescription: faker.random.words(10)
+            label: faker.random.words(2),
+            description: faker.random.words(10)
         }
 
         cy.editCreative(editCreative);
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.creativeEdit)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.label)
 
     })
 })
@@ -76,15 +76,15 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
-            newCreativeDeletedName: faker.random.words(1),
-            creativeDeletedDescription: faker.random.words(10)
+            name: faker.random.words(1),
+            description: faker.random.words(10)
         }
 
         cy.deleteNewCreative(deletingNewCreative);
 
 
         cy.wait(1000)
-        cy.contains(deletingNewCreative.newCreativeDeletedName)
+        cy.contains(deletingNewCreative.name)
             .should('not.exist')
 
     })
@@ -121,13 +121,12 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
-            creativeEditDelete: faker.random.words(2),
-            creativeDeleteDescription: faker.random.words(10)
+            label: faker.random.words(2),
+            description: faker.random.words(10)
         }
 
         cy.editCreativeAndDelete(editCreativeAndDelete);
-        cy.contains(editCreativeAndDelete.creativeEditDelete)
-            .should('not.exist')
+        cy.contains(editCreativeAndDelete.label).should('not.exist')
 
     })
 })
@@ -138,7 +137,8 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Delete a new creative started from scratch", () => {
         const deleteCreativeStartFromScratch = {
-            deleteCreativeFromScratchDescription: faker.random.words(10)
+            creativeFromScratch: 'Creative Start From Scratch',
+            creativeFromScratchDescription: faker.random.words(10)
         }
 
         cy.deleteCreativeStartFromScratch(deleteCreativeStartFromScratch);
