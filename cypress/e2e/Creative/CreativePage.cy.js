@@ -11,9 +11,7 @@ describe("Tests - Creative Page", () => {
 
         cy.newCreative(creativeName);
 
-        cy.contains(creativeName.nameCreative)
-            .should('exist')
-
+        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeName.nameCreative)
 
     })
 })
@@ -27,8 +25,8 @@ describe("Tests - Creative Page", () => {
 
         cy.editCreative(editCreative);
 
-        cy.contains(editCreative.creativeEdit)
-            .should('exist')
+        cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.creativeEdit)
+
     })
 })
 
@@ -41,8 +39,8 @@ describe("Tests - Creative Page", () => {
 
         cy.copyCreative(copyCreative);
 
-        cy.contains(copyCreative.creativeCopy)
-            .should('exist')
+        cy.get('span[class="c-breadcrumbs__item"]').contains(copyCreative.creativeCopy)
+
     })
 })
 
@@ -55,8 +53,8 @@ describe("Tests - Creative Page", () => {
 
         cy.startCreativeFromScratch(startCreativeFromScratch);
 
-        cy.contains(startCreativeFromScratch.creativeFromScratchDescription)
-            .should('exist')
+        cy.get('span[class="c-breadcrumbs__item"]').contains(startCreativeFromScratch.creativeFromScratch)
+
     })
 })
 
@@ -84,38 +82,33 @@ describe("Tests - Creative Page", () => {
  */
 
 describe("Tests - Creative Page", () => {
-    it("Tests - To delete a creative, only.", () => {
 
-        /*for (let i = 0; i < 10 ; i++) {
+    for (let i = 0; i < 30; i++) {
+        // it("Tests - To delete a creative, only.", () => {
 
-            cy.loginEmail()
-            cy.visit('Admin/Campaigns/Campaign/291')
 
-            cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
-            cy.get("#formDeleteSubmit").click({ force: true })
-        }*/
+        //         cy.loginEmail()
+        //         cy.visit('Admin/Campaigns/Campaign/291')
 
-    })
+        //         cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
+        //         cy.get("#formDeleteSubmit").click({ force: true })
 
+
+        // })
+    }
 })
 
 describe("Tests - Creative Page", () => {
-    it("Tests - Edit the creative after deleting it.", () => {
+    it.only("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
             creativeEditDelete: faker.random.words(2),
             creativeDeleteDescription: faker.random.words(10)
         }
 
         cy.editCreativeAndDelete(editCreativeAndDelete);
-
         cy.contains(editCreativeAndDelete.creativeEditDelete)
             .should('not.exist')
 
-
-        cy.get("#inLabel").type('Creative to edit and delete it')
-        cy.get("#Description").type('Creative to edit and delete it')
-        //cy.get('select').last().select(9).should('have.value', 'en')
-        cy.get("#Create").click()
     })
 })
 
@@ -140,12 +133,10 @@ describe("Tests - Creative Page", () => {
 
         cy.duplicateCreative(duplicateCreative);
 
-        cy.contains(duplicateCreative.creativeName).should('exist')
-
-        cy.clearCookie
-
+        cy.get('span[class="c-breadcrumbs__item"]').contains(duplicateCreative.creativeName)
     })
 })
+
 
 
 
