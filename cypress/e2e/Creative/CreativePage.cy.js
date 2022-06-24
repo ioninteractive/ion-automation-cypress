@@ -3,6 +3,9 @@
 const faker = require('faker')
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Create a new Creative using a quick start", () => {
         const creativeName = {
             nameCreative: faker.random.words(1),
@@ -17,6 +20,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Edit the creative created before", () => {
         const editCreative = {
             creativeEdit: faker.random.words(2),
@@ -31,6 +37,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Copy a page of creative", () => {
         const copyCreative = {
             creativeCopy: faker.random.words(2),
@@ -45,6 +54,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Create a new creative from scratch", () => {
         const startCreativeFromScratch = {
             creativeFromScratch: faker.random.words(2),
@@ -59,6 +71,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
             newCreativeDeletedName: faker.random.words(1),
@@ -82,7 +97,9 @@ describe("Tests - Creative Page", () => {
  */
 
 describe("Tests - Creative Page", () => {
-
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     for (let i = 0; i < 30; i++) {
         // it("Tests - To delete a creative, only.", () => {
 
@@ -99,6 +116,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
             creativeEditDelete: faker.random.words(2),
@@ -113,6 +133,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Delete a new creative started from scratch", () => {
         const deleteCreativeStartFromScratch = {
             deleteCreativeFromScratchDescription: faker.random.words(10)
@@ -126,6 +149,9 @@ describe("Tests - Creative Page", () => {
 })
 
 describe("Tests - Creative Page", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
     it("Tests - Duplicate a creative", () => {
         const duplicateCreative = {
             creativeName: faker.random.words(1)
