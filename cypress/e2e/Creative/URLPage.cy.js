@@ -8,8 +8,8 @@ describe("Tests - Create URL", () => {
     })
     it("Tests - Create a new URL", () => {
         const createURL = {
-            urlCreate: faker.random.words(1),
-            creativeId: 2715
+            urlCreate: faker.random.uuid(),
+            chooseFirstCreative: true
         }
 
         cy.createURL(createURL);
@@ -43,9 +43,9 @@ describe("Tests - Edit URL", () => {
         cy.loginEmail()
     })
     const inputs = [
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 2, vehicleIndex: 0, domainIndex: 2 },
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
+        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
+        { urlName: faker.random.uuid(), isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 },
+        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
     ]
 
     inputs.forEach(input => {

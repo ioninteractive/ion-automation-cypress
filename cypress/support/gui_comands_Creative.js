@@ -174,16 +174,20 @@ Cypress.Commands.add('imageActionURL', creativeName => {
 })*/
 
 Cypress.Commands.add('createURL', input => {
-    const { urlCreate, creativeId } = input
+    const { urlCreate, creativeId, chooseFirstCreative } = input
     cy.visitCampaign()
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
-    cy.get('#inDomain').select(17)
+    cy.get('#inDomain').select(Cypress.env('domainName'))
     cy.get('#inSlashName').type(urlCreate)
     cy.get('#inMediaType').select(1)
     cy.get('#inVehicle').select('Email')
     if(creativeId) {
         cy.get(`#pt${creativeId}`).click({ force: true })
+    }
+    if(chooseFirstCreative) {
+        const firstCreativeXPath = '/html/body/div[4]/div[3]/div[1]/form/section[2]/div/div[2]/ul/li[1]'
+        cy.xpath(firstCreativeXPath).click({ force: true })
     }
     cy.xpath('//input[@type="submit"]').click({ force: true })
 })
@@ -194,11 +198,15 @@ Cypress.Commands.add('editURL', editURLInput => {
         cy.visitCampaign()
         const firstUrlFullXPath = '/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[1]/a'
         cy.xpath(firstUrlFullXPath).click({ force: true })
+    }
+    const openEditPage = () => {
         const editButtonFullXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[1]/div[2]/section[2]/div/a'
         cy.wait(2000).then(_ => cy.xpath(editButtonFullXPath).click({ force: true }))
     }
 
+
     visitFirstUrlEditPage()
+    openEditPage()
 
     const editURL = () => {
         if (isRedirectType301) {
@@ -238,7 +246,8 @@ Cypress.Commands.add('editURL', editURLInput => {
     //save
     cy.get('#btn_ts_save_edit').click({ force: true })
 
-    visitFirstUrlEditPage()
+    cy.reload(true)
+    openEditPage()
     const assertURLWasEdited = () => {
         if (isRedirectType301) {
             cy.get('#inRedirect301Y').should('be.checked')
