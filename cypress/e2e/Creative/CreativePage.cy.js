@@ -8,13 +8,13 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new Creative using a quick start", () => {
         const creativeName = {
-            nameCreative: faker.random.words(1),
-            creativeDescription: faker.random.words(10)
+            name: faker.random.uuid(),
+            description: faker.random.words(10)
         }
 
         cy.newCreative(creativeName);
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeName.nameCreative)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeName.name)
 
     })
 })
@@ -25,7 +25,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Edit the creative created before", () => {
         const editCreative = {
-            label: faker.random.words(2),
+            label: faker.random.uuid(),
             description: faker.random.words(10)
         }
 
@@ -42,13 +42,13 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Copy a page of creative", () => {
         const copyCreative = {
-            creativeCopy: faker.random.words(2),
-            creativeCopyDescription: faker.random.words(10)
+            label: faker.random.uuid(),
+            description: faker.random.words(10)
         }
 
         cy.copyCreative(copyCreative);
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(copyCreative.creativeCopy)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(copyCreative.label)
 
     })
 })
@@ -59,13 +59,13 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new creative from scratch", () => {
         const startCreativeFromScratch = {
-            creativeFromScratch: faker.random.words(2),
-            creativeFromScratchDescription: faker.random.words(10)
+            label: faker.random.uuid(),
+            description: faker.random.words(10)
         }
 
         cy.startCreativeFromScratch(startCreativeFromScratch);
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(startCreativeFromScratch.creativeFromScratch)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(startCreativeFromScratch.label)
 
     })
 })
@@ -76,7 +76,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
-            name: faker.random.words(1),
+            name: faker.random.uuid(),
             description: faker.random.words(10)
         }
 
@@ -121,7 +121,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
-            label: faker.random.words(2),
+            label: faker.random.uuid(),
             description: faker.random.words(10)
         }
 
@@ -137,8 +137,8 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Delete a new creative started from scratch", () => {
         const deleteCreativeStartFromScratch = {
-            creativeFromScratch: 'Creative Start From Scratch',
-            creativeFromScratchDescription: faker.random.words(10)
+            label: faker.random.uuid(),
+            description: faker.random.words(10)
         }
 
         cy.deleteCreativeStartFromScratch(deleteCreativeStartFromScratch);
@@ -154,7 +154,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Duplicate a creative", () => {
         const duplicateCreative = {
-            creativeName: faker.random.words(1)
+            creativeName: faker.random.uuid()
         }
 
         cy.duplicateCreative(duplicateCreative);

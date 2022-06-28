@@ -3,8 +3,9 @@ require('cypress-xpath')
 
 const faker = require('faker')
 
-Cypress.Commands.add('newCreative', creativeName => {
+Cypress.Commands.add('newCreative', input => {
 
+    const { name, description } = input
 
     //cy.xpath('//div[@class="sm-close"]').wait(500).click()
 
@@ -15,8 +16,8 @@ Cypress.Commands.add('newCreative', creativeName => {
     cy.get('#qs_categories').select(5)
     cy.get('#select-qscat133-11229').click({ force: true })
 
-    cy.get("#inLabel").type(creativeName.name)
-    cy.get("#Description").type(creativeName.description)
+    cy.get("#inLabel").type(name)
+    cy.get("#Description").type(description)
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
@@ -56,7 +57,8 @@ Cypress.Commands.add('editCreative', editCreative => {
 
 })
 
-Cypress.Commands.add('copyCreative', copyCreative => {
+Cypress.Commands.add('copyCreative', input => {
+    const { label, description } = input
 
     cy.visitCampaign()
 
@@ -64,25 +66,25 @@ Cypress.Commands.add('copyCreative', copyCreative => {
     cy.get('#tab_addcreative_copy').click()
 
     cy.get('#creatives').select(2)
-    cy.get("#inLabel").type(copyCreative.creativeCopy)
-    cy.get("#Description").type(copyCreative.creativeCopyDescription)
+    cy.get("#inLabel").type(label)
+    cy.get("#Description").type(description)
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
 })
 
-Cypress.Commands.add('startCreativeFromScratch', startCreativeFromScratch => {
-
+Cypress.Commands.add('startCreativeFromScratch', input => {
+    const { label, description } = input
     cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_scratch').click()
 
-    cy.get('#apptix').click()
+    cy.xpath('/html/body/div[2]/div[3]/div[1]/form/div[1]/section[3]/div[1]/ul/li[1]').click()
     cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
     cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test2</script>")
-    cy.get("#inLabel").type(startCreativeFromScratch.creativeFromScratch)
-    cy.get("#Description").type(startCreativeFromScratch.creativeFromScratchDescription)
+    cy.get("#inLabel").type(label)
+    cy.get("#Description").type(description)
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 
@@ -118,11 +120,11 @@ Cypress.Commands.add('editCreativeAndDelete', editCreativeAndDelete => {
 
 })
 
-Cypress.Commands.add('deleteCreativeStartFromScratch', deleteCreativeStartFromScratch => {
+Cypress.Commands.add('deleteCreativeStartFromScratch', input => {
+    const { label, description } = input
+    cy.startCreativeFromScratch({ label, description })
 
-    cy.startCreativeFromScratch(deleteCreativeStartFromScratch)
-
-    cy.contains('Creative Start From Scratch').click({ force: true })
+    cy.contains(label).click({ force: true })
     cy.xpath('(//a[@class="c-button"])[4]').click({ force: true })
     cy.wait(500)
     cy.get("#formDeleteSubmit").click({ force: true })
