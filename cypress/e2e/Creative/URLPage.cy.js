@@ -73,14 +73,12 @@ describe("Tests - Insert a creative to a URL", () => {
             cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
     
             cy.createURL({ urlCreate: faker.random.uuid() })
-            cy.url().as('url')
             
             const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
             addWeightToCreative()
     
-            const revisitURL = () => cy.get('@url').then(url => cy.visit(url))
-            revisitURL()
-
+            cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+            cy.reload(true)
             cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
         })
     })
@@ -93,6 +91,8 @@ describe("Tests - Insert a creative to a URL", () => {
         cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.random.uuid(), creativeId }))
 
         const defaultWeight = 5
+        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
+        cy.reload(true)
         cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
     })
 })
