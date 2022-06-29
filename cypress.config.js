@@ -7,6 +7,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'https://qa.postclickmarketing.com/',
+    baseUrl: 'https://qaautomation.postclickmarketing.com/'
+    // baseUrl: 'https://qa.postclickmarketing.com/'
   },
 })

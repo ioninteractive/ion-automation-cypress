@@ -8,8 +8,8 @@ describe("Tests - Create URL", () => {
     })
     it("Tests - Create a new URL", () => {
         const createURL = {
-            urlCreate: faker.random.words(1),
-            creativeId: 2715
+            urlCreate: faker.random.uuid(),
+            chooseFirstCreative: true
         }
 
         cy.createURL(createURL);
@@ -27,8 +27,7 @@ describe("Tests - Creative Page", () => {
 
         //for (let i = 0; i < 10 ; i++) {
 
-            cy.loginEmail()
-            cy.visit('Admin/Campaigns/Campaign/291')
+            cy.visitCampaign()
             cy.xpath('//button[@data-for-region="urls"]').wait(500).click({ force: true })
 
             cy.xpath('/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[7]/a').wait(500).click({ force: true })
@@ -44,9 +43,9 @@ describe("Tests - Edit URL", () => {
         cy.loginEmail()
     })
     const inputs = [
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 0, vehicleIndex: 1, domainIndex: 5 },
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 2, vehicleIndex: 0, domainIndex: 2 },
-        { urlName: `${faker.random.words(1)}-${faker.random.words(1)}`, isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
+        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
+        { urlName: faker.random.uuid(), isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 },
+        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
     ]
 
     inputs.forEach(input => {
@@ -74,14 +73,12 @@ describe("Tests - Insert a creative to a URL", () => {
             cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
     
             cy.createURL({ urlCreate: faker.random.uuid() })
-            cy.url().as('url')
             
             const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
             addWeightToCreative()
     
-            const revisitURL = () => cy.get('@url').then(url => cy.visit(url))
-            revisitURL()
-
+            cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+            cy.reload(true)
             cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
         })
     })
@@ -94,6 +91,8 @@ describe("Tests - Insert a creative to a URL", () => {
         cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.random.uuid(), creativeId }))
 
         const defaultWeight = 5
+        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
+        cy.reload(true)
         cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
     })
 })
