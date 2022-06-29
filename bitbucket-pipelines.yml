@@ -3,7 +3,7 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 
-image: cypress/base:latest
+image: cypress/browsers:node12.14.1-chrome85-ff81
 
 pipelines:
   default:
