@@ -104,7 +104,6 @@ describe("Tests - Creative Page", () => {
         // it("Tests - To delete a creative, only.", () => {
 
 
-        //         cy.loginEmail()
         //         cy.visitCampaign()
 
         //         cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
