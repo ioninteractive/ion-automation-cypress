@@ -24,4 +24,17 @@ describe("Tests - Widget Page", () => {
 
         cy.createWidget(input)
     })
+    it("Tests - Create and delete a widget", () => {
+        const name = faker.random.uuid()
+        const category = faker.random.uuid()
+        const input = {
+            name,
+            category,
+            code: 'some-code',
+            variables: ['variable1', 'variable2']
+        }
+
+        cy.createWidget(input)
+        cy.deleteWidget({ name, category })
+    })
 })

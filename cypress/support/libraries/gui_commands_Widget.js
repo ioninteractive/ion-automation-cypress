@@ -1,3 +1,5 @@
+/// <reference types="Cypress"/>
+
 Cypress.Commands.add('visitWidgets', () => {
     cy.visit('/Admin/Libraries/Widgets')
 })
@@ -47,4 +49,14 @@ Cypress.Commands.add('createWidget', input => {
         cy.xpath(variableLabelInputXPath).should('have.text', `${variable}-label`)
         cy.contains(`##${variable}`)
     });
+})
+
+Cypress.Commands.add('deleteWidget', input => {
+    const { name, category } = input
+    cy.visitWidgets()
+    cy.contains(category).click()
+    const clickOnDeleteButton = () => cy.contains(name).parent().siblings().last().children().first().click()
+    clickOnDeleteButton()
+    cy.get('#formDeleteSubmit').click()
+    cy.contains(name).should('not.exist')
 })
