@@ -1,4 +1,5 @@
 /// <reference types="Cypress"/>
+const faker = require('faker')
 
 Cypress.Commands.add('visitFormsCategories', () => {
     const librariesMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[3]'
@@ -43,5 +44,29 @@ Cypress.Commands.add('editFormCategory', input => {
 
     cy.contains(category).click()
     cy.contains(category).should('exist')
+    cy.contains(description).should('exist')
+})
+
+Cypress.Commands.add('createForm', input => {
+    const { label, description } = input
+
+    const categoryData = { category: faker.datatype.uuid(), description: faker.random.words(10) }
+    cy.createFormCategory(categoryData)
+    const visitCategory = () => {
+        cy.visitFormsCategories()
+        cy.contains(categoryData.category).click()
+    }
+    visitCategory()
+
+    const newFormButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section[2]/nav/a[2]'
+    cy.xpath(newFormButtonXPath).click()
+    cy.get('#Name').type(label)
+    cy.get('#Description').type(description)
+    const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/section[2]/form/div[16]/input'
+    cy.xpath(saveButtonXPath).click()
+
+    visitCategory()
+    cy.contains(label).click()
+    cy.contains(label).should('exist')
     cy.contains(description).should('exist')
 })
