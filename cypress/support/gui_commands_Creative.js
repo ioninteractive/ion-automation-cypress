@@ -7,7 +7,6 @@ Cypress.Commands.add('newCreative', input => {
 
     const { name, description } = input
 
-    //cy.xpath('//div[@class="sm-close"]').wait(500).click()
 
     cy.visitCampaign()
 
