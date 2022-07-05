@@ -157,6 +157,20 @@ Cypress.Commands.add('duplicateCreative', duplicateCreative => {
 
 })
 
+Cypress.Commands.add('pageLanguage', languagePage => {
+
+    cy.visit('Admin/Campaigns/Campaign/291')
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('#qs_sources').select(0)
+    cy.get('#qs_categories').select(5)
+    cy.get('#select-qscat133-11229').click({ force: true })
+
+    cy.get("#inLabel").type(languagePage.nameCreative)
+    cy.get("#Description").type(languagePage.creativeDescription)
+    cy.get('#DefaultLanguage').select(9)
+})
+
 /*/// <reference types="Cypress"/>
 require('cypress-xpath')
 
