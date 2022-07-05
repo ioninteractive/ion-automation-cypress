@@ -93,3 +93,32 @@ Cypress.Commands.add('editForm', input => {
     cy.contains(label).should('exist')
     cy.contains(description).should('exist')
 })
+
+Cypress.Commands.add('addFormField', input => {
+    const { category, form, dataFieldCategoryIndex, dataFieldIndex } = input
+    const visitForm = () => {
+        cy.visitFormsCategories()
+        cy.contains(category).click()
+        cy.contains(form).click()
+    }
+    visitForm()
+
+    const newFormFieldButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section[2]/nav/a'
+    cy.xpath(newFormFieldButtonXPath).click()
+
+    cy.xpath(`//*[@id="DataFieldCategory"]/option[${dataFieldCategoryIndex + 1}]`).then(option => option.text()).as('expectedDataFieldCategory')
+    cy.get('#DataFieldCategory').select(dataFieldCategoryIndex)
+    cy.xpath(`//*[@id="DataField"]/option[${dataFieldIndex + 1}]`).then(option => option.text()).as('expectedDataField')
+    cy.get('#DataField').select(dataFieldIndex)
+
+    const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/form/div/input'
+    cy.xpath(saveButtonXPath).click()
+
+    visitForm()
+
+    cy.get('@expectedDataField').then(expectedDataField => {
+        cy.contains(expectedDataField).last().click()
+        cy.get('#DataField option:selected').should('have.text', expectedDataField)
+        cy.get('@expectedDataFieldCategory').then(expectedDataFieldCategory => cy.get('#DataFieldCategory option:selected').should('have.text', expectedDataFieldCategory))
+    })
+})
