@@ -17,12 +17,6 @@ describe("Tests - Creative Page", () => {
         cy.get('span[class="c-breadcrumbs__item"]').contains(creativeName.name)
 
     })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
     it("Tests - Edit the creative created before", () => {
         const editCreative = {
             label: faker.random.uuid(),
@@ -35,12 +29,6 @@ describe("Tests - Creative Page", () => {
         cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.label)
 
     })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
     it("Tests - Copy a page of creative", () => {
         const copyCreative = {
             label: faker.random.uuid(),
@@ -52,12 +40,6 @@ describe("Tests - Creative Page", () => {
         cy.get('span[class="c-breadcrumbs__item"]').contains(copyCreative.label)
 
     })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
     it("Tests - Create a new creative from scratch", () => {
         const startCreativeFromScratch = {
             label: faker.random.uuid(),
@@ -68,12 +50,6 @@ describe("Tests - Creative Page", () => {
 
         cy.get('span[class="c-breadcrumbs__item"]').contains(startCreativeFromScratch.label)
 
-    })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
     })
     it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
@@ -89,36 +65,14 @@ describe("Tests - Creative Page", () => {
             .should('not.exist')
 
     })
-})
-
-/**
- * This was created only to delete a creative!
- * Creative with preview and without preview
- *  
- */
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
-    for (let i = 0; i < 30; i++) {
+    // for (let i = 0; i < 30; i++) {
         it("Tests - To delete a creative, only.", () => {
+            cy.visitCampaign()
 
-
-        //         cy.visitCampaign()
-
-                cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
-                cy.get("#formDeleteSubmit").click({ force: true })
-
-
+            cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
+            cy.get("#formDeleteSubmit").click({ force: true })
         })
-    }
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
+    // }
     it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
             label: faker.random.uuid(),
@@ -128,12 +82,6 @@ describe("Tests - Creative Page", () => {
         cy.editCreativeAndDelete(editCreativeAndDelete);
         cy.contains(editCreativeAndDelete.label).should('not.exist')
 
-    })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
     })
     it("Tests - Delete a new creative started from scratch", () => {
         const deleteCreativeStartFromScratch = {
@@ -146,12 +94,6 @@ describe("Tests - Creative Page", () => {
         cy.contains('Creative Start From Scratch')
             .should('not.exist')
     })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
     it("Tests - Duplicate a creative", () => {
         const duplicateCreative = {
             creativeName: faker.random.uuid()
@@ -162,6 +104,21 @@ describe("Tests - Creative Page", () => {
         cy.get('span[class="c-breadcrumbs__item"]').contains(duplicateCreative.creativeName)
         cy.contains(Cypress.env('portfolioName'))
         cy.contains(Cypress.env('campaignName'))
+    })
+    it("Tests - Allow selection of page language", () => {
+        // const languagePage = {
+        //     nameCreative: faker.random.words(1),
+        //     creativeDescription: faker.random.words(10)
+        // }
+
+        // cy.pageLanguage(languagePage);
+
+        // cy.get('#DefaultLanguage').select(9).should('have.value','en')
+        // cy.get("#Create").click()
+        // cy.get('span[class="c-breadcrumbs__item"]').contains(languagePage.nameCreative)
+        // cy.xpath('//a[contains (text(),"Edit")]').click()
+        // cy.get('#DefaultLanguage').select(9).should('have.value','en')
+        // cy.get('#DefaultLanguage').select(21).should('have.value','pt')
     })
 })
 
