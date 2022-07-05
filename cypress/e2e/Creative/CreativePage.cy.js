@@ -31,6 +31,7 @@ describe("Tests - Creative Page", () => {
 
         cy.editCreative(editCreative);
 
+        cy.wait(3000)
         cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.label)
 
     })

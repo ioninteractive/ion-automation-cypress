@@ -70,6 +70,7 @@ Cypress.Commands.add('editURL', editURLInput => {
 
     //save
     cy.get('#btn_ts_save_edit').click({ force: true })
+    cy.wait(3000)
 
     cy.reload(true)
     openEditPage()
