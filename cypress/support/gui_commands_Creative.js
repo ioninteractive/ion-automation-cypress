@@ -7,7 +7,6 @@ Cypress.Commands.add('newCreative', creativeName => {
 
     cy.loginEmail()
 
-    //cy.xpath('//div[@class="sm-close"]').wait(500).click()
 
     cy.visit('Admin/Campaigns/Campaign/291')
 
@@ -308,6 +307,4 @@ Cypress.Commands.add('editURL', editURLInput => {
 
     assertURLWasEdited()
 })
-
-
 

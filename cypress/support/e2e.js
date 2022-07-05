@@ -1,3 +1,5 @@
 import './gui_commands'
-import './gui_comands_Portfolio'
-import './gui_comands_Creative'
+import './gui_commands_Portfolio'
+import './gui_commands_Creative'
+import './gui_commands_Integration'
+import './gui_commands_Release'

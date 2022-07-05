@@ -84,17 +84,17 @@ describe("Tests - Creative Page", () => {
 describe("Tests - Creative Page", () => {
 
     for (let i = 0; i < 30; i++) {
-        // it("Tests - To delete a creative, only.", () => {
+        it("Tests - To delete a creative, only.", () => {
 
 
-        //         cy.loginEmail()
-        //         cy.visit('Admin/Campaigns/Campaign/291')
+                cy.loginEmail()
+                cy.visit('Admin/Campaigns/Campaign/291')
 
-        //         cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
-        //         cy.get("#formDeleteSubmit").click({ force: true })
+                cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
+                cy.get("#formDeleteSubmit").click({ force: true })
 
 
-        // })
+        })
     }
 })
 
