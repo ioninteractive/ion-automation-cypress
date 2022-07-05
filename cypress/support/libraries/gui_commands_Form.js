@@ -48,9 +48,9 @@ Cypress.Commands.add('editFormCategory', input => {
 })
 
 Cypress.Commands.add('createForm', input => {
-    const { label, description } = input
+    const { label, description, category } = input
 
-    const categoryData = { category: faker.datatype.uuid(), description: faker.random.words(10) }
+    const categoryData = { category: category || faker.datatype.uuid(), description: faker.random.words(10) }
     cy.createFormCategory(categoryData)
     const visitCategory = () => {
         cy.visitFormsCategories()
@@ -67,6 +67,29 @@ Cypress.Commands.add('createForm', input => {
 
     visitCategory()
     cy.contains(label).click()
+    cy.contains(label).should('exist')
+    cy.contains(description).should('exist')
+})
+
+Cypress.Commands.add('editForm', input => {
+    const { oldLabel, category, label, description } = input
+    const visitForm = formLabel => {
+        cy.visitFormsCategories()
+        cy.contains(category).click()
+        cy.contains(formLabel).click()
+    }
+    visitForm(oldLabel)
+    const optionButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section[2]/nav/nav/button'
+    cy.xpath(optionButtonXPath).click()
+    const editFormButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section[2]/nav/nav/ul/li[2]/a'
+    cy.xpath(editFormButtonXPath).click()
+
+    cy.get('#Name').clear().type(label)
+    cy.get('#Description').clear().type(description)
+    const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/section[2]/form/div[16]/input'
+    cy.xpath(saveButtonXPath).click()
+
+    visitForm(label)
     cy.contains(label).should('exist')
     cy.contains(description).should('exist')
 })

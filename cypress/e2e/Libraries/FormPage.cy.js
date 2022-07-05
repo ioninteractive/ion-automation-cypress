@@ -15,4 +15,9 @@ describe("Tests - Form Page", () => {
     it("Tests - Create a form", () => {
         cy.createForm({ label: faker.datatype.uuid(), description: faker.random.words(10) })
     })
+    it("Tests - Create and edit a form", () => {
+        const createFormData = { category: faker.datatype.uuid(), label: faker.datatype.uuid(), description: faker.random.words(10) }
+        cy.createForm(createFormData)
+        cy.editForm({ category: createFormData.category, oldLabel: createFormData.label, label: faker.datatype.uuid(), description: faker.random.words(10) })
+    })
 })
