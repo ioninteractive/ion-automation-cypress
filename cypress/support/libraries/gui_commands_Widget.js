@@ -60,3 +60,12 @@ Cypress.Commands.add('deleteWidget', input => {
     cy.get('#formDeleteSubmit').click()
     cy.contains(name).should('not.exist')
 })
+
+Cypress.Commands.add('deleteCategory', input => {
+    const { category } = input
+    cy.visitWidgets()
+    const clickOnDeleteButton = () => cy.contains(category).parent().siblings().last().children().first().click()
+    clickOnDeleteButton()
+    cy.get('#formDeleteSubmit').click()
+    cy.contains(category).should('not.exist')
+})
