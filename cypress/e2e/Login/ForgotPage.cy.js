@@ -37,7 +37,7 @@ describe("Tests Login Page - Forgot your password", () => {
     it("Fill in a federated userID and reset the password.", () => {
         cy.forgotPassword()
 
-        cy.get('#txtuserid').type("ops@scribblelive.com")
+        cy.get('#txtuserid').type(Cypress.env('federatedAccountToResetPassword'))
         cy.get('button[class="reset-request-submit"]').click()
 
         cy.get('label.reset-success-title')
@@ -48,7 +48,7 @@ describe("Tests Login Page - Forgot your password", () => {
     it("Fill in the field with Email of a non-federated user and reset the password.", () => {
         cy.forgotPassword()
 
-        cy.get('#txtuserid').type("UserTest7")
+        cy.get('#txtuserid').type(Cypress.env('notFederatedAccountToResetPassword'))
         cy.get('button[class="reset-request-submit"]').click()
 
         cy.get('label.reset-success-title')

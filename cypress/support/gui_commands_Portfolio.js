@@ -5,7 +5,6 @@ const faker = require('faker')
 
 Cypress.Commands.add('portfolioCreate', portfolioName => {
 
-    cy.loginEmail()
     cy.visit('Admin/portfolios')
 
     cy.get('a[class="c-button c-button--primary"]').click()
@@ -18,7 +17,6 @@ Cypress.Commands.add('portfolioCreate', portfolioName => {
 
 Cypress.Commands.add('portfolioEdit', portfolioEditName => {
 
-    cy.loginEmail()
     cy.visit('Admin/portfolios')
 
     cy.xpath('(//a[@class="txt-title-link"])[1]')
@@ -45,7 +43,6 @@ Cypress.Commands.add('portfolioEdit', portfolioEditName => {
 
 Cypress.Commands.add('portfolioDelete', () => {
 
-    cy.loginEmail()
     cy.visit('Admin/portfolios')
     cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
     cy.get('#formDeleteSubmit').click()
@@ -56,7 +53,6 @@ Cypress.Commands.add('portfolioDelete', () => {
 
 Cypress.Commands.add('campaignCreate', campaignName => {
 
-    cy.loginEmail()
     cy.xpath('//a[@class="txt-title-link"][text()="* ion Automation"]')
         .click()
 
@@ -74,7 +70,6 @@ Cypress.Commands.add('campaignCreate', campaignName => {
 })
 
 Cypress.Commands.add('campaignDelete', () => {
-    cy.loginEmail()
     cy.xpath('//a[@class="txt-title-link"][text()="* ion Automation"]')
         .click()
 
