@@ -8,7 +8,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new Creative using a quick start", () => {
         const creativeName = {
-            name: faker.random.uuid(),
+            name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -19,7 +19,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Edit the creative created before", () => {
         const editCreative = {
-            label: faker.random.uuid(),
+            label: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -31,7 +31,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Copy a page of creative", () => {
         const copyCreative = {
-            label: faker.random.uuid(),
+            label: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -42,7 +42,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new creative from scratch", () => {
         const startCreativeFromScratch = {
-            label: faker.random.uuid(),
+            label: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -53,7 +53,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Deleting a creative created using a quick start", () => {
         const deletingNewCreative = {
-            name: faker.random.uuid(),
+            name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -75,7 +75,7 @@ describe("Tests - Creative Page", () => {
     // }
     it("Tests - Edit the creative after deleting it.", () => {
         const editCreativeAndDelete = {
-            label: faker.random.uuid(),
+            label: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -85,7 +85,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Delete a new creative started from scratch", () => {
         const deleteCreativeStartFromScratch = {
-            label: faker.random.uuid(),
+            label: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
@@ -96,7 +96,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Duplicate a creative", () => {
         const duplicateCreative = {
-            creativeName: faker.random.uuid()
+            creativeName: faker.datatype.uuid()
         }
 
         cy.duplicateCreative(duplicateCreative);

@@ -8,7 +8,7 @@ describe("Tests - Create URL", () => {
     })
     it("Tests - Create a new URL", () => {
         const createURL = {
-            urlCreate: faker.random.uuid(),
+            urlCreate: faker.datatype.uuid(),
             chooseFirstCreative: true
         }
 
@@ -43,9 +43,9 @@ describe("Tests - Edit URL", () => {
         cy.loginEmail()
     })
     const inputs = [
-        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
-        { urlName: faker.random.uuid(), isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 },
-        { urlName: faker.random.uuid(), isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
+        { urlName: faker.datatype.uuid(), isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
+        { urlName: faker.datatype.uuid(), isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 },
+        { urlName: faker.datatype.uuid(), isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
     ]
 
     inputs.forEach(input => {
@@ -68,11 +68,11 @@ describe("Tests - Insert a creative to a URL", () => {
         it("Tests - Create a URL and then add a engaged creative", () => {
             const { creativeWeight } = input
 
-            cy.createEngagedCreative({ creativeName: faker.random.uuid() })
+            cy.createEngagedCreative({ creativeName: faker.datatype.uuid() })
             const getCreativeIdFromUrl = url => url.split('/').pop()
             cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
     
-            cy.createURL({ urlCreate: faker.random.uuid() })
+            cy.createURL({ urlCreate: faker.datatype.uuid() })
             
             const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
             addWeightToCreative()
@@ -84,11 +84,11 @@ describe("Tests - Insert a creative to a URL", () => {
     })
 
     it("Tests - Create a URL choosing an engaged creative", () => {
-        cy.createEngagedCreative({ creativeName: faker.random.uuid() })
+        cy.createEngagedCreative({ creativeName: faker.datatype.uuid() })
         const getCreativeIdFromUrl = url => url.split('/').pop()
         cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
 
-        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.random.uuid(), creativeId }))
+        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId }))
 
         const defaultWeight = 5
         cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
