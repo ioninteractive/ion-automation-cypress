@@ -110,6 +110,8 @@ Cypress.Commands.add('addFormFields', input => {
 
         cy.get('#DataFieldCategory').select(dataFieldCategory)
         cy.get('#DataField').select(dataField)
+        cy.get('#LabelText').type(`${dataField} label`)
+        cy.get('#HintText').type(`${dataField} hint`)
 
         const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/form/div/input'
         cy.xpath(saveButtonXPath).click()
@@ -122,6 +124,8 @@ Cypress.Commands.add('addFormFields', input => {
         cy.contains(dataField).last().click()
         cy.get('#DataField option:selected').should('have.text', dataField)
         cy.get('#DataFieldCategory option:selected').should('have.text', dataFieldCategory)
+        cy.get('#LabelText').should('have.value', `${dataField} label`)
+        cy.get('#HintText').should('have.value', `${dataField} hint`)
         cy.go('back')
     })
 })
