@@ -29,13 +29,10 @@ describe("Tests - Form Page", () => {
             { dataFieldCategory: 'Contact info', dataField: 'Last name' },
             { dataFieldCategory: 'Contact info (address)', dataField: 'Country' },
         ]
-        formFields.forEach(formField => {
-            cy.addFormField({
-                category: createFormData.category,
-                form: createFormData.label,
-                dataFieldCategory: formField.dataFieldCategory,
-                dataField: formField.dataField
-            })
+        cy.addFormFields({
+            category: createFormData.category,
+            form: createFormData.label,
+            formFields
         })
     })
 })
