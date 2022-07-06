@@ -21,7 +21,7 @@ describe("Tests Login Page - Forgot your password", () => {
 
     it("Fill in an invalid user in the User id field and try to reset the password.", () => {
         const resetIncorrectUser = {
-            userId: `${faker.random.uuid()}`,
+            userId: `${faker.datatype.uuid()}`,
             /*password: faker.random.words(1)*/
         }
 
