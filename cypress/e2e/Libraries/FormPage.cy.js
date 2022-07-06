@@ -25,16 +25,16 @@ describe("Tests - Form Page", () => {
         cy.createForm(createFormData)
 
         const formFields = [
-            { dataFieldCategoryIndex: 1, dataFieldIndex: 2 },
-            { dataFieldCategoryIndex: 1, dataFieldIndex: 4 },
-            { dataFieldCategoryIndex: 2, dataFieldIndex: 1 },
+            { dataFieldCategory: 'Contact info', dataField: 'Job title'},
+            { dataFieldCategory: 'Contact info', dataField: 'Last name' },
+            { dataFieldCategory: 'Contact info (address)', dataField: 'Country' },
         ]
         formFields.forEach(formField => {
             cy.addFormField({
                 category: createFormData.category,
                 form: createFormData.label,
-                dataFieldCategoryIndex: formField.dataFieldCategoryIndex,
-                dataFieldIndex: formField.dataFieldIndex
+                dataFieldCategory: formField.dataFieldCategory,
+                dataField: formField.dataField
             })
         })
     })
