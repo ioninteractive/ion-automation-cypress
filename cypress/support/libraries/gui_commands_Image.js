@@ -24,7 +24,7 @@ Cypress.Commands.add('uploadImage', input => {
     }
 
     assertImageWasUploaded()
-    cy.visitImages()
-    cy.get('#inReviewCategory').select(category, { force: true })
+    cy.reload(true)
+    cy.get('#inReviewCategory option:selected').should('have.value', category)
     assertImageWasUploaded()
 })
