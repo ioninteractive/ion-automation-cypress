@@ -3,6 +3,7 @@ const images = [
     './cypress/files/png-image.png',
     './cypress/files/webp-image.webp',
     './cypress/files/jpg-image.jpg',
+    './cypress/files/jpeg-image.jpeg',
     './cypress/files/gif-image.gif',
     './cypress/files/svg-image.svg'
 ]

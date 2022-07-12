@@ -8,6 +8,7 @@ module.exports = defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     baseUrl: 'https://qaautomation.postclickmarketing.com/',
-    env: JSON.parse(fs.readFileSync('./cypress.qaautomation.env.json'))
+    env: JSON.parse(fs.readFileSync('./cypress.qaautomation.env.json')),
+    chromeWebSecurity: false
   },
 })
