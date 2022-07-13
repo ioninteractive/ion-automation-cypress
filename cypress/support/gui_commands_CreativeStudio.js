@@ -83,3 +83,12 @@ Cypress.Commands.add('addExternalUrlAction', input => {
     cy.xpath(externalUrlInputXPath).type(url)
     cy.get('#btn_save_editor').click()
 })
+
+Cypress.Commands.add('addGoToPageAction', input => {
+    const { pageIndex } = input
+    const addActionsButtonXPath = '//*[@id="pe_workbench_elements"]/div[2]/div[4]/div'
+    cy.xpath(addActionsButtonXPath).click()
+    cy.contains('Go to Page').click()
+    cy.get('#pe_actions_page_options').select(pageIndex)
+    cy.get('#btn_save_editor').click()
+})
