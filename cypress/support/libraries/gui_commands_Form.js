@@ -2,10 +2,7 @@
 const faker = require('faker')
 
 Cypress.Commands.add('visitFormsCategories', () => {
-    const librariesMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[3]'
-    cy.xpath(librariesMenuItemXPath).click()
-    const formsMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[3]/div/ul/li[4]/a'
-    cy.xpath(formsMenuItemXPath).click()
+    cy.visit('/Admin/Libraries/FormCategories')
 })
 
 Cypress.Commands.add('createFormCategory', input => {
