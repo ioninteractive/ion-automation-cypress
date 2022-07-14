@@ -20,3 +20,25 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 }
+
+const fs = require('fs')
+const path = require('path')
+const pdf = require('pdf-parse');
+
+const repoRoot = path.join(__dirname, '..', '..')
+
+const parsePdf = async (pdfName) => {
+  const pdfPathname = path.join(repoRoot, pdfName)
+  let dataBuffer = fs.readFileSync(pdfPathname);
+  return await pdf(dataBuffer) 
+}
+
+const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
+module.exports = (on, config) => {
+  on('task', {
+    downloadFile,
+    getPdfContent(pdfName) {
+      return parsePdf(pdfName)   
+    }
+  })
+}

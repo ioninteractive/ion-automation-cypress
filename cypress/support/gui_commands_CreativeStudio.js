@@ -92,3 +92,13 @@ Cypress.Commands.add('addGoToPageAction', input => {
     cy.get('#pe_actions_page_options').select(pageIndex)
     cy.get('#btn_save_editor').click()
 })
+
+Cypress.Commands.add('addDownloadFulfillmentAction', input => {
+    const { category, fulfillment } = input
+    const addActionsButtonXPath = '//*[@id="pe_workbench_elements"]/div[2]/div[4]/div'
+    cy.xpath(addActionsButtonXPath).click()
+    cy.contains('Download Fulfillment').click()
+    cy.get('#pe_actions_fulfillment_category_options').select(category)
+    cy.get('#pe_actions_fulfillment_options').select(fulfillment)
+    cy.get('#btn_save_editor').click()
+})
