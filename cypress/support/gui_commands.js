@@ -6,8 +6,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false
 })
 
+Cypress.Commands.add('visitLogin', () => {
+    cy.visit('/Admin')
+})
+
 Cypress.Commands.add('login', () => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('#txtuserid').type(Cypress.env('userId'))
     cy.get('#txtpassword').type(Cypress.env('password'))
@@ -15,7 +19,7 @@ Cypress.Commands.add('login', () => {
 })
 
 Cypress.Commands.add('loginEmail', () => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('#txtuserid').type(Cypress.env('email'))
     cy.get('#txtpassword').type(Cypress.env('password'))
@@ -30,7 +34,7 @@ Cypress.Commands.add("fillMandatoryFields", data => {
 })
 
 Cypress.Commands.add("userIncorrect", loginIncorrectUser => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('#txtuserid').type(loginIncorrectUser.userId)
     cy.get('#txtpassword').type(loginIncorrectUser.password)
@@ -38,7 +42,7 @@ Cypress.Commands.add("userIncorrect", loginIncorrectUser => {
 })
 
 Cypress.Commands.add("passwordIncorrect", loginIncorrectPassword => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('#txtuserid').type(Cypress.env('userId'))
     cy.get('#txtpassword').type(loginIncorrectPassword.password)
@@ -46,7 +50,7 @@ Cypress.Commands.add("passwordIncorrect", loginIncorrectPassword => {
 })
 
 Cypress.Commands.add("nullFields", () => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     //cy.get('#txtuserid').type(null)
     //cy.get('#txtpassword').type(null)
@@ -54,7 +58,7 @@ Cypress.Commands.add("nullFields", () => {
 })
 
 Cypress.Commands.add('loginStaySigned', () => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('#txtuserid').type(Cypress.env('userId'))
     cy.get('#txtpassword').type(Cypress.env('password'))
@@ -63,7 +67,7 @@ Cypress.Commands.add('loginStaySigned', () => {
 })
 
 Cypress.Commands.add('forgotPassword', () => {
-    cy.visit('Admin/Login')
+    cy.visitLogin()
 
     cy.get('a.login-forgot-password').click()
 })
