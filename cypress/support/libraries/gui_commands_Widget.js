@@ -11,7 +11,8 @@ Cypress.Commands.add('createWidget', input => {
     cy.xpath(createWidgetButtonXPath).click()
 
     cy.get('#name').type(name)
-    if(category){
+    if(category){        
+        cy.wait(1500)
         cy.get('#btn_add_category').click()
         cy.get('#w_newcat').type(category)
     } else {
