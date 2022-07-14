@@ -77,3 +77,7 @@ Cypress.Commands.add("userResetIncorrect", resetIncorrectUser => {
     cy.get('#txtuserid').type(resetIncorrectUser.userId)
     cy.get('button[type=submit]').click()
 })
+
+Cypress.Commands.add('logout', () => {
+    cy.visit('/Admin/Auth/Logout')
+})

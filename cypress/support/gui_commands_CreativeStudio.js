@@ -75,6 +75,16 @@ Cypress.Commands.add('addImageToCreative', input => {
     cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
 })
 
+Cypress.Commands.add('visitCreativeStudio', input => {
+    const { creativeName } = input
+    cy.visitCampaign()
+    cy.contains(creativeName).click()
+    const landingPageXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section/div[2]/ul/li[2]/div/div/div[2]/h4/a'
+    cy.xpath(landingPageXPath).click()
+    const timeToLoadCreativeStudio = 5000
+    cy.wait(timeToLoadCreativeStudio)
+})
+
 Cypress.Commands.add('addExternalUrlAction', input => {
     const { url } = input
     const addActionsButtonXPath = '//*[@id="pe_workbench_elements"]/div[2]/div[4]/div'
@@ -137,4 +147,10 @@ Cypress.Commands.add('assertDownloadFulfillmentAction', input => {
         cy.downloadFile(url, './downloads', fulfillmentName)
         cy.task('getPdfContent', `./downloads/${fulfillmentName}`).then(content => assert.isTrue(content.text.includes(fulfillmentFileContent), 'downloaded fulfillment file content should match with provided file'))
     })
+})
+
+Cypress.Commands.add('openImageEditor', input => {
+    const { imageName } = input
+    cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).click()
+    cy.wait(2000)
 })
