@@ -2,8 +2,7 @@
 require('cypress-xpath')
 
 Cypress.Commands.add('visitIntegrations', () => {
-    const integrationsMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[5]/a'
-    cy.xpath(integrationsMenuItemXPath).click()
+    cy.visit('/Admin/Integration/DataExports')
 })
 
 Cypress.Commands.add('createFieldMapping', input => {
