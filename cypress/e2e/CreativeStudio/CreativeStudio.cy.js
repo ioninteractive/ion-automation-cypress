@@ -1,7 +1,11 @@
 /// <reference types="Cypress"/>
+/// <reference types="cypress-downloadfile"/>
 require('cypress-xpath')
 const faker = require('faker')
 const imagePath = './cypress/files/gif-image.gif'
+const fulfillmentPath = './cypress/files/fulfillment-pdf-file.pdf'
+const fulfillmentFileContent = 'this is a fulfillment test'
+
 describe("Tests - Creative Studio", () => {
     beforeEach(() => {
         cy.loginEmail()
@@ -74,6 +78,42 @@ describe("Tests - Creative Studio", () => {
             cy.get(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0)).click()
             const matchLandingPageSlashAnything = landingPageUrl => new RegExp(`^${landingPageUrl}\/.+$`)
             cy.get('@landingPageUrl').then(landingPageUrl => cy.url().should('match', matchLandingPageSlashAnything(landingPageUrl)))
+        })
+    })
+    it('Tests - Add to creative a image with download fulfillment action', () => {
+        const imageName = imagePath.split('/').pop()
+        const imageCategory = faker.datatype.uuid().replaceAll('-', '')
+        cy.uploadImage({
+            filePath: imagePath,
+            fileName: imageName,
+            category: imageCategory,
+            annotation: faker.random.words(10)
+        })
+        const fulfillmentName = fulfillmentPath.split('/').pop()
+        const fulfillmentCategory = faker.datatype.uuid().replaceAll('-', '')
+        cy.uploadFulfillment({
+            filePath: fulfillmentPath,
+            fileName: fulfillmentName,
+            category: fulfillmentCategory,
+            annotation: faker.random.words(10)
+        })
+        const creativeName = faker.datatype.uuid()
+        cy.createEngagedCreative({ creativeName })
+        const getCreativeIdFromUrl = url => url.split('/').pop()
+        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
+        cy.get('@creativeId').then(creativeId => {
+            cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId })
+            cy.addImageToCreative({ creativeName, imageCategory, imageName })
+            cy.addDownloadFulfillmentAction({ category: fulfillmentCategory, fulfillment: fulfillmentName })
+            cy.visitCampaign()
+            cy.contains(creativeName).click()
+            const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
+            cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+            cy.get(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0)).click()
+            cy.url().then(url => {
+                cy.downloadFile(url, './downloads', fulfillmentName)
+                cy.task('getPdfContent', `./downloads/${fulfillmentName}`).then(content => assert.isTrue(content.text.includes(fulfillmentFileContent), 'downloaded fulfillment file content should match with provided file'))
+            })
         })
     })
 })

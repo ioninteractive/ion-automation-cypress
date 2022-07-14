@@ -1,3 +1,4 @@
+import './commands'
 import './gui_commands'
 import './gui_commands_Portfolio'
 import './gui_commands_Creative'
