@@ -53,13 +53,7 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
 })
 
 Cypress.Commands.add('addImageToCreative', input => {
-    const { creativeName, imageCategory, imageName } = input
-    cy.visitCampaign()
-    cy.contains(creativeName).click()
-    const landingPageXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section/div[2]/ul/li[2]/div/div/div[2]/h4/a'
-    cy.xpath(landingPageXPath).click()
-    const timeToLoadCreativeStudio = 5000
-    cy.wait(timeToLoadCreativeStudio)
+    const { imageCategory, imageName } = input
     cy.get('h2').contains('Basics').trigger('mouseover')
     const imagesDraggableXPath = '//*[@id="pe_workbench_palette"]/div/div[2]/div/div[3]/div[2]'
     const positionToDrop = { clientX: 250, clientY: 158, screenX: 250, screenY: 158, pageX: 250, pageY: 378 }
@@ -73,6 +67,23 @@ Cypress.Commands.add('addImageToCreative', input => {
     cy.wait(3000)
     cy.get('#btn_save_editor').click()
     cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
+})
+
+Cypress.Commands.add('addTextToCreative', input => {
+    const { text } = input
+    cy.get('h2').contains('Basics').trigger('mouseover')
+    const textDraggableXPath = '//*[@id="pe_workbench_palette"]/div/div[2]/div/div[3]/div[1]'
+    const positionToDrop = { clientX: 250, clientY: 158, screenX: 250, screenY: 158, pageX: 250, pageY: 378 }
+    cy.xpath(textDraggableXPath)
+        .trigger("mouseover")
+        .trigger("mousedown", { which: 1 })
+        .trigger("mousemove", { ...positionToDrop })
+        .trigger("mouseup", { which: 1, force: true, ...positionToDrop })
+    cy.contains('Standard Text').click()
+    cy.wait(500)
+    cy.get('#pe_std_text').type(text)
+    cy.get('#btn_save_editor').click()
+    cy.iframe('#page_iframe').contains(text).should('exist')
 })
 
 Cypress.Commands.add('visitCreativeStudio', input => {
@@ -142,15 +153,54 @@ Cypress.Commands.add('assertDownloadFulfillmentAction', input => {
     cy.contains(creativeName).click()
     const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
     cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
-    cy.get(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0)).click()
-    cy.url().then(url => {
-        cy.downloadFile(url, './downloads', fulfillmentName)
-        cy.task('getPdfContent', `./downloads/${fulfillmentName}`).then(content => assert.isTrue(content.text.includes(fulfillmentFileContent), 'downloaded fulfillment file content should match with provided file'))
-    })
+    cy.get(`img[src*="${imageName}"]`)
+        .should('be.visible')
+        .and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
+        .parent()
+        .then(anchor => {
+            const downloadPageUrl = anchor.prop('href')
+            cy.request({ url: downloadPageUrl, encoding: 'binary' })
+                .then((response) => {
+                    cy.writeFile(`./downloads/${fulfillmentName}`, response.body, 'binary')
+                })
+            cy.task('getPdfContent', `./downloads/${fulfillmentName}`).then(content => assert.isTrue(content.text.includes(fulfillmentFileContent), 'downloaded fulfillment file content should match with provided file'))
+        })
 })
 
 Cypress.Commands.add('openImageEditor', input => {
     const { imageName } = input
     cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).click()
     cy.wait(2000)
+})
+
+Cypress.Commands.add('addDownloadPageAsPdfAction', input => {
+    const { fileName } = input
+    const addActionsButtonXPath = '//*[@id="pe_workbench_elements"]/div[2]/div[4]/div'
+    cy.xpath(addActionsButtonXPath).click()
+    cy.contains('Download Page as PDF').click()
+    const landingPageIndex = 1
+    cy.get('#pe_actions_page_options_2').select(landingPageIndex)
+    cy.contains('Add filename').click()
+    cy.get('input[name="file_name"]').type(fileName)
+    cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('assertDownloadPageAsPdfAction', input => {
+    const { creativeName, imageName, fileName, pageTextContent } = input
+    cy.visitCampaign()
+    cy.contains(creativeName).click()
+    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
+    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+    cy.get(`img[src*="${imageName}"]`)
+        .should('be.visible')
+        .and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
+        .parent()
+        .then(anchor => {
+            const downloadPageUrl = anchor.prop('href')
+            cy.request({ url: downloadPageUrl, encoding: 'binary' })
+                .then((response) => {
+                    cy.writeFile(`./downloads/${fileName}`, response.body, 'binary')
+                })
+            cy.task('getPdfContent', `./downloads/${fileName}`).then(content => assert.isTrue(content.text.includes(pageTextContent), 'downloaded page as pdf should contain image that was inserted'))
+        })
 })

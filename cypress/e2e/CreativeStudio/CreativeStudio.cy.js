@@ -45,7 +45,8 @@ describe("Tests - Creative Studio - Actions", () => {
         const getCreativeIdFromUrl = url => url.split('/').pop()
         cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
         cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId }))
-        cy.addImageToCreative({ creativeName, imageCategory, imageName })
+        cy.visitCreativeStudio({ creativeName })
+        cy.addImageToCreative({ imageCategory, imageName })
         cy.logout()
     })
     beforeEach(() => {
@@ -77,5 +78,14 @@ describe("Tests - Creative Studio - Actions", () => {
         cy.openImageEditor({ imageName })
         cy.addDownloadFulfillmentAction({ category: fulfillmentCategory, fulfillment: fulfillmentName })
         cy.assertDownloadFulfillmentAction({ creativeName, imageName, fulfillmentName, fulfillmentFileContent })
+    })
+    it('Add to creative a image with download page as pdf action', () => {
+        const pageTextContent = 'this text should be in the page as pdf file'
+        cy.visitCreativeStudio({ creativeName })
+        cy.addTextToCreative({ text: pageTextContent })
+        cy.openImageEditor({ imageName })
+        const fileName = 'page-as-pdf.pdf'
+        cy.addDownloadPageAsPdfAction({ fileName })
+        cy.assertDownloadPageAsPdfAction({ creativeName, imageName, fileName, pageTextContent })
     })
 })
