@@ -108,3 +108,39 @@ describe("Tests - Creative Studio - Micro-Themes", () => {
         microTheme.classes.forEach(cl => cy.get(`img[src*="${imageName}"]`).should('have.class', cl))
     })
 })
+
+describe("Tests - Creative Studio - Optimized Images", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Check source of optimized image", () => {
+        cy.visitLivePage({ creativeName })
+        cy.url().as('livePageUrl')
+        cy.get(`img[src*="${imageName}"]`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://iuploads.scribblecdn.net/'), 'original images should be hosted by iuploads.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        })
+        cy.get(`img[src*="${imageName}"]`).then($img => $img.attr('id')).as('imgId')
+        
+        cy.setAlwaysOptimizeImage({ creativeName, imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://ion-imagesizer.scribblecdn.net/'), 'optimized images should be hosted by ion-imagesizer.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+        
+        cy.setInheritOptimizeImageBehaviorFromLibrary({ creativeName, imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://iuploads.scribblecdn.net/'), 'original images should be hosted by iuploads.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+        
+        cy.optimizeImage({ category: imageCategory, name: imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://ion-imagesizer.scribblecdn.net/'), 'optimized images should be hosted by ion-imagesizer.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+    })
+})
