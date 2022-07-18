@@ -21,7 +21,7 @@ describe("Tests - URL", () => {
         cy.contains(url.name).should('exist')
     })
     editUrlInputs.forEach(input => it("Tests - Edit URL", () => cy.editURL(input)))
-    it("Tests - To delete a URL, only.", () => {
+    it("Tests - Delete URL", () => {
         cy.deleteUrl({ name: url.name })
 
         cy.visitCampaign()
