@@ -28,41 +28,42 @@ describe("Tests - URL", () => {
         cy.get('button[data-for-region="urls"]').click()
         cy.contains(url.name).should('not.exist')
     })
-    it("Tests - Create a URL and then add a engaged creative", () => {
-        const creativeName = faker.datatype.uuid()
-        cy.createEngagedCreative({ creativeName })
-        const getCreativeIdFromUrl = url => url.split('/').pop()
-        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
+})
 
-        const urlName = faker.datatype.uuid()
+const creativeName = faker.datatype.uuid()
+const urlName = faker.datatype.uuid()
+describe("Tests - URL with creative", () => {
+    before(() => {
+        cy.loginEmail()
+        cy.createEngagedCreative({ creativeName })
+        cy.logout()
+    })
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Tests - Create a URL and then add a engaged creative", () => {
         cy.createURL({ name: urlName })
 
         const creativeWeight = 7
-        const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
+        const addWeightToCreative = () => cy.contains(creativeName).parent().siblings().eq(1).children().first().select(creativeWeight, { force: true })
         addWeightToCreative()
 
-        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+        cy.contains(creativeName).parent().siblings().eq(1).children().first().should('have.value', creativeWeight)
         cy.reload(true)
-        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
-
-        cy.deleteUrl({ name: urlName })
-        cy.deleteCreative({ name: creativeName })
+        cy.contains(creativeName).parent().siblings().eq(1).children().first().should('have.value', creativeWeight)
     })
     it("Tests - Create a URL choosing an engaged creative", () => {
-        const creativeName = faker.datatype.uuid()
-        cy.createEngagedCreative({ creativeName })
-        const getCreativeIdFromUrl = url => url.split('/').pop()
-        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
-
-        const urlName = faker.datatype.uuid()
-        cy.get('@creativeId').then(creativeId => cy.createURL({ name: urlName, creativeId }))
+        cy.createURL({ name: urlName, creativeName })
 
         const defaultWeight = 5
-        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
+        cy.contains(creativeName).parent().siblings().eq(1).children().first().should('have.value', defaultWeight)
         cy.reload(true)
-        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
-
+        cy.contains(creativeName).parent().siblings().eq(1).children().first().should('have.value', defaultWeight)
+    })
+    afterEach(() => {
         cy.deleteUrl({ name: urlName })
+    })
+    after(() => {        
         cy.deleteCreative({ name: creativeName })
     })
 })

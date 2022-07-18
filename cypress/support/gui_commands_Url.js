@@ -1,5 +1,5 @@
 Cypress.Commands.add('createURL', input => {
-    const { name, creativeId } = input
+    const { name, creativeName } = input
     cy.visitCampaign()
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
@@ -7,8 +7,8 @@ Cypress.Commands.add('createURL', input => {
     cy.get('#inSlashName').type(name)
     cy.get('#inMediaType').select('Banner/Display')
     cy.get('#inVehicle').select('Email')
-    if (creativeId) {
-        cy.get(`#pt${creativeId}`).click({ force: true })
+    if (creativeName) {
+        cy.contains(creativeName).click({ force: true })
     } else {
         const firstCreativeXPath = '/html/body/div[4]/div[3]/div[1]/form/section[2]/div/div[2]/ul/li[1]'
         cy.xpath(firstCreativeXPath).click({ force: true })
