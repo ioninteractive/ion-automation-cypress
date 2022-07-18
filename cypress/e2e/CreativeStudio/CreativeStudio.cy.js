@@ -44,7 +44,7 @@ describe("Tests - Creative Studio - Actions", () => {
         cy.createEngagedCreative({ creativeName })
         const getCreativeIdFromUrl = url => url.split('/').pop()
         cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
-        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId }))
+        cy.get('@creativeId').then(creativeId => cy.createURL({ name: faker.datatype.uuid(), creativeId }))
         cy.visitCreativeStudio({ creativeName })
         cy.addImageToCreative({ imageCategory, imageName })
         cy.logout()

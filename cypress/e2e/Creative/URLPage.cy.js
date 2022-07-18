@@ -1,98 +1,68 @@
 /// <reference types="Cypress"/>
 
 const faker = require('faker')
-
-describe("Tests - Create URL", () => {
+const url = {
+    name: faker.datatype.uuid()
+}
+const editUrlNames = [url.name, faker.datatype.uuid(), url.name]
+const editUrlInputs = [
+    { oldUrlName: editUrlNames[0], urlName: editUrlNames[1], isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
+    { oldUrlName: editUrlNames[1], urlName: editUrlNames[2], isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 }
+]
+describe("Tests - URL", () => {
     beforeEach(() => {
         cy.loginEmail()
     })
     it("Tests - Create a new URL", () => {
-        const createURL = {
-            urlCreate: faker.datatype.uuid(),
-            chooseFirstCreative: true
-        }
-
-        cy.createURL(createURL);
-
-        cy.get('span[class="c-breadcrumbs__item"]').contains(createURL.urlCreate)
-
+        cy.createURL(url)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(url.name)
+        cy.visitCampaign()
+        cy.get('button[data-for-region="urls"]').click()
+        cy.contains(url.name).should('exist')
     })
-})
-
-describe("Tests - Creative Page", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
+    editUrlInputs.forEach(input => it("Tests - Edit URL", () => cy.editURL(input)))
     it("Tests - To delete a URL, only.", () => {
+        cy.deleteUrl({ name: url.name })
 
-        //for (let i = 0; i < 10 ; i++) {
-
-            cy.visitCampaign()
-            cy.xpath('//button[@data-for-region="urls"]').wait(500).click({ force: true })
-
-            cy.xpath('/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[7]/a').wait(500).click({ force: true })
-            cy.get("#formDeleteSubmit").click({ force: true })
-       // }
-
+        cy.visitCampaign()
+        cy.get('button[data-for-region="urls"]').click()
+        cy.contains(url.name).should('not.exist')
     })
-
-})
-
-describe("Tests - Edit URL", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
-    const inputs = [
-        { urlName: faker.datatype.uuid(), isRedirectType301: true, seoType: 'Always', isRespondentsAlwaysNew: false, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.0', mediaTypeIndex: 1, vehicleIndex: 1, domainIndex: 5 },
-        { urlName: faker.datatype.uuid(), isRedirectType301: false, seoType: 'Never', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.7', mediaTypeIndex: 3, vehicleIndex: 0, domainIndex: 2 },
-        { urlName: faker.datatype.uuid(), isRedirectType301: true, seoType: 'If SEO Creative', isRespondentsAlwaysNew: true, description: faker.random.words(10), defaultURL: `https://${faker.random.words(1)}.com`, sitemapPriority: '0.9', mediaTypeIndex: 4, vehicleIndex: 0, domainIndex: 4 },
-    ]
-
-    inputs.forEach(input => {
-        it("Tests - Edit the first URL from URLs page", () => {
-            cy.editURL(input)
-        })
-    })
-})
-
-describe("Tests - Insert a creative to a URL", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
-    const inputs = [
-        { creativeWeight: 10 },
-        { creativeWeight: 5 }
-    ]
-
-    inputs.forEach(input => {
-        it("Tests - Create a URL and then add a engaged creative", () => {
-            const { creativeWeight } = input
-
-            cy.createEngagedCreative({ creativeName: faker.datatype.uuid() })
-            const getCreativeIdFromUrl = url => url.split('/').pop()
-            cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
-    
-            cy.createURL({ urlCreate: faker.datatype.uuid() })
-            
-            const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
-            addWeightToCreative()
-    
-            cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
-            cy.reload(true)
-            cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
-        })
-    })
-
-    it("Tests - Create a URL choosing an engaged creative", () => {
-        cy.createEngagedCreative({ creativeName: faker.datatype.uuid() })
+    it("Tests - Create a URL and then add a engaged creative", () => {
+        const creativeName = faker.datatype.uuid()
+        cy.createEngagedCreative({ creativeName })
         const getCreativeIdFromUrl = url => url.split('/').pop()
         cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
 
-        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId }))
+        const urlName = faker.datatype.uuid()
+        cy.createURL({ name: urlName })
+
+        const creativeWeight = 7
+        const addWeightToCreative = () => cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).select(creativeWeight, { force: true }))
+        addWeightToCreative()
+
+        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+        cy.reload(true)
+        cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', creativeWeight))
+
+        cy.deleteUrl({ name: urlName })
+        cy.deleteCreative({ name: creativeName })
+    })
+    it("Tests - Create a URL choosing an engaged creative", () => {
+        const creativeName = faker.datatype.uuid()
+        cy.createEngagedCreative({ creativeName })
+        const getCreativeIdFromUrl = url => url.split('/').pop()
+        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
+
+        const urlName = faker.datatype.uuid()
+        cy.get('@creativeId').then(creativeId => cy.createURL({ name: urlName, creativeId }))
 
         const defaultWeight = 5
         cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
         cy.reload(true)
         cy.get('@creativeId').then(creativeId => cy.get(`#weight-${creativeId}`).should('have.value', defaultWeight))
+
+        cy.deleteUrl({ name: urlName })
+        cy.deleteCreative({ name: creativeName })
     })
 })
