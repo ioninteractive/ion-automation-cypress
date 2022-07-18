@@ -1,36 +1,40 @@
 Cypress.Commands.add('createURL', input => {
-    const { urlCreate, creativeId, chooseFirstCreative } = input
+    const { name, creativeName } = input
     cy.visitCampaign()
 
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
     cy.get('#inDomain').select(Cypress.env('domainName'))
-    cy.get('#inSlashName').type(urlCreate)
-    cy.get('#inMediaType').select(1)
+    cy.get('#inSlashName').type(name)
+    cy.get('#inMediaType').select('Banner/Display')
     cy.get('#inVehicle').select('Email')
-    if(creativeId) {
-        cy.get(`#pt${creativeId}`).click({ force: true })
-    }
-    if(chooseFirstCreative) {
+    if (creativeName) {
+        cy.contains(creativeName).click({ force: true })
+    } else {
         const firstCreativeXPath = '/html/body/div[4]/div[3]/div[1]/form/section[2]/div/div[2]/ul/li[1]'
         cy.xpath(firstCreativeXPath).click({ force: true })
     }
     cy.xpath('//input[@type="submit"]').click({ force: true })
 })
 
+Cypress.Commands.add('deleteUrl', url => {
+    const { name } = url
+    cy.visitCampaign()
+    cy.xpath('//button[@data-for-region="urls"]').wait(500).click({ force: true })
+    const clickOnDeleteButton = () => cy.contains(name).parent().siblings().last().children().first().click()
+    clickOnDeleteButton()
+    cy.get("#formDeleteSubmit").click({ force: true })
+})
+
 Cypress.Commands.add('editURL', editURLInput => {
-    const { urlName, isRedirectType301, seoType, isRespondentsAlwaysNew, description, defaultURL, sitemapPriority, mediaTypeIndex, vehicleIndex, domainIndex } = editURLInput
-    const visitFirstUrlEditPage = () => {
-        cy.visitCampaign()
-        const firstUrlFullXPath = '/html/body/div[4]/div[3]/div[1]/div[3]/section[2]/div[2]/table/tbody/tr[1]/td[1]/a'
-        cy.xpath(firstUrlFullXPath).click({ force: true })
-    }
+    const { oldUrlName, urlName, isRedirectType301, seoType, isRespondentsAlwaysNew, description, defaultURL, sitemapPriority, mediaTypeIndex, vehicleIndex, domainIndex } = editURLInput
     const openEditPage = () => {
         const editButtonFullXPath = '//*[@id="wrapper"]/div[3]/div[1]/div[1]/div[2]/section[2]/div/a'
         cy.wait(2000).then(_ => cy.xpath(editButtonFullXPath).click({ force: true }))
     }
 
-
-    visitFirstUrlEditPage()
+    cy.visitCampaign()
+    cy.get('button[data-for-region="urls"]').click()
+    cy.contains(oldUrlName).click()
     openEditPage()
 
     const editURL = () => {
@@ -39,7 +43,7 @@ Cypress.Commands.add('editURL', editURLInput => {
         } else {
             cy.get('#inRedirect301N').check({ force: true })
         }
-    
+
         switch (seoType) {
             case 'Always':
                 cy.get('#inInSitemapA').check({ force: true })
@@ -51,13 +55,13 @@ Cypress.Commands.add('editURL', editURLInput => {
                 cy.get('#inInSitemapP').check({ force: true })
                 break;
         }
-    
+
         if (isRespondentsAlwaysNew) {
             cy.get('#inAlwaysNewY').check({ force: true })
         } else {
             cy.get('#inAlwaysNewN').check({ force: true })
         }
-    
+
         cy.get('#inSlashName').clear().type(urlName)
         cy.get('#inDescription').clear().type(description)
         cy.get('#inDefaultURL').clear().type(defaultURL)
@@ -80,7 +84,7 @@ Cypress.Commands.add('editURL', editURLInput => {
         } else {
             cy.get('#inRedirect301N').should('be.checked')
         }
-    
+
         switch (seoType) {
             case 'Always':
                 cy.get('#inInSitemapA').should('be.checked')
@@ -92,13 +96,13 @@ Cypress.Commands.add('editURL', editURLInput => {
                 cy.get('#inInSitemapP').should('be.checked')
                 break;
         }
-    
+
         if (isRespondentsAlwaysNew) {
             cy.get('#inAlwaysNewY').should('be.checked')
         } else {
             cy.get('#inAlwaysNewN').should('be.checked')
-        }        
-        
+        }
+
         cy.get('#inSlashName').should('have.value', urlName)
         cy.get('#inDescription').should('have.value', description)
         cy.get('#inDefaultURL').should('have.value', defaultURL)
