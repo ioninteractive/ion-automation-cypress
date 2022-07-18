@@ -6,7 +6,7 @@ describe("Tests - Widget Page", () => {
     })
     it("Tests - Create a new widget with new category", () => {
         const input = {
-            name: faker.random.uuid(),
+            name: faker.datatype.uuid(),
             category: faker.random.words(1),
             code: 'some-code',
             variables: ['variable1', 'variable2']
@@ -16,7 +16,7 @@ describe("Tests - Widget Page", () => {
     })
     it("Tests - Create a new widget selecting first category", () => {
         const input = {
-            name: faker.random.uuid(),
+            name: faker.datatype.uuid(),
             category: null,
             code: 'some-code',
             variables: ['variable1', 'variable2']
@@ -25,8 +25,8 @@ describe("Tests - Widget Page", () => {
         cy.createWidget(input)
     })
     it("Tests - Create and delete a widget", () => {
-        const name = faker.random.uuid()
-        const category = faker.random.uuid()
+        const name = faker.datatype.uuid()
+        const category = faker.datatype.uuid()
         const input = {
             name,
             category,
@@ -38,8 +38,8 @@ describe("Tests - Widget Page", () => {
         cy.deleteWidget({ name, category })
     })
     it("Tests - Delete an unused category", () => {
-        const name = faker.random.uuid()
-        const category = faker.random.uuid()
+        const name = faker.datatype.uuid()
+        const category = faker.datatype.uuid()
         const input = {
             name,
             category,

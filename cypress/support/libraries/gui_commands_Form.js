@@ -2,10 +2,7 @@
 const faker = require('faker')
 
 Cypress.Commands.add('visitFormsCategories', () => {
-    const librariesMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[3]'
-    cy.xpath(librariesMenuItemXPath).click()
-    const formsMenuItemXPath = '//*[@id="header"]/nav[1]/ul/li[3]/div/ul/li[4]/a'
-    cy.xpath(formsMenuItemXPath).click()
+    cy.visit('/Admin/Libraries/FormCategories')
 })
 
 Cypress.Commands.add('createFormCategory', input => {
@@ -94,8 +91,8 @@ Cypress.Commands.add('editForm', input => {
     cy.contains(description).should('exist')
 })
 
-Cypress.Commands.add('addFormField', input => {
-    const { category, form, dataFieldCategoryIndex, dataFieldIndex } = input
+Cypress.Commands.add('addFormFields', input => {
+    const { category, form, formFields } = input
     const visitForm = () => {
         cy.visitFormsCategories()
         cy.contains(category).click()
@@ -103,22 +100,29 @@ Cypress.Commands.add('addFormField', input => {
     }
     visitForm()
 
-    const newFormFieldButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section[2]/nav/a'
-    cy.xpath(newFormFieldButtonXPath).click()
+    formFields.forEach(formField => {
+        const { dataFieldCategory, dataField } = formField
+        const newFormFieldButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section[2]/nav/a'
+        cy.xpath(newFormFieldButtonXPath).click()
 
-    cy.xpath(`//*[@id="DataFieldCategory"]/option[${dataFieldCategoryIndex + 1}]`).then(option => option.text()).as('expectedDataFieldCategory')
-    cy.get('#DataFieldCategory').select(dataFieldCategoryIndex)
-    cy.xpath(`//*[@id="DataField"]/option[${dataFieldIndex + 1}]`).then(option => option.text()).as('expectedDataField')
-    cy.get('#DataField').select(dataFieldIndex)
+        cy.get('#DataFieldCategory').select(dataFieldCategory)
+        cy.get('#DataField').select(dataField)
+        cy.get('#LabelText').type(`${dataField} label`)
+        cy.get('#HintText').type(`${dataField} hint`)
 
-    const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/form/div/input'
-    cy.xpath(saveButtonXPath).click()
+        const saveButtonXPath = '//*[@id="wrapper"]/div[3]/div[1]/form/div/input'
+        cy.xpath(saveButtonXPath).click()
+    })
 
     visitForm()
 
-    cy.get('@expectedDataField').then(expectedDataField => {
-        cy.contains(expectedDataField).last().click()
-        cy.get('#DataField option:selected').should('have.text', expectedDataField)
-        cy.get('@expectedDataFieldCategory').then(expectedDataFieldCategory => cy.get('#DataFieldCategory option:selected').should('have.text', expectedDataFieldCategory))
+    formFields.forEach(formField => {
+        const { dataFieldCategory, dataField } = formField
+        cy.contains(dataField).last().click()
+        cy.get('#DataField option:selected').should('have.text', dataField)
+        cy.get('#DataFieldCategory option:selected').should('have.text', dataFieldCategory)
+        cy.get('#LabelText').should('have.value', `${dataField} label`)
+        cy.get('#HintText').should('have.value', `${dataField} hint`)
+        cy.go('back')
     })
 })

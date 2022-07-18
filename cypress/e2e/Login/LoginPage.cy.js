@@ -22,7 +22,7 @@ describe("Tests Login Page", () => {
 
     it("Trying to authenticate with incorrect User ID", () => {
         const loginIncorrectUser = {
-            userId: `${faker.random.uuid()}`,
+            userId: `${faker.datatype.uuid()}`,
             password: faker.random.words(1)
         }
 
