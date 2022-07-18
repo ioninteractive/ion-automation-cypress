@@ -30,12 +30,12 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
             .trigger("mousedown", { which: 1 })
             .trigger("mousemove", { ...positionToDropLibraryForm })
             .trigger("mouseup", { which: 1, force: true, ...positionToDropLibraryForm })
-        
+
         cy.contains(createFormData.category).click({ force: true })
         cy.contains(createFormData.label).click()
         cy.get('#btn_save_editor').click({ force: true })
     }
-    
+
     const assertFormFieldsArePresentInCreative = () => {
         formFields.forEach(formField => {
             const label = `${formField.dataField} label`
@@ -49,7 +49,7 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
     cy.newCreative(creativeData)
     openCreativeStudio()
     addFormToCreative()
-    assertFormFieldsArePresentInCreative() 
+    assertFormFieldsArePresentInCreative()
 })
 
 Cypress.Commands.add('addImageToCreative', input => {
@@ -207,4 +207,26 @@ Cypress.Commands.add('visitLivePage', input => {
     cy.contains(creativeName).click()
     const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
     cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+})
+
+Cypress.Commands.add('setAlwaysOptimizeImage', input => {
+    const { creativeName, imageName } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('div[data-title="Optimize Image"]').click()
+    cy.get('#image-optimization-true').check({ force: true })
+    cy.get('#pe_img_shop_optimize_save').click()
+    cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('setInheritOptimizeImageBehaviorFromLibrary', input => {
+    const { creativeName, imageName } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('div[data-title="Optimize Image"]').click()
+    cy.get('#image-optimization-null').check({ force: true })
+    cy.get('#pe_img_shop_optimize_save').click()
+    cy.get('#btn_save_editor').click()
 })
