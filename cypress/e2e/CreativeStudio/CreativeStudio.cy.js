@@ -89,3 +89,22 @@ describe("Tests - Creative Studio - Actions", () => {
         cy.assertDownloadPageAsPdfAction({ creativeName, imageName, fileName, pageTextContent })
     })
 })
+
+const microTheme = {
+    category: 'Images',
+    value: 'Center Align',
+    classes: ['image-c']
+}
+describe("Tests - Creative Studio - Micro-Themes", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Add micro-theme to creative", () => {
+        cy.visitCreativeStudio({ creativeName })
+        cy.openImageEditor({ imageName })
+        cy.addMicroTheme(microTheme)
+        microTheme.classes.forEach(cl => cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).should('have.class', cl))
+        cy.visitLivePage({ creativeName })
+        microTheme.classes.forEach(cl => cy.get(`img[src*="${imageName}"]`).should('have.class', cl))
+    })
+})
