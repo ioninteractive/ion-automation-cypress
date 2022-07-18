@@ -73,3 +73,12 @@ Cypress.Commands.add("userResetIncorrect", resetIncorrectUser => {
     cy.get('#txtuserid').type(resetIncorrectUser.userId)
     cy.get('button[type=submit]').click()
 })
+
+//This will be implemented
+/*Cypress.Commands.add('loginSSO', () => {
+    cy.visit('Admin/Login')
+
+    cy.get('#txtuserid').type(Cypress.env('userId'))
+    cy.get('#txtpassword').type(Cypress.env('password'))
+    cy.get('button[type=submit]').click()
+})*/

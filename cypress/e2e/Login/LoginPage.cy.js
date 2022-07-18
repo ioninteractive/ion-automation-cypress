@@ -4,7 +4,7 @@ const faker = require('faker')
 
 describe("Tests Login Page", () => {
 
-    it("Test - Tryng to autenticate with correct User ID and password", () => {
+    it("Test - Trying to authenticate with the correct User ID and password", () => {
         cy.login()
 
         cy.get('h1')
@@ -64,3 +64,17 @@ describe("Tests Login Page", () => {
     });
 
 });
+
+//This will be implemented
+/*it(" SSO Test - Trying to authenticate with the correct User ID and password", () => {
+    cy.loginStaySigned()
+
+    //to do improve condition of ::before and ::after
+    cy.get('span')
+        .should('have.class', 'slider round')
+
+    cy.get('button[type=submit]').click()
+
+    cy.get('h1')
+        .should("contain", `Welcome back, ${Cypress.env('firstName')}.`);
+});*/

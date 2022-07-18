@@ -7,7 +7,9 @@
     "test": "npx cypress run --headless --browser chrome --config-file ./cypress.qaautomation.config.js",
     "open": "cypress open --config-file ./cypress.qaautomation.config.js",
     "test:qa": "npx cypress run --headless --browser chrome --config-file ./cypress.qa.config.js",
-    "open:qa": "cypress open --config-file ./cypress.qa.config.js"
+    "open:qa": "cypress open --config-file ./cypress.qa.config.js",
+    "test:sso": "npx cypress run --headless --browser chrome --config-file ./cypress.qa.config.js",
+    "open:sso": "cypress open --config-file ./cypress.qa.config.js"
   },
   "keywords": [
     "cypress",
