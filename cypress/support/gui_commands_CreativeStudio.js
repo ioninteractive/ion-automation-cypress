@@ -4,7 +4,7 @@
 import 'cypress-iframe'
 
 Cypress.Commands.add('addLibraryFormToCreative', input => {
-    const { createFormData, formFields, creativeData } = input
+    const { createFormData, formFields, creativeName } = input
     const createForm = () => {
         cy.createForm(createFormData)
         cy.addFormFields({
@@ -12,13 +12,6 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
             form: createFormData.label,
             formFields
         })
-    }
-
-    const openCreativeStudio = () => {
-        const secondPage = '//*[@id="wrapper"]/div[3]/div[1]/div/div/section/div[2]/ul/li[3]/div/div/div[2]/h4/a'
-        cy.xpath(secondPage).click()
-        const timeToLoadCreativeStudio = 5000
-        cy.wait(timeToLoadCreativeStudio)
     }
 
     const addFormToCreative = () => {
@@ -46,8 +39,7 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
     }
 
     createForm()
-    cy.newCreative(creativeData)
-    openCreativeStudio()
+    cy.visitCreativeStudio({ creativeName })
     addFormToCreative()
     assertFormFieldsArePresentInCreative()
 })
@@ -229,4 +221,22 @@ Cypress.Commands.add('setInheritOptimizeImageBehaviorFromLibrary', input => {
     cy.get('#image-optimization-null').check({ force: true })
     cy.get('#pe_img_shop_optimize_save').click()
     cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('setImageAltText', input => {
+    const { creativeName, imageName, altText } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('span[data-liveball-view-action="edit-alt-text"]').click()
+    cy.get('#altText').type(altText)
+    cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('setImageRole', input => {
+    const { creativeName, imageName, role } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains('Accessibility').click()
+    cy.get('#role-inline-select').select(role)
 })
