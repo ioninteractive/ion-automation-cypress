@@ -42,9 +42,7 @@ describe("Tests - Creative Studio - Actions", () => {
             annotation: faker.random.words(10)
         })
         cy.createEngagedCreative({ creativeName })
-        const getCreativeIdFromUrl = url => url.split('/').pop()
-        cy.get('#buttonCreativePreview').invoke('attr', 'href').then(getCreativeIdFromUrl).as('creativeId')
-        cy.get('@creativeId').then(creativeId => cy.createURL({ urlCreate: faker.datatype.uuid(), creativeId }))
+        cy.createURL({ name: faker.datatype.uuid(), creativeName })
         cy.visitCreativeStudio({ creativeName })
         cy.addImageToCreative({ imageCategory, imageName })
         cy.logout()
@@ -87,5 +85,60 @@ describe("Tests - Creative Studio - Actions", () => {
         const fileName = 'page-as-pdf.pdf'
         cy.addDownloadPageAsPdfAction({ fileName })
         cy.assertDownloadPageAsPdfAction({ creativeName, imageName, fileName, pageTextContent })
+    })
+})
+
+const microTheme = {
+    category: 'Images',
+    value: 'Center Align',
+    classes: ['image-c']
+}
+describe("Tests - Creative Studio - Micro-Themes", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Add micro-theme to creative", () => {
+        cy.visitCreativeStudio({ creativeName })
+        cy.openImageEditor({ imageName })
+        cy.addMicroTheme(microTheme)
+        microTheme.classes.forEach(cl => cy.iframe('#page_iframe').find(`img[src*="${imageName}"]`).should('have.class', cl))
+        cy.visitLivePage({ creativeName })
+        microTheme.classes.forEach(cl => cy.get(`img[src*="${imageName}"]`).should('have.class', cl))
+    })
+})
+
+describe("Tests - Creative Studio - Optimized Images", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Check source of optimized image", () => {
+        cy.visitLivePage({ creativeName })
+        cy.url().as('livePageUrl')
+        cy.get(`img[src*="${imageName}"]`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://iuploads.scribblecdn.net/'), 'original images should be hosted by iuploads.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        })
+        cy.get(`img[src*="${imageName}"]`).then($img => $img.attr('id')).as('imgId')
+        
+        cy.setAlwaysOptimizeImage({ creativeName, imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://ion-imagesizer.scribblecdn.net/'), 'optimized images should be hosted by ion-imagesizer.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+        
+        cy.setInheritOptimizeImageBehaviorFromLibrary({ creativeName, imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://iuploads.scribblecdn.net/'), 'original images should be hosted by iuploads.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+        
+        cy.optimizeImage({ category: imageCategory, name: imageName })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('src').startsWith('https://ion-imagesizer.scribblecdn.net/'), 'optimized images should be hosted by ion-imagesizer.scribblecdn.net')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
     })
 })

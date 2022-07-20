@@ -171,19 +171,11 @@ Cypress.Commands.add('pageLanguage', languagePage => {
     cy.get('#DefaultLanguage').select(9)
 })
 
-/*/// <reference types="Cypress"/>
-require('cypress-xpath')
-
-const faker = require('faker')
-
-Cypress.Commands.add('imageActionURL', creativeName => {
-
-    cy.visit('/Admin/Creative/1518')
-
-    cy.get("#buttonCreativePreview").click()
-    cy.xpath("//button[@class='c-button preview-button']").click
-    cy.scrollTo('bottom')
-    cy.get("#ball_it7Imrv6UE2fQMbbkKXNKQ").click()
-    cy.get("#ball_inneriCvIQOvUu3UuyOVIaConCg").click()
-
-})*/
+Cypress.Commands.add('deleteCreative', creative => {
+    const { name } = creative
+    cy.visitCampaign()
+    cy.xpath('//button[@data-for-region="creatives"]').wait(500).click({ force: true })
+    const clickOnDeleteButton = () => cy.contains(name).parent().siblings().last().children().first().click()
+    clickOnDeleteButton()
+    cy.get("#formDeleteSubmit").click({ force: true })
+})

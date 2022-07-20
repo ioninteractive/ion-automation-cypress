@@ -30,12 +30,12 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
             .trigger("mousedown", { which: 1 })
             .trigger("mousemove", { ...positionToDropLibraryForm })
             .trigger("mouseup", { which: 1, force: true, ...positionToDropLibraryForm })
-        
+
         cy.contains(createFormData.category).click({ force: true })
         cy.contains(createFormData.label).click()
         cy.get('#btn_save_editor').click({ force: true })
     }
-    
+
     const assertFormFieldsArePresentInCreative = () => {
         formFields.forEach(formField => {
             const label = `${formField.dataField} label`
@@ -49,7 +49,7 @@ Cypress.Commands.add('addLibraryFormToCreative', input => {
     cy.newCreative(creativeData)
     openCreativeStudio()
     addFormToCreative()
-    assertFormFieldsArePresentInCreative() 
+    assertFormFieldsArePresentInCreative()
 })
 
 Cypress.Commands.add('addImageToCreative', input => {
@@ -108,10 +108,7 @@ Cypress.Commands.add('addExternalUrlAction', input => {
 
 Cypress.Commands.add('assertExternalUrlAction', input => {
     const { creativeName, imageName, externalUrl } = input
-    cy.visitCampaign()
-    cy.contains(creativeName).click()
-    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
-    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+    cy.visitLivePage({ creativeName })
     cy.get(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0)).click()
     cy.url().should('eq', externalUrl)
 })
@@ -127,10 +124,7 @@ Cypress.Commands.add('addGoToPageAction', input => {
 
 Cypress.Commands.add('assertGoToPageAction', input => {
     const { creativeName, imageName } = input
-    cy.visitCampaign()
-    cy.contains(creativeName).click()
-    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
-    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+    cy.visitLivePage({ creativeName })
     cy.url().as('landingPageUrl')
     cy.get(`img[src*="${imageName}"]`).should('be.visible').and($img => expect($img[0].naturalWidth).to.be.greaterThan(0)).click()
     const matchLandingPageSlashAnything = landingPageUrl => new RegExp(`^${landingPageUrl}\/.+$`)
@@ -149,10 +143,7 @@ Cypress.Commands.add('addDownloadFulfillmentAction', input => {
 
 Cypress.Commands.add('assertDownloadFulfillmentAction', input => {
     const { creativeName, imageName, fulfillmentName, fulfillmentFileContent } = input
-    cy.visitCampaign()
-    cy.contains(creativeName).click()
-    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
-    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+    cy.visitLivePage({ creativeName })
     cy.get(`img[src*="${imageName}"]`)
         .should('be.visible')
         .and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
@@ -187,10 +178,7 @@ Cypress.Commands.add('addDownloadPageAsPdfAction', input => {
 
 Cypress.Commands.add('assertDownloadPageAsPdfAction', input => {
     const { creativeName, imageName, fileName, pageTextContent } = input
-    cy.visitCampaign()
-    cy.contains(creativeName).click()
-    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
-    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+    cy.visitLivePage({ creativeName })
     cy.get(`img[src*="${imageName}"]`)
         .should('be.visible')
         .and($img => expect($img[0].naturalWidth).to.be.greaterThan(0))
@@ -203,4 +191,42 @@ Cypress.Commands.add('assertDownloadPageAsPdfAction', input => {
                 })
             cy.task('getPdfContent', `./downloads/${fileName}`).then(content => assert.isTrue(content.text.includes(pageTextContent), 'downloaded page as pdf should contain image that was inserted'))
         })
+})
+
+Cypress.Commands.add('addMicroTheme', microTheme => {
+    const { category, value } = microTheme
+    const addMicroThemeButtonXPath = '//*[@id="pe_workbench_elements"]/div[2]/div[7]/div'
+    cy.xpath(addMicroThemeButtonXPath).click()
+    cy.get('select[data-liveball-view-action="pick-tag"]').select(category)
+    cy.get('select[data-liveball-view-action="pick-theme"]').select(value)
+})
+
+Cypress.Commands.add('visitLivePage', input => {
+    const { creativeName } = input
+    cy.visitCampaign()
+    cy.contains(creativeName).click()
+    const livePageUrlXPath = '//*[@id="wrapper"]/div[3]/div[1]/div/section/div[4]/div[2]/ul/li[1]/div[2]/span'
+    cy.xpath(livePageUrlXPath).then($el => cy.visit($el.text()))
+})
+
+Cypress.Commands.add('setAlwaysOptimizeImage', input => {
+    const { creativeName, imageName } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('div[data-title="Optimize Image"]').click()
+    cy.get('#image-optimization-true').check({ force: true })
+    cy.get('#pe_img_shop_optimize_save').click()
+    cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('setInheritOptimizeImageBehaviorFromLibrary', input => {
+    const { creativeName, imageName } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('div[data-title="Optimize Image"]').click()
+    cy.get('#image-optimization-null').check({ force: true })
+    cy.get('#pe_img_shop_optimize_save').click()
+    cy.get('#btn_save_editor').click()
 })

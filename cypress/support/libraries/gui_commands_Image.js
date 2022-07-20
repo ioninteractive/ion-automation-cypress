@@ -28,3 +28,18 @@ Cypress.Commands.add('uploadImage', input => {
     cy.get('#inReviewCategory option:selected').should('have.value', category)
     assertImageWasUploaded()
 })
+
+Cypress.Commands.add('optimizeImage', image => {
+    const { category, name } = image
+    cy.visitImages()
+    cy.wait(3000)
+    cy.get('#inReviewCategory').select(category)
+    cy.wait(3000)
+    cy.get('#inChangeCategory option:selected').should('have.text', category)
+    cy.contains(name).click()
+    cy.get('#ComboShouldBeOptimized').select('Use optimized image')
+    cy.get('input[value="Update"]').click()
+    cy.reload(true)
+    cy.get('#inReviewCategory option:selected').should('have.text', category)
+    cy.get('#ComboShouldBeOptimized option:selected').should('have.text', 'Use optimized image')
+})
