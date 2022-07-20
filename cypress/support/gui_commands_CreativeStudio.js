@@ -230,3 +230,21 @@ Cypress.Commands.add('setInheritOptimizeImageBehaviorFromLibrary', input => {
     cy.get('#pe_img_shop_optimize_save').click()
     cy.get('#btn_save_editor').click()
 })
+
+Cypress.Commands.add('setImageAltText', input => {
+    const { creativeName, imageName, altText } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains(imageName).click()
+    cy.get('span[data-liveball-view-action="edit-alt-text"]').click()
+    cy.get('#altText').type(altText)
+    cy.get('#btn_save_editor').click()
+})
+
+Cypress.Commands.add('setImageRole', input => {
+    const { creativeName, imageName, role } = input
+    cy.visitCreativeStudio({ creativeName })
+    cy.openImageEditor({ imageName })
+    cy.contains('Accessibility').click()
+    cy.get('#role-inline-select').select(role)
+})

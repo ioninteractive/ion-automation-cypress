@@ -142,3 +142,43 @@ describe("Tests - Creative Studio - Optimized Images", () => {
         }))
     })
 })
+
+describe("Tests - Creative Studio - Image' alt text and role", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Image's alt text", () => {
+        const altText = 'this is the alt text for the tested image'
+        cy.visitLivePage({ creativeName })
+        cy.url().as('livePageUrl')
+        cy.get(`img[src*="${imageName}"]`).then($img => {
+            assert.isTrue(($img.attr('alt') ?? '').trim() == false, 'should not have an alt text when alt text was not set')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        })
+        cy.get(`img[src*="${imageName}"]`).then($img => $img.attr('id')).as('imgId')
+        
+        cy.setImageAltText({ creativeName, imageName, altText })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('alt') === altText, 'should match alt text that was set')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+    })
+    it("Image's role", () => {
+        const role = 'button'
+        cy.visitLivePage({ creativeName })
+        cy.url().as('livePageUrl')
+        cy.get(`img[src*="${imageName}"]`).then($img => {
+            assert.isTrue(($img.attr('role') ?? '').trim() == false, 'should not have a role when role was not set')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        })
+        cy.get(`img[src*="${imageName}"]`).then($img => $img.attr('id')).as('imgId')
+        
+        cy.setImageRole({ creativeName, imageName, role: role })
+        cy.get('@livePageUrl').then(livePageUrl => cy.visit(livePageUrl))
+        cy.get('@imgId').then(imgId => cy.get(`#${imgId}`).then($img => {
+            assert.isTrue($img.attr('role') === role, 'should match role that was set')
+            expect($img[0].naturalWidth).to.be.greaterThan(0)
+        }))
+    })
+})
