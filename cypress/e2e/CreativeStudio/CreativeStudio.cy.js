@@ -9,28 +9,6 @@ const getFileName = path => path.split('/').pop()
 const imageName = getFileName(imagePath)
 const imageCategory = faker.datatype.uuid().replaceAll('-', '')
 const creativeName = faker.datatype.uuid()
-describe("Tests - Creative Studio - Form", () => {
-    beforeEach(() => {
-        cy.loginEmail()
-    })
-    it("Add form to creative", () => {
-        const createFormData = { 
-            category: faker.datatype.uuid(),
-            label: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-        const formFields = [
-            { dataFieldCategory: 'Contact info', dataField: 'First name' },
-            { dataFieldCategory: 'Contact info', dataField: 'Email address' },
-            { dataFieldCategory: 'Contact info (address)', dataField: 'City' },
-        ]
-        const creativeData = {
-            name: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-        cy.addLibraryFormToCreative({ createFormData, formFields, creativeData })               
-    })
-})
 
 describe("Tests - Creative Studio - Actions", () => {
     before(() => {
@@ -85,6 +63,25 @@ describe("Tests - Creative Studio - Actions", () => {
         const fileName = 'page-as-pdf.pdf'
         cy.addDownloadPageAsPdfAction({ fileName })
         cy.assertDownloadPageAsPdfAction({ creativeName, imageName, fileName, pageTextContent })
+    })
+})
+
+describe("Tests - Creative Studio - Form", () => {
+    beforeEach(() => {
+        cy.loginEmail()
+    })
+    it("Add form to creative", () => {
+        const createFormData = { 
+            category: faker.datatype.uuid(),
+            label: faker.datatype.uuid(),
+            description: faker.random.words(10)
+        }
+        const formFields = [
+            { dataFieldCategory: 'Contact info', dataField: 'First name' },
+            { dataFieldCategory: 'Contact info', dataField: 'Email address' },
+            { dataFieldCategory: 'Contact info (address)', dataField: 'City' },
+        ]
+        cy.addLibraryFormToCreative({ createFormData, formFields, creativeName })               
     })
 })
 
