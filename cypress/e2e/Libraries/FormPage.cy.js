@@ -1,37 +1,42 @@
 const faker = require('faker')
 
+const formCategory = {
+    category : faker.datatype.uuid(),
+    description: faker.random.words(10)
+}
+const form = {
+    label : faker.datatype.uuid(),
+    description: faker.random.words(10)
+}
 describe("Tests - Form Page", () => {
     beforeEach(() => {
         cy.loginEmail()
     })
     it("Tests - Create a form category", () => {
-        cy.createFormCategory({ category: faker.datatype.uuid(), description: faker.random.words(10) })
+        cy.createFormCategory(formCategory)
     })
-    it("Tests - Create and edit a form category", () => {
-        const createCategoryData = { category: faker.datatype.uuid(), description: faker.random.words(10) }
-        cy.createFormCategory(createCategoryData)
-        cy.editFormCategory({ oldCategory: createCategoryData.category, category: faker.datatype.uuid(), description: faker.random.words(10) })
+    it("Tests - Edit a form category", () => {
+        const newCategory = faker.datatype.uuid()
+        cy.editFormCategory({ oldCategory: formCategory.category, category: newCategory, description: faker.random.words(10) })
+        formCategory.category = newCategory
     })
     it("Tests - Create a form", () => {
-        cy.createForm({ label: faker.datatype.uuid(), description: faker.random.words(10) })
+        cy.createForm({ ...form, category: formCategory.category })
     })
-    it("Tests - Create and edit a form", () => {
-        const createFormData = { category: faker.datatype.uuid(), label: faker.datatype.uuid(), description: faker.random.words(10) }
-        cy.createForm(createFormData)
-        cy.editForm({ category: createFormData.category, oldLabel: createFormData.label, label: faker.datatype.uuid(), description: faker.random.words(10) })
+    it("Tests - Edit a form", () => {
+        const newLabel = faker.datatype.uuid()
+        cy.editForm({ category: formCategory.category, oldLabel: form.label, label: newLabel, description: faker.random.words(10) })
+        form.label = newLabel
     })
-    it("Tests - Create a form and add form fields", () => {
-        const createFormData = { category: faker.datatype.uuid(), label: faker.datatype.uuid(), description: faker.random.words(10) }
-        cy.createForm(createFormData)
-
+    it("Tests - Add form fields to form", () => {
         const formFields = [
             { dataFieldCategory: 'Contact info', dataField: 'Job title'},
             { dataFieldCategory: 'Contact info', dataField: 'Last name' },
             { dataFieldCategory: 'Contact info (address)', dataField: 'Country' },
         ]
         cy.addFormFields({
-            category: createFormData.category,
-            form: createFormData.label,
+            category: formCategory.category,
+            form: form.label,
             formFields
         })
     })
