@@ -47,11 +47,9 @@ Cypress.Commands.add('editFormCategory', input => {
 Cypress.Commands.add('createForm', input => {
     const { label, description, category } = input
 
-    const categoryData = { category: category || faker.datatype.uuid(), description: faker.random.words(10) }
-    cy.createFormCategory(categoryData)
     const visitCategory = () => {
         cy.visitFormsCategories()
-        cy.contains(categoryData.category).click()
+        cy.contains(category).click()
     }
     visitCategory()
 
