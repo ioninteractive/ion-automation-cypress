@@ -2,108 +2,83 @@
 
 const faker = require('faker')
 
+const quickStartCreative = {
+    name: faker.datatype.uuid(),
+    description: faker.random.words(10)
+}
+const creativeFromScratch = {
+    name: faker.datatype.uuid(),
+    description: faker.random.words(10)
+}
 describe("Tests - Creative Page", () => {
     beforeEach(() => {
         cy.loginEmail()
     })
     it("Tests - Create a new Creative using a quick start", () => {
-        const creativeName = {
-            name: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-
-        cy.newCreative(creativeName);
-
-        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeName.name)
-
+        cy.newCreative(quickStartCreative)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(quickStartCreative.name).should('exist')
     })
-    it("Tests - Edit the creative created before", () => {
-        const editCreative = {
-            label: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-
-        cy.editCreative(editCreative);
-
+    it("Tests - Edit a creative created using a quick start", () => {
+        const newName = faker.datatype.uuid()
+        cy.editCreative({ oldName: quickStartCreative.name, name: newName, description: faker.random.words(10) })
+        quickStartCreative.name = newName
         cy.wait(3000)
-        cy.get('span[class="c-breadcrumbs__item"]').contains(editCreative.label)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(newName).should('exist')
 
     })
-    it("Tests - Copy a page of creative", () => {
-        const copyCreative = {
-            label: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-
-        cy.copyCreative(copyCreative);
-
-        cy.get('span[class="c-breadcrumbs__item"]').contains(copyCreative.label)
-
+    it("Tests - Delete a creative created using a quick start", () => {
+        cy.deleteCreative(quickStartCreative)
+        cy.wait(1000)
+        cy.contains(quickStartCreative.name).should('not.exist')
     })
     it("Tests - Create a new creative from scratch", () => {
-        const startCreativeFromScratch = {
-            label: faker.datatype.uuid(),
-            description: faker.random.words(10)
-        }
-
-        cy.startCreativeFromScratch(startCreativeFromScratch);
-
-        cy.get('span[class="c-breadcrumbs__item"]').contains(startCreativeFromScratch.label)
-
+        cy.startCreativeFromScratch(creativeFromScratch)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeFromScratch.name).should('exist')
     })
-    it("Tests - Deleting a creative created using a quick start", () => {
-        const deletingNewCreative = {
+    it("Tests - Delete a new creative started from scratch", () => {
+        cy.deleteCreative(creativeFromScratch)
+        cy.contains(creativeFromScratch.name).should('not.exist')
+    })
+    it("Tests - Copy a creative from same campaign", () => {
+        const newCreative = {
             name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
-        cy.deleteNewCreative(deletingNewCreative);
-
-
-        cy.wait(1000)
-        cy.contains(deletingNewCreative.name)
-            .should('not.exist')
-
+        cy.copyCreative(newCreative)
+        cy.get('span[class="c-breadcrumbs__item"]').contains(newCreative.name).should('exist')
+        cy.visitCampaign()
+        cy.contains(newCreative.name).should('exist')
     })
-    // for (let i = 0; i < 30; i++) {
-        it("Tests - To delete a creative, only.", () => {
-            cy.visitCampaign()
-
-            cy.xpath('(//span[@class="o-icon o-icon--delete"])[1]').click()
-            cy.get("#formDeleteSubmit").click({ force: true })
-        })
-    // }
-    it("Tests - Edit the creative after deleting it.", () => {
-        const editCreativeAndDelete = {
-            label: faker.datatype.uuid(),
+    it("Tests - Copy a creative from different campaign", () => {
+        const campaign = {
+            name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
-
-        cy.editCreativeAndDelete(editCreativeAndDelete);
-        cy.contains(editCreativeAndDelete.label).should('not.exist')
-
-    })
-    it("Tests - Delete a new creative started from scratch", () => {
-        const deleteCreativeStartFromScratch = {
-            label: faker.datatype.uuid(),
+        cy.createCampaign(campaign)
+        const newCreative = {
+            name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
+        cy.copyCreative({ ...newCreative, campaign: campaign.name })
 
-        cy.deleteCreativeStartFromScratch(deleteCreativeStartFromScratch);
-
-        cy.contains('Creative Start From Scratch')
-            .should('not.exist')
+        cy.get('span[class="c-breadcrumbs__item"]').contains(newCreative.name)
+        cy.visitCampaign()
+        cy.contains(newCreative.name).should('not.exist')
+        cy.visitPortfolio()
+        cy.contains(campaign.name).click()
+        cy.contains(newCreative.name).should('exist')
     })
     it("Tests - Duplicate a creative", () => {
-        const duplicateCreative = {
-            creativeName: faker.datatype.uuid()
+        const newCreative = {
+            name: faker.datatype.uuid()
         }
 
-        cy.duplicateCreative(duplicateCreative);
+        cy.duplicateCreative(newCreative);
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(duplicateCreative.creativeName)
-        cy.contains(Cypress.env('portfolioName'))
-        cy.contains(Cypress.env('campaignName'))
+        cy.get('span[class="c-breadcrumbs__item"]').contains(newCreative.name).should('exist')
+        cy.contains(Cypress.env('portfolioName')).should('exist')
+        cy.contains(Cypress.env('campaignName')).should('exist')
     })
     it('Tests - Quick Start Search - Show quick starts found', () => {
         const search = 'inf'
