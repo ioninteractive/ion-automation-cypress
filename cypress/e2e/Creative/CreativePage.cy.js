@@ -105,20 +105,30 @@ describe("Tests - Creative Page", () => {
         cy.contains(Cypress.env('portfolioName'))
         cy.contains(Cypress.env('campaignName'))
     })
-    it("Tests - Allow selection of page language", () => {
-        // const languagePage = {
-        //     nameCreative: faker.random.words(1),
-        //     creativeDescription: faker.random.words(10)
-        // }
+    it('Tests - Quick Start Search - Show quick starts found', () => {
+        const search = 'inf'
+        cy.visitCampaign()
+        cy.get('a[data-region="creative-button"]').click()
+        cy.wait(2000)
+        cy.get('#qs_search').type(search)
+        cy.wait(2000)
+        cy.get(`#qscat${search}`).children().should('have.length.gt', 0)
 
-        // cy.pageLanguage(languagePage);
+        const chooseQuickStartCategory = () => cy.get('#qs_categories').select(1)
+        chooseQuickStartCategory()
 
-        // cy.get('#DefaultLanguage').select(9).should('have.value','en')
-        // cy.get("#Create").click()
-        // cy.get('span[class="c-breadcrumbs__item"]').contains(languagePage.nameCreative)
-        // cy.xpath('//a[contains (text(),"Edit")]').click()
-        // cy.get('#DefaultLanguage').select(9).should('have.value','en')
-        // cy.get('#DefaultLanguage').select(21).should('have.value','pt')
+        cy.get('#qs_search').type(search)
+        cy.get(`#qscat${search}`).children().should('have.length.gt', 0)
+    })    
+    it('Tests - Quick Start Search - Show not found error message', () => {
+        const search = 'asdasdasddwqeqwedsq'
+        cy.visitCampaign()
+        cy.get('a[data-region="creative-button"]').click()
+        cy.wait(2000)
+        cy.get('#qs_search').type(search)
+        cy.wait(2000)
+        cy.get(`#qscat${search}`).should('not.exist')
+        cy.contains('No Quickstart were found.Try again using different terms.').should('exist')
     })
 })
 
