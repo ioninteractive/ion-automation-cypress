@@ -16,6 +16,7 @@ Cypress.Commands.add('login', () => {
     cy.get('#txtuserid').type(Cypress.env('userId'))
     cy.get('#txtpassword').type(Cypress.env('password'))
     cy.get('button[type=submit]').click()
+    cy.get('div[class="c-breadcrumbs t-admin__breadcrumbs"]').children().should('have.length', 1).first().should('have.text', 'Dashboard')
 })
 
 Cypress.Commands.add('loginEmail', () => {
