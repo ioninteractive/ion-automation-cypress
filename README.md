@@ -29,10 +29,14 @@ Welcome to Ion's automation test using Cypress.
 4.Run the tests in the VSCodeTerminal
 
 QA console
-* npm run open:qa  
+```bash
+npm run open:qa  
+```
 
 QAAutomation console
-* npm run open
+```bash
+npm run open
+```
 
 ### Who do I talk to? ###
 
