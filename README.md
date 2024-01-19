@@ -26,7 +26,7 @@ Welcome to Ion's automation test using Cypress.
   npm run e2e
   ```
 
-4.Run the tests in the VSCodeTerminal
+4. Run the tests in the VSCodeTerminal
 
 QA console
 ```bash
