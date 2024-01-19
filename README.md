@@ -36,8 +36,8 @@ QAAutomation console
 
 ### Who do I talk to? ###
 
-* [Janaína Matheus](janaina.maciel@rockcontent.com)
-* [Caique Santana](caique.santana@rockcontent.com)
+* [Janaína Matheus]
+* [Caique Santana]
 
 
 ### Who contributed to the project ###
