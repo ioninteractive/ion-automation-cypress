@@ -11,9 +11,11 @@ Cypress.Commands.add('newCreative', input => {
     cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('#qs_sources').select(0)
-    cy.get('#qs_categories').select(5)
-    cy.get('#select-qscat133-11229').click({ force: true })
+    cy.get('li[data-creative-value="Assessment"]').click()
+    cy.get('button[id="select-16212"]').click({ force: true })
+    //cy.get('#qs_sources').select(0)deprecated
+    //cy.get('#qs_categories').select(5)deprecated
+   // cy.get('#select-qscat133-11229').click({ force: true })deprecated
 
     cy.get("#inLabel").type(name)
     cy.get("#Description").type(description)

@@ -27,6 +27,7 @@ Cypress.Commands.add('editPortfolio', portfolio => {
     cy.visitPortfolios()
 
     cy.contains(oldName).click()
+    cy.get('div[class="c-action-menu"]').click()
     cy.get('a[class="c-button"]')
         .contains('Edit portfolio')
         .click()

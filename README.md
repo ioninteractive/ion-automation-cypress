@@ -26,9 +26,23 @@ Welcome to Ion's automation test using Cypress.
   npm run e2e
   ```
 
+4.Run the tests in the VSCodeTerminal
+
+QA console
+* npm run open:qa  
+
+QAAutomation console
+* npm run open
+
 ### Who do I talk to? ###
 
-* [Janaína Maciel](janaina.maciel@rockcontent.com)
-* [Nicolas Kelepuris](nicolas.kelepuris@rockcontent.com)
+* [Janaína Matheus](janaina.maciel@rockcontent.com)
 * [Caique Santana](caique.santana@rockcontent.com)
+
+
+### Who contributed to the project ###
+
+* [Caique Santana]
 * [Pedro Faria]
+* [Janaína Maciel]
+* [Nicolas Kelepuris]

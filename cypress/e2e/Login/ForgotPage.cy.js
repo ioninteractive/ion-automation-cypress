@@ -48,7 +48,8 @@ describe("Tests Login Page - Forgot your password", () => {
     it("Fill in the field with Email of a non-federated user and reset the password.", () => {
         cy.forgotPassword()
 
-        cy.get('#txtuserid').type(Cypress.env('notFederatedAccountToResetPassword'))
+        //cy.get('#txtuserid').type(Cypress.env('notFederatedAccountToResetPassword'))
+        cy.get('#txtuserid').type('janainaqaion@gmail.com')
         cy.get('button[class="reset-request-submit"]').click()
 
         cy.get('label.reset-success-title')
