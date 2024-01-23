@@ -40,7 +40,7 @@ npm run open
 
 ### Who do I talk to? ###
 
-* [Janaína Matheus]<janaina.maciel@rockcontent.com>
+* [Janaína Matheus]
 * [Caique Santana]
 
 
