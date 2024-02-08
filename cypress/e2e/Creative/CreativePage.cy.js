@@ -16,7 +16,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new Creative using a quick start", () => {
         cy.newCreative(quickStartCreative)
-        //cy.get('a[class="popoutNav-link popoutNav-link-creative"]').contains(quickStartCreative.name).should('exist')
+        cy.get('a[class="popoutNav-link popoutNav-link-creative"]').contains(quickStartCreative.name).should('exist')
     })
     it("Tests - Edit a creative created using a quick start", () => {
         const newName = faker.datatype.uuid()
@@ -39,7 +39,7 @@ describe("Tests - Creative Page", () => {
         cy.deleteCreative(creativeFromScratch)
         cy.contains(creativeFromScratch.name).should('not.exist')
     })
-    it("Tests - Copy a creative from same campaign", () => {
+    it("Tests - Copy a creative from the same campaign", () => {
         const newCreative = {
             name: faker.datatype.uuid(),
             description: faker.random.words(10)
@@ -50,7 +50,7 @@ describe("Tests - Creative Page", () => {
         cy.visitCampaign()
         cy.contains(newCreative.name).should('exist')
     })
-    it("Tests - Copy a creative from different campaign", () => {
+    it("Tests - Copy a creative from a different campaign", () => {
         const campaign = {
             name: faker.datatype.uuid(),
             description: faker.random.words(10)

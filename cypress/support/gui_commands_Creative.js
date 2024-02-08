@@ -10,18 +10,21 @@ Cypress.Commands.add('newCreative', input => {
 
     cy.visitCampaign()
 
+    //Accessing 'Add new creative' page and select it
     cy.get('a[class="c-button c-button--primary"]').click()
-    cy.get('li[data-creative-value="Assessment"]').click({ force: true })
-    cy.xpath('//button[@class="c-button c-button--save"]').click
-    //cy.get('button[id="select-16212"]').click({ force: true })
-    //cy.get('#qs_sources').select(0)deprecated
-    //cy.get('#qs_categories').select(5)deprecated
-   // cy.get('#select-qscat133-11229').click({ force: true })deprecated
+    cy.get('#templates_search').type('CLOUD: 4-Assessment Hub')
+    cy.get("#select-16212").click({ force: true })
 
+    //Filling 'New creative' page
     cy.get("#inLabel").type(name)
     cy.get("#Description").type(description)
-    cy.get('#DefaultLanguage').select(9)
+    cy.get("#Theme").select('Coastal Blue')
+    cy.get('#DefaultLanguage').select('English')
     cy.get("#Create").click()
+
+    //validating the creative generation
+    cy.get('div[class="pe-top-bar--logo"]').click({ force: true })
+
 
 })
 
@@ -41,9 +44,10 @@ Cypress.Commands.add('editCreative', creative => {
     cy.xpath(editButtonXPath).click()
 
 
-    cy.get("#Label").clear().type(name)
+    cy.get("#inLabel").clear().type(name)
     cy.get("#Description").clear().type(description)
     cy.get('#DefaultLanguage').select(9)
+    cy.get('span[class="c-input__toggle-btn"]').click()
     cy.get("#FriendlyPathURL").clear().type("/test-rules-Automation")
     cy.get('#AutoPopulateDataScope').select(2)
     for (let i = 0; i < 30; i++) {
@@ -55,7 +59,7 @@ Cypress.Commands.add('editCreative', creative => {
     }
     cy.xpath('(//textarea[@autocorrect="off"])[2]').type('<script>Test</script>')
 
-    cy.xpath("//input[@value='Save']").click()
+    cy.get('#btnSaveEdit').click()
 
 })
 
