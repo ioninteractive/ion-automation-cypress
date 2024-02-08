@@ -40,8 +40,8 @@ npm run open
 
 ### Who do I talk to? ###
 
-* [Janaína Matheus] <janaina.maciel@rockcontent.com>
-* [Caique Santana] <caique.santana@rockcontent.com>
+* <janaina.maciel@rockcontent.com>
+* <caique.santana@rockcontent.com>
 
 
 ### Contributors to the project: ###
