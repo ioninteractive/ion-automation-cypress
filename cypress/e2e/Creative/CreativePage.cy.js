@@ -8,6 +8,7 @@ const quickStartCreative = {
 }
 const creativeFromScratch = {
     name: faker.datatype.uuid(),
+    pagename: faker.datatype.uuid(),
     description: faker.random.words(10)
 }
 describe("Tests - Creative Page", () => {
@@ -33,7 +34,7 @@ describe("Tests - Creative Page", () => {
     })
     it("Tests - Create a new creative from scratch", () => {
         cy.startCreativeFromScratch(creativeFromScratch)
-        cy.get('span[class="c-breadcrumbs__item"]').contains(creativeFromScratch.name).should('exist')
+        cy.get('a[class="popoutNav-link popoutNav-link-creative').contains(creativeFromScratch.name).should('exist')
     })
     it("Tests - Delete a new creative started from scratch", () => {
         cy.deleteCreative(creativeFromScratch)

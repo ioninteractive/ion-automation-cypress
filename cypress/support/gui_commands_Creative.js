@@ -85,19 +85,27 @@ Cypress.Commands.add('copyCreative', input => {
 })
 
 Cypress.Commands.add('startCreativeFromScratch', input => {
-    const { name, description } = input
+    const { name, description, pagename } = input
     cy.visitCampaign()
 
     cy.get('a[class="c-button c-button--primary"]').click()
     cy.get('#tab_addcreative_scratch').click()
 
-    cy.xpath('/html/body/div[2]/div[3]/div[1]/form/div[1]/section[3]/div[1]/ul/li[1]').click()
-    cy.xpath('(//div[@class="CodeMirror-lines"])[1]').type("<script>Test</script>")
-    cy.xpath('(//div[@class="CodeMirror-lines"])[2]').type("<script>Test2</script>")
+    cy.get('#select-bul_test').click({ force: true })
     cy.get("#inLabel").type(name)
     cy.get("#Description").type(description)
-    cy.get('#DefaultLanguage').select(9)
+    cy.get("#Theme").select('Jana_Ion_QA (legacy)')
+    cy.get('#DefaultLanguage').select('English')
+    cy.get('#New_FriendlyPathURL').type('/testing')
     cy.get("#Create").click()
+
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+    cy.get('#tab_addpage_scratch').click()
+    cy.xpath('//img[@src="/Global/Templates/ion/bul_test/cp-1_column/cp-1_column_sm.jpg"]').click()
+    cy.get("#inLabel").type(pagename)
+    cy.get("#Create").click()
+    cy.get('div[class="pe-top-bar--logo"]').click({ force: true })
 
 })
 
