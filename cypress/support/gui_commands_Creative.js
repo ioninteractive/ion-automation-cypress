@@ -77,9 +77,11 @@ Cypress.Commands.add('copyCreative', input => {
     cy.get('#tab_addcreative_copy').click()
 
     cy.get('#campaigns').select(Cypress.env('campaignName'))
-    cy.get('#creatives').select(1)
+    cy.get('#creatives_search').type('automated test - copy')
+    cy.get("#select-11650").click({ force: true })
     cy.get("#inLabel").type(name)
     cy.get("#Description").type(description)
+    cy.get("#Theme").select('Coastal Blue')
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 })
