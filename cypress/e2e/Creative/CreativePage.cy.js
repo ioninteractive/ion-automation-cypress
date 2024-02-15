@@ -40,14 +40,14 @@ describe("Tests - Creative Page", () => {
         cy.deleteCreative(creativeFromScratch)
         cy.contains(creativeFromScratch.name).should('not.exist')
     })
-    it("Tests - Copy a creative from the same campaign", () => {
+    it("Tests - Copy a creative from the same campaign - my creatives tab", () => {
         const newCreative = {
             name: faker.datatype.uuid(),
             description: faker.random.words(10)
         }
 
         cy.copyCreative(newCreative)
-        cy.get('span[class="c-breadcrumbs__item"]').contains(newCreative.name).should('exist')
+        cy.get('a[class="popoutNav-link popoutNav-link-creative').contains(newCreative.name).should('exist')
         cy.visitCampaign()
         cy.contains(newCreative.name).should('exist')
     })
@@ -63,7 +63,7 @@ describe("Tests - Creative Page", () => {
         }
         cy.copyCreative({ ...newCreative, campaign: campaign.name })
 
-        cy.get('span[class="c-breadcrumbs__item"]').contains(newCreative.name)
+        cy.get('a[class="popoutNav-link popoutNav-link-creative').contains(newCreative.name)
         cy.visitCampaign()
         cy.contains(newCreative.name).should('not.exist')
         cy.visitPortfolio()

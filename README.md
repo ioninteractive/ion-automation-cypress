@@ -47,6 +47,8 @@ npm run open
 ### Contributors to the project: ###
 
 * [Caique Santana]
-* [Pedro Faria]
 * [Janaína Maciel]
 * [Nicolas Kelepuris]
+* [Pedro Faria]
+
+
