@@ -127,7 +127,7 @@ Cypress.Commands.add('duplicateCreative', creative => {
     cy.xpath('//button[@data-action="confirmDuplicateCreative"]').should('be.visible').click({ force: true })
 
 
-    cy.wait(2000)
+    //cy.wait(10000)
     cy.contains(creative.name).click({ force: true })
 })
 
