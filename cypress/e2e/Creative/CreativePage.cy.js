@@ -83,28 +83,27 @@ describe("Tests - Creative Page", () => {
     })
     it('Tests - Quick Start Search - Show quick starts found', () => {
         const search = 'inf'
+        const searched = 'Infographic'
         cy.visitCampaign()
         cy.get('a[data-region="creative-button"]').click()
         cy.wait(2000)
-        cy.get('#qs_search').type(search)
+        cy.get('#templates_search').type(searched)
         cy.wait(2000)
-        cy.get(`#qscat${search}`).children().should('have.length.gt', 0)
+        cy.get('p[title]').contains(searched).should('exist')
+        //cy.get(`p[title]${searched}`).children().should('have.length.gt', 0)
 
-        const chooseQuickStartCategory = () => cy.get('#qs_categories').select(1)
-        chooseQuickStartCategory()
-
-        cy.get('#qs_search').type(search)
-        cy.get(`#qscat${search}`).children().should('have.length.gt', 0)
+        
     })    
     it('Tests - Quick Start Search - Show not found error message', () => {
         const search = 'asdasdasddwqeqwedsq'
         cy.visitCampaign()
         cy.get('a[data-region="creative-button"]').click()
         cy.wait(2000)
-        cy.get('#qs_search').type(search)
+        cy.get('#templates_search').type(search)
         cy.wait(2000)
-        cy.get(`#qscat${search}`).should('not.exist')
-        cy.contains('No Quickstart were found.Try again using different terms.').should('exist')
+        //cy.get(`#qscat${search}`).should('not.exist')
+        cy.contains('No creatives found for this filter.').should('exist')
+        cy.contains('Please, try again using different filters.').should('exist')
     })
 })
 
