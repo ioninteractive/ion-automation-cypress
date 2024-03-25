@@ -10,7 +10,7 @@ module.exports = defineConfig({
     baseUrl: 'https://qa.postclickmarketing.com/',
     env: JSON.parse(fs.readFileSync('./cypress.qa.env.json')),
     chromeWebSecurity: false,
-    numTestsKeptInMemory: 50,
+    numTestsKeptInMemory: 10,
     defaultCommandTimeout: 50000
   },
 })
