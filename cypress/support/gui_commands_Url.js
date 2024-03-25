@@ -1,19 +1,20 @@
 Cypress.Commands.add('createURL', input => {
     const { name, creativeName } = input
     cy.visitCampaign()
-
     cy.xpath('//a[@data-region="url-button"]').click({ force: true })
-    cy.get('#inDomain').select(Cypress.env('domainName'))
+    //cy.get('#inDomain').select(Cypress.env('domainName'))
+    cy.get('#inDomain').select('qa.postclickmarketing.com')
     cy.get('#inSlashName').type(name)
     cy.get('#inMediaType').select('Banner/Display')
     cy.get('#inVehicle').select('Email')
-    if (creativeName) {
+    /*if (creativeName) {
         cy.contains(creativeName).click({ force: true })
     } else {
         const firstCreativeXPath = '/html/body/div[4]/div[3]/div[1]/form/section[2]/div/div[2]/ul/li[1]'
         cy.xpath(firstCreativeXPath).click({ force: true })
-    }
+    }*/
     cy.xpath('//input[@type="submit"]').click({ force: true })
+    cy.contains(name).should('exist')
 })
 
 Cypress.Commands.add('deleteUrl', url => {
@@ -25,6 +26,8 @@ Cypress.Commands.add('deleteUrl', url => {
     cy.get("#formDeleteSubmit").click({ force: true })
 })
 
+
+// I need to review this carefully and why it is executing twice in different test cases 
 Cypress.Commands.add('editURL', editURLInput => {
     const { oldUrlName, urlName, isRedirectType301, seoType, isRespondentsAlwaysNew, description, defaultURL, sitemapPriority, mediaTypeIndex, vehicleIndex, domainIndex } = editURLInput
     const openEditPage = () => {

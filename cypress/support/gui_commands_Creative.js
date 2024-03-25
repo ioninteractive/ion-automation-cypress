@@ -23,7 +23,7 @@ Cypress.Commands.add('newCreative', input => {
     cy.get("#Create").click()
 
     //validating the creative generation
-    cy.get('div[class="pe-top-bar--logo"]').click({ force: true })
+    cy.get('div[class="pe-top-bar--logo"]').click({ force: true }) //<----------------- Insert a condition in case the Cookie banner appear.  
 
 
 })
