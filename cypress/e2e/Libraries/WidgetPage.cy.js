@@ -51,4 +51,6 @@ describe("Tests - Widget Page", () => {
         cy.deleteWidget({ name, category })
         cy.deleteCategory({ category })
     })
+
+    //warnings message scenario
 })

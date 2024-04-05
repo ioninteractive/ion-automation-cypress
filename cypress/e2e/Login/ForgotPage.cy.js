@@ -55,4 +55,5 @@ describe("Tests Login Page - Forgot your password", () => {
         cy.get('label.reset-success-title')
             .should('be.visible')
     })
+
 })
