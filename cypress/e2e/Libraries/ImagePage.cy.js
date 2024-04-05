@@ -23,3 +23,6 @@ describe("Tests - Image page", () => {
         })
     })
 })
+
+
+//Implement deleting images, moving to another category, warning messages, and updating image scenarios

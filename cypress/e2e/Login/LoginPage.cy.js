@@ -65,6 +65,13 @@ describe("Tests Login Page", () => {
 
 });
 
+//Change your password scenario - only the console's owner can do this action
+
+
+
+
+
+
 //This will be implemented
 /*it(" SSO Test - Trying to authenticate with the correct User ID and password", () => {
     cy.loginStaySigned()
