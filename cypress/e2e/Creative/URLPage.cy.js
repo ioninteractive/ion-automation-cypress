@@ -20,7 +20,9 @@ describe("Tests - URL", () => {
         cy.get('button[data-for-region="urls"]').click()
         cy.contains(url.name).should('exist')
     })
-    editUrlInputs.forEach(input => it("Tests - Edit URL", () => cy.editURL(input)))
+    editUrlInputs.forEach(input => 
+        it("Tests - Edit URL", () => cy.editURL(input)))
+
     it("Tests - Delete URL", () => {
         cy.deleteUrl({ name: url.name })
 
@@ -35,13 +37,13 @@ const urlName = faker.datatype.uuid()
 describe("Tests - URL with creative", () => {
     before(() => {
         cy.loginEmail()
-        cy.createEngagedCreative({ creativeName })
+        cy.createEngagedCreative({ creativeName }) //<------------------- Change this because cookies banner is in the way
         cy.logout()
     })
     beforeEach(() => {
         cy.loginEmail()
     })
-    it("Tests - Create a URL and then add a engaged creative", () => {
+    it("Tests - Create a URL and then add an engaged creative", () => {
         cy.createURL({ name: urlName })
 
         const creativeWeight = 7

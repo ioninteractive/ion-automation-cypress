@@ -23,7 +23,7 @@ Cypress.Commands.add('newCreative', input => {
     cy.get("#Create").click()
 
     //validating the creative generation
-    cy.get('div[class="pe-top-bar--logo"]').click({ force: true })
+    cy.get('div[class="pe-top-bar--logo"]').click({ force: true }) //<----------------- Insert a condition in case the Cookie banner appear.  
 
 
 })
@@ -77,9 +77,11 @@ Cypress.Commands.add('copyCreative', input => {
     cy.get('#tab_addcreative_copy').click()
 
     cy.get('#campaigns').select(Cypress.env('campaignName'))
-    cy.get('#creatives').select(1)
+    cy.get('#creatives_search').type('automated test - copy')
+    cy.get("#select-11650").click({ force: true })
     cy.get("#inLabel").type(name)
     cy.get("#Description").type(description)
+    cy.get("#Theme").select('Coastal Blue')
     cy.get('#DefaultLanguage').select(9)
     cy.get("#Create").click()
 })
@@ -125,7 +127,7 @@ Cypress.Commands.add('duplicateCreative', creative => {
     cy.xpath('//button[@data-action="confirmDuplicateCreative"]').should('be.visible').click({ force: true })
 
 
-    cy.wait(2000)
+    //cy.wait(10000)
     cy.contains(creative.name).click({ force: true })
 })
 
