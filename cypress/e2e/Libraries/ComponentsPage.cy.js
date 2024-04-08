@@ -1,7 +1,7 @@
 const faker = require('faker')
 
-const componentsLabel = {
-    label: faker.random.words(10),
+const newLabel = {
+    label: faker.random.words(1),
 }
 
 
@@ -9,9 +9,9 @@ describe("Tests - Components Page", () => {
     beforeEach(() => {
         cy.loginEmail()
     })
-    it("Tests - Create a component label", () => {
-        
-        
+    it("Tests - Create a new component label", () => {
+
+        cy.createNewLabel(newLabel)    
     })
 })
 
