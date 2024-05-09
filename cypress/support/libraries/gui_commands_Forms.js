@@ -123,4 +123,7 @@ Cypress.Commands.add('addFormFields', input => {
         cy.get('#HintText').should('have.value', `${dataField} hint`)
         cy.go('back')
     })
+    //Delete scenarios
+
+    //Preview form scenario
 })

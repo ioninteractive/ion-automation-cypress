@@ -11,7 +11,7 @@ describe("Tests Login Page", () => {
             .should("contain", `Welcome back, ${Cypress.env('firstName')}.`);
     });
 
-    it("Trying to authenticate with correct Email and password", () => {
+    it("Trying to authenticate with the correct Email and password", () => {
         cy.loginEmail()
 
         //validations
@@ -20,7 +20,7 @@ describe("Tests Login Page", () => {
 
     });
 
-    it("Trying to authenticate with incorrect User ID", () => {
+    it("Trying to authenticate with the incorrect User ID", () => {
         const loginIncorrectUser = {
             userId: `${faker.datatype.uuid()}`,
             password: faker.random.words(1)
@@ -32,7 +32,7 @@ describe("Tests Login Page", () => {
 
     });
 
-    it("Trying to authenticate with incorrect password", () => {
+    it("Trying to authenticate with the incorrect password", () => {
         const loginIncorrectPassword = {
             password: faker.random.words(1)
         }
@@ -42,7 +42,7 @@ describe("Tests Login Page", () => {
         cy.contains('Wrong user ID or password').should('exist')
     })
 
-    it("Trying to authenticate by not entering any information in the User Id and password fields", () => {
+    it("Trying to authenticate by not entering any information in the User ID and password fields", () => {
         cy.nullFields()
 
         cy.get('.field-validation-error').should('not.be.disabled')
@@ -65,23 +65,12 @@ describe("Tests Login Page", () => {
 
 });
 
-//Change your password scenario - only the console's owner can do this action
+//Change password - Only the console's owner can do this action
 
 
 
 
 
 
-//This will be implemented
-/*it(" SSO Test - Trying to authenticate with the correct User ID and password", () => {
-    cy.loginStaySigned()
 
-    //to do improve condition of ::before and ::after
-    cy.get('span')
-        .should('have.class', 'slider round')
 
-    cy.get('button[type=submit]').click()
-
-    cy.get('h1')
-        .should("contain", `Welcome back, ${Cypress.env('firstName')}.`);
-});*/
