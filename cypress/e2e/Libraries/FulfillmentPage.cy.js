@@ -18,7 +18,7 @@ describe("Tests - Fulfillment page", () => {
         })
 
         fulfillments.forEach(fulfillment => {
-            it(`Tests - Deleting a ${fulfillment.split('.').pop()} fulfillment in the library `, () => {
+            it(`Tests - Delete a ${fulfillment.split('.').pop()} fulfillment in the library `, () => {
                 cy.deletingAFile({
                     filePath: fulfillment,
                     fileName: fulfillment.split('/').pop(),
@@ -28,17 +28,22 @@ describe("Tests - Fulfillment page", () => {
             })
 
 
-        it('Tests - Tries to insert a fulfillment without file', () => {
+        it('Tests - Try to insert a fulfillment without a file', () => {
             cy.tryToUploadWithoutAFile({
                 category: faker.datatype.uuid().replaceAll('-', ''),
                 annotation: faker.random.words(10)
             })
          })
 
-        it('Tests - Moving a file to another category', () => {
+        it('Tests - Move a file to another category', () => {
             cy.moveAFileToAnotherCategory()
 
         }) 
+        /* New scenarios
+        
+        Update a file in an existing category
+
+Click to view the file*/ 
       })
    })
 })

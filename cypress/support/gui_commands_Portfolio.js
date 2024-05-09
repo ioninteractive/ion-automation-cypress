@@ -38,6 +38,24 @@ Cypress.Commands.add('editPortfolio', portfolio => {
     cy.get("#Submit1").click()
 })
 
+/*new scenarios
+
+Edit Portfolio - Permission groups
+
+Edit Portfolio - Advanced options
+
+Access Portfolio performance 
+
+Export portfolio respondents 
+
+New note portfolio
+
+Delete new note portfolio
+
+
+*/
+
+
 
 Cypress.Commands.add('deletePortfolio', portfolio => {
     const { name } = portfolio

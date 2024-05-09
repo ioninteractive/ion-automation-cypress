@@ -19,6 +19,20 @@ Cypress.Commands.add('createCampaign', campaign => {
 
 })
 
+/*New scenarios
+
+Edit campaign 
+
+Export campaign respondents 
+
+Access campaign performance
+
+Scheduled exports
+
+Delete all campaign respondents
+
+*/ 
+
 Cypress.Commands.add('deleteCampaign', campaign => {
     const { name } = campaign
     cy.visitPortfolio()

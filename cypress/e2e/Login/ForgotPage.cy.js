@@ -4,7 +4,7 @@ const faker = require('faker')
 
 describe("Tests Login Page - Forgot your password", () => {
 
-    it("Trying to recover password without filling in user id or email", () => {
+    it("Trying to recover password without filling in user ID or email", () => {
         cy.forgotPassword()
 
         cy.get('#txtuserid').clear()
@@ -19,7 +19,7 @@ describe("Tests Login Page - Forgot your password", () => {
             .should('be.visible')
     })
 
-    it("Fill in an invalid user in the User id field and try to reset the password.", () => {
+    it("Fill in an invalid user in the User ID field and try to reset the password.", () => {
         const resetIncorrectUser = {
             userId: `${faker.datatype.uuid()}`,
             /*password: faker.random.words(1)*/
@@ -34,7 +34,7 @@ describe("Tests Login Page - Forgot your password", () => {
 
     })
 
-    it("Fill in a federated userID and reset the password.", () => {
+    it("Fill in a federated user ID and reset the password.", () => {
         cy.forgotPassword()
 
         cy.get('#txtuserid').type(Cypress.env('federatedAccountToResetPassword'))
@@ -45,7 +45,7 @@ describe("Tests Login Page - Forgot your password", () => {
 
     })
 
-    it("Fill in the field with Email of a non-federated user and reset the password.", () => {
+    it("Fill in the field with the Email of a non-federated user and reset the password.", () => {
         cy.forgotPassword()
 
         //cy.get('#txtuserid').type(Cypress.env('notFederatedAccountToResetPassword'))
