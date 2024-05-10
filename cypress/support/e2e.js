@@ -8,9 +8,12 @@ import './gui_commands_Integration'
 import './gui_commands_CreativeStudio'
 import './gui_commands_BugsFixed'
 import './gui_commands_Home'
-import './libraries/gui_commands_Widget'
+import './libraries/gui_commands_Widgets'
 import './libraries/gui_commands_Image'
 import './libraries/gui_commands_Forms'
 import './libraries/gui_commands_Fulfillment'
 import './libraries/gui_commands_Components'
+import './libraries/gui_commands_Icons'
+import './libraries/gui_commands_Scripts'
+
 

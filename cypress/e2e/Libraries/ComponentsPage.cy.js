@@ -22,10 +22,10 @@ describe("Tests - Components Page", () => {
     it("Tests - Delete components", () => {
 
     })
-    it("Tests - Access the components ( by pages)", () => {
+    it("Tests - Validate the component page usage ", () => {
 
     })
-    it("Tests - Edit Components' names, labels, and description", () => {
+    it("Tests - Edit Components (name, labels, and description) ", () => {
 
     })
     it("Tests - Validate not creating label names that exceed 80 char", () => {

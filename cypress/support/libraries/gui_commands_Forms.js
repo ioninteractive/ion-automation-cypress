@@ -64,6 +64,8 @@ Cypress.Commands.add('createForm', input => {
     cy.contains(label).click()
     cy.contains(label).should('exist')
     cy.contains(description).should('exist')
+
+    //The test above is using Generated type and it is not validating the fields below Description
 })
 
 Cypress.Commands.add('editForm', input => {
@@ -123,7 +125,5 @@ Cypress.Commands.add('addFormFields', input => {
         cy.get('#HintText').should('have.value', `${dataField} hint`)
         cy.go('back')
     })
-    //Delete scenarios
-
-    //Preview form scenario
+    
 })

@@ -13,7 +13,7 @@ describe("Tests - Image page", () => {
         cy.loginEmail()
     })
     images.forEach(image => {
-        it(`Tests - Insert a ${image.split('.').pop()} image in the library `, () => {
+        it(`Tests - Upload ${image.split('.').pop()} images in the library `, () => {
             cy.uploadImage({
                 filePath: image,
                 fileName: image.split('/').pop(),
