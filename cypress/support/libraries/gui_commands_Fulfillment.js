@@ -24,6 +24,7 @@ Cypress.Commands.add('uploadFulfillment', input => {
     cy.visitFulfillments()
     cy.get('#ReviewCategory').select(category)
     cy.get('#ReviewCategory option:selected').should('have.value', category)
+    //Put an assert to validate the size file display
     cy.contains(fileName)
 })
 

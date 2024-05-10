@@ -7,6 +7,7 @@ describe("Tests - Fulfillment page", () => {
     beforeEach(() => {
         cy.loginEmail()
     })
+    //Update this test using the other eleven types of file extension
     fulfillments.forEach(fulfillment => {
         it(`Tests - Insert a ${fulfillment.split('.').pop()} fulfillment in the library `, () => {
             cy.uploadFulfillment({
@@ -43,7 +44,14 @@ describe("Tests - Fulfillment page", () => {
         
         Update a file in an existing category
 
-Click to view the file*/ 
+        Click to view the file
+
+        Validate the “Used in” button 
+        
+        
+        */ 
+
+
       })
    })
 })
