@@ -23,9 +23,13 @@ describe("Tests - Portfolio Page", () => {
 
     it("Tests - Edit Portfolio", () => {
         cy.editPortfolio(newPortfolio)
+        cy.get('.l-grid > :nth-child(1) > .o-badge').should('exist')
+        cy.contains('Admins').should('exist')
         cy.visitPortfolios()
         cy.contains(portfolio.name).should('not.exist')
         cy.contains(newPortfolio.name).should('exist')
+        cy.get(':nth-child(1) > :nth-child(2) > .h-d-inline-block > .h-mr-1').should('exist')
+        
 
     })
     it("Tests - Delete Portfolio", () => {
