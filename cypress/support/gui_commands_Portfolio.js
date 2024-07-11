@@ -20,7 +20,7 @@ Cypress.Commands.add('createPortfolio', portfolio => {
     cy.get("#inDescription").type(description)
     cy.get("#Submit1").click()
 })
-
+//Editing the permission groups, too
 Cypress.Commands.add('editPortfolio', portfolio => {
     const { name, description, oldName } = portfolio
 
@@ -35,12 +35,46 @@ Cypress.Commands.add('editPortfolio', portfolio => {
         .type(name)
     cy.get("#inDescription").clear()
         .type(description)
+    cy.get('[for="Admins"]').click()
     cy.get("#Submit1").click()
+    
 })
+
+
+Cypress.Commands.add('editPortfolioAdvancedOptions', portfolio => {
+    const { name, description, oldName } = portfolio
+
+
+    cy.visitPortfolios()
+
+    cy.get('a[class="c-button c-button--primary"]').click()
+
+    cy.get("#inLabel").type(name)
+    cy.get("#inDescription").type(description)
+    cy.get("#Submit1").click()
+
+    cy.visitPortfolios()
+
+    cy.contains(oldName).click()
+    cy.get('div[class="c-action-menu"]').click()
+    cy.get('a[class="c-button"]')
+        .contains('Edit portfolio')
+        .click()
+    cy.get("#inLabel").clear()
+        .type(name)
+    cy.get("#inDescription").clear()
+        .type(description)
+    cy.get('[for="Admins"]').click()
+    cy.get("#Submit1").click()
+    
+})
+
+
+
 
 /*new scenarios
 
-Edit Portfolio - Permission groups
+Edit Portfolio - Permission groups -ok
 
 Edit Portfolio - Advanced options
 
