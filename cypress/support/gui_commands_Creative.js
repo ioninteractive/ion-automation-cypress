@@ -156,15 +156,9 @@ Cypress.Commands.add('deleteCreative', creative => {
 
 //Copy Personalization Tests
 
-Cypress.Commands.add('noCopyValidatingMessage', () => {
+Cypress.Commands.add('noCopyValidatingMessage', input => {
 
-
-    cy.login()
-    cy.visit('Admin/Creative/5450')
-    cy.get('[data-for-region="personalization"]').click()
-    cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
-
-    /*const { name, description } = input
+    const { name, description } = input
 
     cy.login()
     cy.visit('Admin/Campaigns/Campaign/291')
@@ -178,14 +172,21 @@ Cypress.Commands.add('noCopyValidatingMessage', () => {
     cy.get("#Theme").select('Jana_Ion_QA (legacy)')
     cy.get('#DefaultLanguage').select('English')
     cy.get('#New_FriendlyPathURL').type('/testing')
-    cy.get("#Create").click()*/
+    cy.get("#Create").click()
 
-    //I stopped here
+    cy.get(':nth-child(3) > .c-page-list__add > .c-button').click()
+    cy.get('#tab_addpage_scratch').click()
+    cy.wait(1000)
+    cy.get('#cp-1_column > .c-thumbnail__img').click()
+    cy.get('#inLabel').type('No text')
+    cy.get('#Create').click()
+    cy.wait(1000)
 
-    
-
-    
-
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo > .popoutNav > .nav-items > :nth-child(4) > .popoutNav-link > span').click({ force: true })
+    cy.get('[data-for-region="personalization"]').click()
+    cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
 
 
 })
@@ -216,7 +217,40 @@ Cypress.Commands.add('validatingMessagesWhenFieldsAreEmpty', input => {
     cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
     cy.get('.h-align-left > .c-button--save').click()
 
+})
 
+Cypress.Commands.add('validatingCopyPreview', input => {
+
+    const { name, description, copyName, creativeCopy } = input
+
+    cy.login()
+    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.get('.c-button--primary').click()
+    cy.get('#templates_search').click().type('CLOUD: 4 Category Assessm')
+    cy.get('#select-16206').click({ force: true })
+
+    cy.get("#inLabel").type(name)
+    cy.get("#Description").type(description)
+    cy.get("#Theme").select('Coastal Blue')
+    cy.get('#DefaultLanguage').select('English')
+    cy.get("#Create").click()
+
+
+    //cy.get('.mfp-close').
+    //cy.get('.notification-banner-dismiss').click()
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo > .popoutNav > .nav-items > :nth-child(4) > .popoutNav-link > span').click({ force: true })
+    cy.get('[data-for-region="personalization"]').click()
+    cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
+
+    cy.get('#Label').type(copyName)
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser language')
+    cy.get(':nth-child(1) > #PersonalizationCondition_SelectedRightOperand').select('English')
+    cy.get(':nth-child(10) > :nth-child(1) > .c-card__header > .o-icon-chevron-down').click()
+    cy.get('#input-text-4').click({ force: true }).type('Copy test').should('exist')
+    cy.get('.o-toggle').click()
+    
 
 
 
