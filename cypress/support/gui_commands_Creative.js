@@ -248,7 +248,8 @@ Cypress.Commands.add('validatingCopyPreview', input => {
     cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser language')
     cy.get(':nth-child(1) > #PersonalizationCondition_SelectedRightOperand').select('English')
     cy.get(':nth-child(10) > :nth-child(1) > .c-card__header > .o-icon-chevron-down').click()
-    cy.get('#input-text-4').click({ force: true }).type('Copy test').should('exist')
+    cy.get('#input-text-4').click({ force: true })
+    cy.get('#input-text-4').type('Copy test' , { force: true }).should('exist')
     cy.get('.o-toggle').click()
     
 
