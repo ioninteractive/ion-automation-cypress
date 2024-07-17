@@ -251,10 +251,46 @@ Cypress.Commands.add('validatingCopyPreview', input => {
     cy.get('#input-text-4').click({ force: true })
     cy.get('#input-text-4').type('Copy test' , { force: true }).should('exist')
     cy.get('.o-toggle').click()
+
+})
+
+Cypress.Commands.add('validatingMessageAlertForNoChangesInCopy',input => {
+
+    const { name, description, copyName, creativeCopy } = input
+
+    cy.login()
+    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.get('.c-button--primary').click()
+    cy.get('#templates_search').click().type('CLOUD: 4 Category Assessm')
+    cy.get('#select-16206').click({ force: true })
+
+    cy.get("#inLabel").type(name)
+    cy.get("#Description").type(description)
+    cy.get("#Theme").select('Coastal Blue')
+    cy.get('#DefaultLanguage').select('English')
+    cy.get("#Create").click()
+
+
+    //cy.get('.mfp-close').
+    //cy.get('.notification-banner-dismiss').click()
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo > .popoutNav > .nav-items > :nth-child(4) > .popoutNav-link > span').click({ force: true })
+    cy.get('[data-for-region="personalization"]').click()
+    cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
+
+    cy.get('#Label').type(copyName)
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser language')
+    cy.get(':nth-child(1) > #PersonalizationCondition_SelectedRightOperand').select('English')
+    cy.get(':nth-child(10) > :nth-child(1) > .c-card__header > .o-icon-chevron-down').click()
+    cy.get('#input-text-4').click({ force: true })
+    cy.get('#input-text-4').type(creativeCopy , { force: true }).should('exist')
+    cy.get('.h-align-left > .c-button--save').click()
+    cy.get('.personalization-item > .c-card > :nth-child(2) > :nth-child(1) > .c-button').click()
+    cy.get('.h-align-left > .c-button--save').click()
+
+
     
-
-
-
 
 })
 
