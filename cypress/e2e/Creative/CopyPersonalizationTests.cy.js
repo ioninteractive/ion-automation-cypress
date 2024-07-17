@@ -61,5 +61,28 @@ describe("Tests Copy personalization feature", () => {
 
     })
 
+    it("Test - Validating message alert for no changes in the copy personalization", () => {
+
+        cy.validatingMessageAlertForNoChangesInCopy(newCopyPersonalization)
+        cy.get(':nth-child(2) > .c-alert > .c-alert__message > h1').contains('Personalization')
+        cy.get(':nth-child(2) > .c-alert > .c-alert__message').contains('This creative is equal to the original one. Change the copy of at least one text.')
+        cy.get('.h-align-left > #leave-personalization').click()
+        cy.get('.hdr_bar').contains('Leave personalization')
+        cy.get('p').contains('Are you sure you want to leave this page? All the informations not saved will be lost')
+        cy.get('.h-align-right > .c-button--save').click()
+
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
+        cy.get('#formDeleteSubmit').click()
+
+        //There is a bug with copy not allowing to delete a creative
+
+        cy.contains('Sorry, an internal problem has occurred').should('exist')
+        cy.get('a[class="t-admin__brand"]').click({ force: true })
+        cy.contains(newCopyPersonalization.name).should('exist')
+
+
+    })
+
 })
 
