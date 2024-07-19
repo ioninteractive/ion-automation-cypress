@@ -29,6 +29,7 @@ describe("Tests Copy personalization feature", () => {
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
         cy.get('#formDeleteSubmit').click()
+        cy.contains(quickStartCreative.name).should('not.exist')
 
     })
     it("Test - Validating message when the fields are empty", () => {
@@ -44,6 +45,7 @@ describe("Tests Copy personalization feature", () => {
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
         cy.get('#formDeleteSubmit').click()
+        cy.contains(quickStartCreative.name).should('not.exist')
 
 
     })
@@ -57,6 +59,7 @@ describe("Tests Copy personalization feature", () => {
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
         cy.get('#formDeleteSubmit').click()
+        cy.contains(newCopyPersonalization.name).should('not.exist')
 
 
     })
@@ -75,11 +78,11 @@ describe("Tests Copy personalization feature", () => {
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
         cy.get('#formDeleteSubmit').click()
 
-        //There is a bug with copy not allowing to delete a creative
+        //There was a bug with copy not allowing to delete a creative
 
-        cy.contains('Sorry, an internal problem has occurred').should('exist')
-        cy.get('a[class="t-admin__brand"]').click({ force: true })
-        cy.contains(newCopyPersonalization.name).should('exist')
+        cy.contains('Sorry, an internal problem has occurred').should('not.exist')
+        //cy.get('a[class="t-admin__brand"]').click({ force: true })
+        cy.contains(newCopyPersonalization.name).should('not.exist')
 
 
     })
