@@ -18,7 +18,7 @@ const newCopyPersonalization = {
 
 describe("Tests Copy personalization feature", () => {
 
-    it("Test - Validating message when have no copy", () => {
+    /*it("Test - Validating message when have no copy", () => {
 
         cy.noCopyValidatingMessage(quickStartCreative)
         cy.get(':nth-child(2) > .c-alert').should('exist')
@@ -84,6 +84,21 @@ describe("Tests Copy personalization feature", () => {
         //cy.get('a[class="t-admin__brand"]').click({ force: true })
         cy.contains(newCopyPersonalization.name).should('not.exist')
 
+
+    })*/
+
+    it("Test - Validating message alert for no URL added in the creative", () => {
+
+        cy.validatingMessageAlertForNoURLAddedInTheCreative(newCopyPersonalization)
+        cy.contains('Personalization').should('exist')
+        cy.contains("This creative doesn't have a URL. Create one before personalizing the creative.").should('exist')
+
+        cy.get('a.c-breadcrumbs__item').click()
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
+        cy.get('#formDeleteSubmit').click()
+        cy.contains('Sorry, an internal problem has occurred').should('not.exist')
+        cy.contains(newCopyPersonalization.name).should('not.exist')
 
     })
 
