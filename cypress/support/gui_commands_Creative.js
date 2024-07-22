@@ -313,7 +313,7 @@ Cypress.Commands.add('validatingMessageAlertForNoURLAddedInTheCreative', input =
     cy.get('.pe-top-bar--logo').click({ force: true })
     cy.get('.pe-top-bar--logo').click({ force: true })
     cy.get('.pe-top-bar--logo > .popoutNav > .nav-items > :nth-child(4) > .popoutNav-link > span').click({ force: true })
-    cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__trigger').contains('Draft')
+    cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__trigger').contains('Draft')//draft status
     cy.contains('Draft').should('exist')
     cy.get('[data-for-region="personalization"]').click()
     cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
@@ -327,7 +327,7 @@ Cypress.Commands.add('validatingMessageAlertForNoURLAddedInTheCreative', input =
     cy.get('a.c-breadcrumbs__item').click()
     cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__trigger').click()
     cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
-    cy.contains('Live').should('exist')
+    cy.contains('Live').should('exist')//live status
     cy.get('[data-for-region="personalization"]').click()
     cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
     cy.get('#Label').type(copyName)
