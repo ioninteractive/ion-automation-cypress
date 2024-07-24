@@ -324,6 +324,7 @@ Cypress.Commands.add('validatingMessageAlertForNoURLAddedInTheCreative', input =
     cy.get('.c-alert__message > p').contains("This creative doesn't have a URL. Create one before personalizing the creative.")
     cy.contains('Personalization').should('exist')
     cy.contains("This creative doesn't have a URL. Create one before personalizing the creative.").should('exist')
+    cy.get('a.c-breadcrumbs__item').should('exist')
     cy.get('a.c-breadcrumbs__item').click()
     cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__trigger').click()
     cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
@@ -332,6 +333,49 @@ Cypress.Commands.add('validatingMessageAlertForNoURLAddedInTheCreative', input =
     cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
     cy.get('#Label').type(copyName)
     cy.get('#PersonalizationCondition_SelectedLeftOperand').select('URL')
+
+
+})
+
+Cypress.Commands.add('validatingCopyDropdownOptions', input => {
+
+    const { name, description } = input
+
+    cy.login()
+    cy.visit('Admin/Campaigns/Campaign/291')
+    cy.get('.c-button--primary').click()
+    cy.get('#templates_search').click().type('CLOUD: 4 Category Assessm')
+    cy.get('#select-16206').click({ force: true })
+
+    cy.get("#inLabel").type(name)
+    cy.get("#Description").type(description)
+    cy.get("#Theme").select('Coastal Blue')
+    cy.get('#DefaultLanguage').select('English')
+    cy.get("#Create").click()
+
+
+    //cy.get('.mfp-close').
+    //cy.get('.notification-banner-dismiss').click()
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo').click({ force: true })
+    cy.get('.pe-top-bar--logo > .popoutNav > .nav-items > :nth-child(4) > .popoutNav-link > span').click({ force: true })
+    cy.get('.c-control-bar__status > form > .c-action-menu > .c-action-menu__trigger').contains('Draft')//draft status
+    cy.contains('Draft').should('exist')
+    cy.get('[data-for-region="personalization"]').click()
+    cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
+
+
+    const expectedWhenCopyOptions = ['No conditions required', 'Browser language', 'Browser region', 'Day of week', 'Geolocated country (99% accuracy)', 'Geolocated region (75% accuracy)', 'Geolocated city (70% accuracy)', 'Grade', 'Time of day', 'URL'];
+
+    cy.get('#PersonalizationCondition_SelectedLeftOperand')
+        .find('option')
+        .then($options => {
+            const existingWhenCopyOption = Array.from($options).map(option => option.innerText.trim());
+
+            expect(existingWhenCopyOption).to.deep.eq(expectedWhenCopyOptions)
+
+        })
+        //later I will finish to validate all copy dropdowns 
 
 })
 
