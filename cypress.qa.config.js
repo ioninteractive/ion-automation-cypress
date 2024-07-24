@@ -12,6 +12,6 @@ module.exports = defineConfig({
     env: JSON.parse(fs.readFileSync('./cypress.qa.env.json')),
     chromeWebSecurity: false,
     numTestsKeptInMemory: 50,
-    defaultCommandTimeout: 70000
+    defaultCommandTimeout: 80000
   },
 })

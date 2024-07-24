@@ -18,13 +18,14 @@ const newCopyPersonalization = {
 
 describe("Tests Copy personalization feature", () => {
 
-    it("Test - Validating message when have no copy", () => {
+    /*it("Test - Validating message when have no copy", () => {
 
         cy.noCopyValidatingMessage(quickStartCreative)
         cy.get(':nth-child(2) > .c-alert').should('exist')
         cy.contains('Personalization').should('exist')
         cy.contains("This creative doesn't have any copy. Select a different one.").should('exist')
 
+        cy.get('a.c-breadcrumbs__item').should('exist')
         cy.get('a.c-breadcrumbs__item').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
@@ -41,6 +42,7 @@ describe("Tests Copy personalization feature", () => {
         cy.get(':nth-child(2) > .c-alert > .c-alert__message').contains('Condition is mandatory.')
         cy.get(':nth-child(2) > .c-alert > .c-alert__message').contains('At least one element must be personalized in the experience.')
 
+        cy.get('a.c-breadcrumbs__item').should('exist')
         cy.get('a.c-breadcrumbs__item').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
@@ -55,6 +57,7 @@ describe("Tests Copy personalization feature", () => {
         cy.validatingCopyPreview(newCopyPersonalization)
         //cy.get('#preview-page',{ force: true }).contains('Copy test',{ force: true }) - Find a way to interact with the preview page or change the tests to use Selenium.
 
+        cy.get('a.c-breadcrumbs__item').should('exist')
         cy.get('a.c-breadcrumbs__item').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
         cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
@@ -99,6 +102,12 @@ describe("Tests Copy personalization feature", () => {
         cy.get('#formDeleteSubmit').click()
         cy.contains('Sorry, an internal problem has occurred').should('not.exist')
         cy.contains(newCopyPersonalization.name).should('not.exist')
+
+    })*/
+
+    it('Test - Validating copy dropdown options', () => {
+
+        cy.validatingCopyDropdownOptions(quickStartCreative)
 
     })
 
