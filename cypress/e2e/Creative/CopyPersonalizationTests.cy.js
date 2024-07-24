@@ -18,7 +18,7 @@ const newCopyPersonalization = {
 
 describe("Tests Copy personalization feature", () => {
 
-    /*it("Test - Validating message when have no copy", () => {
+    it("Test - Validating message when have no copy", () => {
 
         cy.noCopyValidatingMessage(quickStartCreative)
         cy.get(':nth-child(2) > .c-alert').should('exist')
@@ -103,7 +103,7 @@ describe("Tests Copy personalization feature", () => {
         cy.contains('Sorry, an internal problem has occurred').should('not.exist')
         cy.contains(newCopyPersonalization.name).should('not.exist')
 
-    })*/
+    })
 
     it('Test - Validating copy dropdown options', () => {
 
