@@ -391,7 +391,7 @@ Cypress.Commands.add('validatingCopyDropdownOptions', input => {
 
 
 
-    //Validating all dropdowns
+    //Validating all dropdowns options
 
 })
 
