@@ -375,7 +375,23 @@ Cypress.Commands.add('validatingCopyDropdownOptions', input => {
             expect(existingWhenCopyOption).to.deep.eq(expectedWhenCopyOptions)
 
         })
-        //later I will finish to validate all copy dropdowns 
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser language')
+
+    const expectedEqualsDifferentOption = ['Equals to', 'Different from'];
+
+    cy.get('#PersonalizationCondition_SelectedOperation')
+        .find('option')
+        .then($options => {
+            const existingEqualsDifferentOption = Array.from($options).map(option => option.innerText.trim());
+
+            expect(existingEqualsDifferentOption).to.deep.eq(expectedEqualsDifferentOption)
+        })
+
+        //Later, instead of manually writing the options, use a script to catch and store them. 
+
+
+
+    //Validating all dropdowns
 
 })
 
