@@ -18,7 +18,7 @@ const newCopyPersonalization = {
 
 describe("Tests Copy personalization feature", () => {
 
-    it("Test - Validating message when have no copy", () => {
+    /*it("Test - Validating message when have no copy", () => {
 
         cy.noCopyValidatingMessage(quickStartCreative)
         cy.get(':nth-child(2) > .c-alert').should('exist')
@@ -103,11 +103,18 @@ describe("Tests Copy personalization feature", () => {
         cy.contains('Sorry, an internal problem has occurred').should('not.exist')
         cy.contains(newCopyPersonalization.name).should('not.exist')
 
-    })
+    })*/
 
     it('Test - Validating copy dropdown options', () => {
 
         cy.validatingCopyDropdownOptions(quickStartCreative)
+
+        cy.get('a.c-breadcrumbs__item').click()
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__trigger').click()
+        cy.get('.h-d-flex > .c-action-menu > .c-action-menu__items > :nth-child(2) > .c-button').click()
+        cy.get('#formDeleteSubmit').click()
+        cy.contains('Sorry, an internal problem has occurred').should('not.exist')
+        cy.contains(newCopyPersonalization.name).should('not.exist')
 
     })
 

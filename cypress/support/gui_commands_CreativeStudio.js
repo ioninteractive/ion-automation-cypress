@@ -240,3 +240,10 @@ Cypress.Commands.add('setImageRole', input => {
     cy.contains('Accessibility').click()
     cy.get('#role-inline-select').select(role)
 })
+
+Cypress.Commands.add(`validateNewTagInAllElement`, () => {
+
+
+
+    
+})
