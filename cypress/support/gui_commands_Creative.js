@@ -365,33 +365,143 @@ Cypress.Commands.add('validatingCopyDropdownOptions', input => {
     cy.get('[data-region="personalization"] > .c-page-list__add > .c-button').click()
 
 
-    const expectedWhenCopyOptions = ['No conditions required', 'Browser language', 'Browser region', 'Day of week', 'Geolocated country (99% accuracy)', 'Geolocated region (75% accuracy)', 'Geolocated city (70% accuracy)', 'Grade', 'Time of day', 'URL'];
+    const expectedWhenCopyOptions = [];
 
-    cy.get('#PersonalizationCondition_SelectedLeftOperand')
-        .find('option')
-        .then($options => {
-            const existingWhenCopyOption = Array.from($options).map(option => option.innerText.trim());
+    cy.get('#PersonalizationCondition_SelectedLeftOperand >option').each(($el) => {
 
-            expect(existingWhenCopyOption).to.deep.eq(expectedWhenCopyOptions)
+        expectedWhenCopyOptions.push($el.text());
+    }).then(() => {
 
-        })
+        cy.log('When options:', expectedWhenCopyOptions);
+
+        expect(expectedWhenCopyOptions).
+            to.
+            deep.
+            equal(['No conditions required', 'Browser language', 'Browser region', 'Day of week', 'Geolocated country (99% accuracy)', 'Geolocated region (75% accuracy)', 'Geolocated city (70% accuracy)', 'Grade', 'Time of day', 'URL'])
+
+    })
+
     cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser language')
 
-    const expectedEqualsDifferentOption = ['Equals to', 'Different from'];
+    const dropdownEqualsDiffTextOptions = [];
 
-    cy.get('#PersonalizationCondition_SelectedOperation')
-        .find('option')
-        .then($options => {
-            const existingEqualsDifferentOption = Array.from($options).map(option => option.innerText.trim());
+    cy.get('#PersonalizationCondition_SelectedOperation > option').each(($el) => {
 
-            expect(existingEqualsDifferentOption).to.deep.eq(expectedEqualsDifferentOption)
-        })
+        dropdownEqualsDiffTextOptions.push($el.text());
 
-        //Later, instead of manually writing the options, use a script to catch and store them. 
+    }).then(() => {
+
+        cy.log('Equals to and different from options:', dropdownEqualsDiffTextOptions);
+
+        expect(dropdownEqualsDiffTextOptions).to.deep.equal(['Equals to', 'Different from']);
+    })
 
 
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Browser region')
 
-    //Validating all dropdowns options
+    const expectedBrowserRegionsOptions = [];
+
+    cy.get('#PersonalizationCondition_SelectedRightOperand >option').each(($el) => {
+
+        expectedBrowserRegionsOptions.push($el.text());
+    }).then(() => {
+
+        cy.log('Browser Region options:', expectedBrowserRegionsOptions);
+
+        cy.get('#PersonalizationCondition_SelectedRightOperand')
+            .find('option')
+            .then($options => {
+
+                const actualBrowserRegionsOptions = Array.from($options).map(option => option.innerText.trim());
+                expect(actualBrowserRegionsOptions).to.deep.equal(expectedBrowserRegionsOptions);
+            });
+
+    })
+
+
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Day of week')
+
+    cy.wait(1000)
+
+    const expectedDayOfWeekOptions = [];
+
+    cy.get('#PersonalizationCondition_SelectedRightOperand >option').each(($el) => {
+
+        expectedDayOfWeekOptions.push($el.text());
+    }).then(() => {
+
+        cy.log('Days of week options:', expectedDayOfWeekOptions);
+
+        expect(expectedDayOfWeekOptions).
+            to.
+            deep.
+            equal(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Weekday', 'Weekend'])
+
+    })
+
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Geolocated country (99% accuracy)')
+
+    const expectedGeoCountryOptions = [];
+
+    cy.get('#PersonalizationCondition_SelectedRightOperand >option').each(($el) => {
+
+        expectedGeoCountryOptions.push($el.text());
+    }).then(() => {
+
+        cy.log('Geo Country options:', expectedGeoCountryOptions);
+
+        cy.get('#PersonalizationCondition_SelectedRightOperand')
+            .find('option')
+            .then($options => {
+
+                const actualGeoCountryOptions = Array.from($options).map(option => option.innerText.trim());
+                expect(actualGeoCountryOptions).to.deep.equal(expectedGeoCountryOptions);
+            });
+
+    })
+
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Grade')
+
+    cy.wait(1000)
+
+    const expectedGradeOptions = [];
+
+    cy.get('#PersonalizationCondition_SelectedRightOperand >option').each(($el) => {
+
+        expectedGradeOptions.push($el.text());
+    }).then(() => {
+
+        cy.log('Days of week options:', expectedGradeOptions);
+
+        expect(expectedGradeOptions).
+            to.
+            deep.
+            equal(['A', 'B', 'C', 'D', 'F'])
+
+    })
+
+    cy.get('#PersonalizationCondition_SelectedLeftOperand').select('Time of day')
+
+    const expectedTimeOfDayOptions = [];
+
+    cy.get('#PersonalizationCondition_SelectedRightOperand >option').each(($el) => {
+
+        expectedTimeOfDayOptions.push($el.text());
+    }).then(() => {
+
+        cy.log('Geo Country options:', expectedTimeOfDayOptions);
+
+        cy.get('#PersonalizationCondition_SelectedRightOperand')
+            .find('option')
+            .then($options => {
+
+                const actualTimeOfDayOptions = Array.from($options).map(option => option.innerText.trim());
+                expect(actualTimeOfDayOptions).to.deep.equal(expectedTimeOfDayOptions);
+            });
+
+    })
+
+
 
 })
 
